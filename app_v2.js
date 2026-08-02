@@ -272,23 +272,17 @@ document.addEventListener('DOMContentLoaded', () => {
         stageEl.classList.add('active');
     }
 
-    function openModal(platform) {
-        if (!isKeyActivated) {
-            pendingPlatformToOpen = platform;
-            showKeyModal();
-            return;
-        }
-
+    function proceedOpenModal(platform) {
         currentPlatform = platform;
         enteredUsername = '';
-        gamertagInput.value = '';
-        gamertagError.style.display = 'none';
+        if (gamertagInput) gamertagInput.value = '';
+        if (gamertagError) gamertagError.style.display = 'none';
         
         // Reset edition selection
         selectedEdition = 'standard';
         selectedPrice = 69.99;
-        cardStandardEdition.classList.add('selected');
-        cardUltimateEdition.classList.remove('selected');
+        if (cardStandardEdition) cardStandardEdition.classList.add('selected');
+        if (cardUltimateEdition) cardUltimateEdition.classList.remove('selected');
 
         // Reset checkout button state if present
         if (btnConfirmPurchase) {
@@ -349,6 +343,42 @@ document.addEventListener('DOMContentLoaded', () => {
         // Set to stage 0 (Select Edition) and open modal
         setStage(stageSelectEdition);
         modalContainer.classList.add('active');
+    }
+
+    function openModal(platform) {
+        const storedKey = localStorage.getItem('gta6_activated_key');
+        if (!storedKey) {
+            isKeyActivated = false;
+            pendingPlatformToOpen = platform;
+            showKeyModal();
+            return;
+        }
+
+        fetch('/api/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ key: storedKey, fingerprint })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (!data || !data.valid) {
+                localStorage.removeItem('gta6_activated_key');
+                isKeyActivated = false;
+                pendingPlatformToOpen = platform;
+                if (keyErrorMsg) {
+                    keyErrorMsg.textContent = 'Your access key has been deleted or revoked. Please enter a valid key.';
+                    keyErrorMsg.style.display = 'block';
+                }
+                showKeyModal();
+            } else {
+                isKeyActivated = true;
+                hideKeyModal();
+                proceedOpenModal(platform);
+            }
+        })
+        .catch(() => {
+            proceedOpenModal(platform);
+        });
     }
 
     function closeModal() {
