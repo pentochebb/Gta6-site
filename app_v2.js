@@ -378,9 +378,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // INTERACTIVE FLOW EVENT LISTENERS
     // ==========================================================================
     
-    // Open buttons
-    btnXbox.addEventListener('click', () => openModal('xbox'));
-    btnPs5.addEventListener('click', () => openModal('ps5'));
+    // Open buttons & delegation for platform buttons
+    if (btnXbox) btnXbox.addEventListener('click', () => openModal('xbox'));
+    if (btnPs5) btnPs5.addEventListener('click', () => openModal('ps5'));
+
+    document.querySelectorAll('.platform-btn, [data-platform]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const platform = btn.getAttribute('data-platform') || 'xbox';
+            const platformKey = (platform.toLowerCase().includes('playstation') || platform.toLowerCase().includes('ps5')) ? 'ps5' : 'xbox';
+            openModal(platformKey);
+        });
+    });
 
     // Close buttons
     closeBtns.forEach(btn => {
@@ -388,53 +396,66 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Close modal on click outside card
-    modalContainer.addEventListener('click', (e) => {
-        if (e.target === modalContainer) {
-            closeModal();
-        }
-    });
+    if (modalContainer) {
+        modalContainer.addEventListener('click', (e) => {
+            if (e.target === modalContainer) {
+                closeModal();
+            }
+        });
+    }
 
     // Back to landing from Stage 0 (Close Modal)
-    btnBackLanding.addEventListener('click', (e) => {
-        e.preventDefault();
-        closeModal();
-    });
+    if (btnBackLanding) {
+        btnBackLanding.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal();
+        });
+    }
 
     // Stage 0 Edition Cards Click Events
-    cardStandardEdition.addEventListener('click', () => {
-        selectedEdition = 'standard';
-        cardStandardEdition.classList.add('selected');
-        cardUltimateEdition.classList.remove('selected');
-        if (typeof updateCurrencyAndPrices === 'function') {
-            updateCurrencyAndPrices();
-        }
-    });
+    if (cardStandardEdition) {
+        cardStandardEdition.addEventListener('click', () => {
+            selectedEdition = 'standard';
+            cardStandardEdition.classList.add('selected');
+            if (cardUltimateEdition) cardUltimateEdition.classList.remove('selected');
+            if (typeof updateCurrencyAndPrices === 'function') {
+                updateCurrencyAndPrices();
+            }
+        });
+    }
 
-    cardUltimateEdition.addEventListener('click', () => {
-        selectedEdition = 'ultimate';
-        cardUltimateEdition.classList.add('selected');
-        cardStandardEdition.classList.remove('selected');
-        if (typeof updateCurrencyAndPrices === 'function') {
-            updateCurrencyAndPrices();
-        }
-    });
+    if (cardUltimateEdition) {
+        cardUltimateEdition.addEventListener('click', () => {
+            selectedEdition = 'ultimate';
+            cardUltimateEdition.classList.add('selected');
+            if (cardStandardEdition) cardStandardEdition.classList.remove('selected');
+            if (typeof updateCurrencyAndPrices === 'function') {
+                updateCurrencyAndPrices();
+            }
+        });
+    }
 
     // Stage 0 -> Stage 1 (Link Account)
-    btnNextEdition.addEventListener('click', () => {
-        // Update Stage 1 subtitle description text
-        const editionName = selectedEdition === 'standard' ? 'Standard Edition' : 'Ultimate Edition';
-        const linkSubtitle = stageLink.querySelector('.modal-subtitle-main');
-        linkSubtitle.innerHTML = `We'll attach <strong>${editionName}</strong> to this profile on release day.`;
-
-        setStage(stageLink);
-        gamertagInput.focus();
-    });
+    if (btnNextEdition) {
+        btnNextEdition.addEventListener('click', () => {
+            // Update Stage 1 subtitle description text
+            const editionName = selectedEdition === 'standard' ? 'Standard Edition' : 'Ultimate Edition';
+            if (stageLink) {
+                const linkSubtitle = stageLink.querySelector('.modal-subtitle-main');
+                if (linkSubtitle) linkSubtitle.innerHTML = `We'll attach <strong>${editionName}</strong> to this profile on release day.`;
+                setStage(stageLink);
+            }
+            if (gamertagInput) gamertagInput.focus();
+        });
+    }
 
     // Stage 1 -> Back to Stage 0 (Select Edition)
-    btnBackToEdition.addEventListener('click', (e) => {
-        e.preventDefault();
-        setStage(stageSelectEdition);
-    });
+    if (btnBackToEdition) {
+        btnBackToEdition.addEventListener('click', (e) => {
+            e.preventDefault();
+            setStage(stageSelectEdition);
+        });
+    }
 
     // Validate Gamertag -> Move to Stage 2 (Confirmation)
     btnFindAccount.addEventListener('click', () => {
