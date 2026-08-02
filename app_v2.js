@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnActivateKey = document.getElementById('btn-activate-key');
     const keyErrorMsg = document.getElementById('key-error-msg');
 
+    let isKeyActivated = false;
+    let pendingPlatformToOpen = null;
+
     function getDeviceFingerprint() {
         return btoa(navigator.userAgent + screen.width + 'x' + screen.height).slice(0, 32);
     }
@@ -54,6 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Hide key modal by default on load so landing page is 100% interactive
+    hideKeyModal();
+
     if (keyModalOverlay) {
         const storedKey = localStorage.getItem('gta6_activated_key');
         if (storedKey) {
@@ -65,17 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(res => res.json())
             .then(data => {
                 if (data.valid) {
+                    isKeyActivated = true;
                     hideKeyModal();
                 } else {
                     localStorage.removeItem('gta6_activated_key');
-                    showKeyModal();
+                    isKeyActivated = false;
                 }
             })
             .catch(() => {
+                isKeyActivated = true;
                 hideKeyModal();
             });
-        } else {
-            showKeyModal();
         }
 
         if (btnActivateKey) {
@@ -103,7 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (data.success) {
                         localStorage.setItem('gta6_activated_key', rawKey);
+                        isKeyActivated = true;
                         hideKeyModal();
+
+                        if (pendingPlatformToOpen) {
+                            openModal(pendingPlatformToOpen);
+                            pendingPlatformToOpen = null;
+                        }
                     } else {
                         keyErrorMsg.textContent = data.message || 'Invalid or expired access key.';
                         keyErrorMsg.style.display = 'block';
@@ -261,6 +273,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openModal(platform) {
+        if (!isKeyActivated) {
+            pendingPlatformToOpen = platform;
+            showKeyModal();
+            return;
+        }
+
         currentPlatform = platform;
         enteredUsername = '';
         gamertagInput.value = '';
