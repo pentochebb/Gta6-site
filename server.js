@@ -152,18 +152,34 @@ app.get('/api/keys', async (req, res) => {
     res.json(keys);
 });
 
+function findKeyRecord(keysObj, rawKey) {
+    if (!keysObj || !rawKey) return null;
+    const clean = rawKey.trim().toUpperCase().replace(/\s+/g, '');
+
+    if (keysObj[clean]) return { keyStr: clean, data: keysObj[clean] };
+    if (keysObj[rawKey]) return { keyStr: rawKey, data: keysObj[rawKey] };
+
+    for (const k in keysObj) {
+        if (k.trim().toUpperCase().replace(/\s+/g, '') === clean) {
+            return { keyStr: k, data: keysObj[k] };
+        }
+    }
+    return null;
+}
+
 // API: Verify key
 app.post('/api/verify', async (req, res) => {
     const { key, fingerprint } = req.body;
     if (!key) return res.json({ valid: false, message: 'Key is required.' });
 
     const keys = await getKeys();
-    const keyData = keys[key];
+    const record = findKeyRecord(keys, key);
 
-    if (!keyData) {
+    if (!record) {
         return res.json({ valid: false, message: 'Invalid access key.' });
     }
 
+    const keyData = record.data;
     if (keyData.expiresAt && new Date(keyData.expiresAt) < new Date()) {
         return res.json({ valid: false, message: 'Key has expired.' });
     }
@@ -181,11 +197,14 @@ app.post('/api/activate', async (req, res) => {
     if (!key) return res.json({ success: false, message: 'Key is required.' });
 
     const keys = await getKeys();
-    const keyData = keys[key];
+    const record = findKeyRecord(keys, key);
 
-    if (!keyData) {
+    if (!record) {
         return res.json({ success: false, message: 'Invalid access key.' });
     }
+
+    const targetKeyStr = record.keyStr;
+    const keyData = record.data;
 
     if (keyData.activated && keyData.fingerprint && keyData.fingerprint !== fingerprint) {
         return res.json({ success: false, message: 'Key is already bound to another device.' });
@@ -198,7 +217,7 @@ app.post('/api/activate', async (req, res) => {
     if (keysCollection) {
         try {
             await keysCollection.updateOne(
-                { _id: key },
+                { _id: targetKeyStr },
                 { $set: { activated: true, fingerprint, activatedAt: keyData.activatedAt } }
             );
         } catch (e) {
@@ -206,7 +225,7 @@ app.post('/api/activate', async (req, res) => {
         }
     } else {
         const localKeys = readKeysLocal();
-        localKeys[key] = keyData;
+        localKeys[targetKeyStr] = keyData;
         writeKeysLocal(localKeys);
     }
 
