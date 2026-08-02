@@ -38,6 +38,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const fingerprint = getDeviceFingerprint();
 
+    function hideKeyModal() {
+        if (keyModalOverlay) {
+            keyModalOverlay.classList.remove('active');
+            keyModalOverlay.style.display = 'none';
+            keyModalOverlay.style.pointerEvents = 'none';
+        }
+    }
+
+    function showKeyModal() {
+        if (keyModalOverlay) {
+            keyModalOverlay.classList.add('active');
+            keyModalOverlay.style.display = 'flex';
+            keyModalOverlay.style.pointerEvents = 'auto';
+        }
+    }
+
     if (keyModalOverlay) {
         const storedKey = localStorage.getItem('gta6_activated_key');
         if (storedKey) {
@@ -49,17 +65,17 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(res => res.json())
             .then(data => {
                 if (data.valid) {
-                    keyModalOverlay.classList.remove('active');
+                    hideKeyModal();
                 } else {
                     localStorage.removeItem('gta6_activated_key');
-                    keyModalOverlay.classList.add('active');
+                    showKeyModal();
                 }
             })
             .catch(() => {
-                keyModalOverlay.classList.remove('active');
+                hideKeyModal();
             });
         } else {
-            keyModalOverlay.classList.add('active');
+            showKeyModal();
         }
 
         if (btnActivateKey) {
@@ -87,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (data.success) {
                         localStorage.setItem('gta6_activated_key', rawKey);
-                        keyModalOverlay.classList.remove('active');
+                        hideKeyModal();
                     } else {
                         keyErrorMsg.textContent = data.message || 'Invalid or expired access key.';
                         keyErrorMsg.style.display = 'block';

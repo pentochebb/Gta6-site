@@ -610,7 +610,14 @@ a {
     padding: 20px;
 }
 
+.modal-overlay:not(.active) {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
 .modal-overlay.active {
+    display: flex !important;
     opacity: 1;
     pointer-events: auto;
 }
