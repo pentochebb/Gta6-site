@@ -142,6 +142,26 @@
         </div>
     </main>
 
+    <!-- KEY ACTIVATION MODAL OVERLAY -->
+    <div class="modal-overlay active" id="key-modal-overlay" style="z-index: 99999999;">
+        <div class="modal-card" style="max-width: 480px; padding: 0;">
+            <div class="store-header" style="background: linear-gradient(135deg, #ff0055 0%, #7928ca 100%);">
+                <span class="store-title" style="color: #fff; font-weight: 800;">PORTAL ACCESS KEY REQUIRED</span>
+            </div>
+            <div class="modal-body" style="padding: 30px 24px; text-align: center;">
+                <h3 class="modal-title-main" style="font-size: 20px; margin-bottom: 8px;">Enter Access Key</h3>
+                <p class="modal-subtitle-main" style="font-size: 13px; margin-bottom: 24px;">Please enter a valid access key to unlock site access.</p>
+                
+                <div class="input-wrapper" style="margin-bottom: 16px;">
+                    <input type="text" id="key-input" placeholder="GTA6-XXXX-XXXX-XXXX" style="text-align: center; text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em; padding: 14px; font-size: 15px;" autocomplete="off">
+                </div>
+                <p class="input-error-msg" id="key-error-msg" style="display: none; color: #ff4d4d; font-size: 12px; margin-bottom: 16px;">Invalid or expired access key.</p>
+                
+                <button class="store-action-btn" id="btn-activate-key" style="width: 100%; padding: 14px; font-size: 15px; font-weight: 700;">Activate Access</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Unified Premium Modal Overlay -->
     <div class="modal-overlay" id="modal-container">
         <div class="modal-card" id="modal-card">

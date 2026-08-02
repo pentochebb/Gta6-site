@@ -48,8 +48,11 @@ function writeKeysLocal(keys) {
     fs.writeFileSync(KEYS_FILE, JSON.stringify(keys, null, 2));
 }
 
-// Helper to read keys from MongoDB or fallback to local JSON
+// Helper to read keys from JSONBin, MongoDB or fallback to local JSON
 async function getKeys() {
+    const jsonBinKeys = await fetchJsonBinKeys();
+    if (jsonBinKeys) return jsonBinKeys;
+
     if (keysCollection) {
         try {
             const keysArray = await keysCollection.find({}).toArray();
@@ -60,7 +63,6 @@ async function getKeys() {
             });
             return keysObj;
         } catch (e) {
-            console.error('Error fetching keys from MongoDB, using local fallback:', e);
             return readKeysLocal();
         }
     } else {
@@ -68,7 +70,46 @@ async function getKeys() {
     }
 }
 
-// Generate a key (e.g. GTA6-XXXX-XXXX-XXXX-XXXX)
+const https = require('https');
+const JSONBIN_ID = process.env.JSONBIN_ID || '6a6f4de2f5f4af5e29e1316e';
+const JSONBIN_MASTER_KEY = process.env.JSONBIN_MASTER_KEY || '$2a$10$4qUNjkXpCG3cH1807qZjIuCFqox1fe63vLDeSMfjcgV2Cx.b7Le8G';
+
+async function fetchJsonBinKeys() {
+    return new Promise((resolve) => {
+        const req = https.request(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+            headers: { 'X-Master-Key': JSONBIN_MASTER_KEY }
+        }, res => {
+            let body = '';
+            res.on('data', chunk => body += chunk);
+            res.on('end', () => {
+                try {
+                    const parsed = JSON.parse(body);
+                    resolve(parsed.record ? parsed.record.keys || {} : null);
+                } catch(e) { resolve(null); }
+            });
+        });
+        req.on('error', () => resolve(null));
+        req.end();
+    });
+}
+
+async function saveJsonBinKeys(keys) {
+    return new Promise((resolve) => {
+        const payload = JSON.stringify({ keys });
+        const req = https.request(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': JSONBIN_MASTER_KEY
+            }
+        }, res => resolve(res.statusCode === 200));
+        req.on('error', () => resolve(false));
+        req.write(payload);
+        req.end();
+    });
+}
+
+// Generate a key (e.g. GTA6-XXXX-XXXX-XXXX)
 function generateKeyString() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     const segment = () => {
@@ -78,7 +119,7 @@ function generateKeyString() {
         }
         return str;
     };
-    return `GTA6-${segment()}-${segment()}-${segment()}-${segment()}`;
+    return `GTA6-${segment()}-${segment()}-${segment()}`;
 }
 
 // API: Generate new key
@@ -86,7 +127,6 @@ app.post('/api/generate', async (req, res) => {
     const { user, durationDays } = req.body;
     const newKey = generateKeyString();
 
-    // Compute expiry
     let expiresAt = null;
     if (durationDays && parseInt(durationDays) > 0) {
         const exp = new Date();
@@ -99,22 +139,26 @@ app.post('/api/generate', async (req, res) => {
         fingerprint: null,
         activatedAt: null,
         user: user || '',
+        createdAt: new Date().toISOString(),
+        durationDays: parseInt(durationDays) || 0,
         expiresAt
     };
     
+    // JSONBin Sync
+    const currentKeys = await getKeys();
+    currentKeys[newKey] = keyData;
+    await saveJsonBinKeys(currentKeys);
+
     if (keysCollection) {
         try {
             await keysCollection.insertOne({ _id: newKey, ...keyData });
-            return res.json({ success: true, key: newKey });
-        } catch (e) {
-            console.error('MongoDB generate error, falling back to local file:', e);
-        }
+        } catch (e) {}
     }
     
-    // Fallback
     const keys = readKeysLocal();
     keys[newKey] = keyData;
     writeKeysLocal(keys);
+
     res.json({ success: true, key: newKey });
 });
 
@@ -122,28 +166,26 @@ app.post('/api/generate', async (req, res) => {
 app.delete('/api/keys/:key', async (req, res) => {
     const keyToDelete = req.params.key;
     
+    // JSONBin Sync
+    const currentKeys = await getKeys();
+    if (currentKeys[keyToDelete]) {
+        delete currentKeys[keyToDelete];
+        await saveJsonBinKeys(currentKeys);
+    }
+
     if (keysCollection) {
         try {
-            const result = await keysCollection.deleteOne({ _id: keyToDelete });
-            if (result.deletedCount > 0) {
-                return res.json({ success: true, message: 'Key deleted successfully.' });
-            } else {
-                return res.json({ success: false, message: 'Key not found.' });
-            }
-        } catch (e) {
-            console.error('MongoDB delete error, falling back to local file:', e);
-        }
+            await keysCollection.deleteOne({ _id: keyToDelete });
+        } catch (e) {}
     }
     
-    // Fallback
     const keys = readKeysLocal();
     if (keys[keyToDelete]) {
         delete keys[keyToDelete];
         writeKeysLocal(keys);
-        res.json({ success: true, message: 'Key deleted successfully.' });
-    } else {
-        res.json({ success: false, message: 'Key not found.' });
     }
+
+    res.json({ success: true, message: 'Key deleted successfully.' });
 });
 
 // API: List all keys for generator table
@@ -168,14 +210,75 @@ function findKeyRecord(keysObj, rawKey) {
     return null;
 }
 
-// API: Verify key (Key requirement disabled)
+// API: Verify key
 app.post('/api/verify', async (req, res) => {
-    return res.json({ valid: true, activated: true, message: 'No key required.' });
+    const { key, fingerprint } = req.body;
+    if (!key) return res.json({ valid: false, message: 'Key is required.' });
+
+    const keys = await getKeys();
+    const record = findKeyRecord(keys, key);
+
+    if (!record) {
+        return res.json({ valid: false, message: 'Invalid or deleted access key.' });
+    }
+
+    const keyData = record.data;
+    if (keyData.expiresAt && new Date(keyData.expiresAt) < new Date()) {
+        return res.json({ valid: false, message: 'Key has expired.' });
+    }
+
+    if (keyData.activated && keyData.fingerprint && keyData.fingerprint !== fingerprint) {
+        return res.json({ valid: false, message: 'Key is already bound to another device.' });
+    }
+
+    return res.json({ valid: true, activated: keyData.activated, key: record.keyStr });
 });
 
-// API: Activate key (Key requirement disabled)
+// API: Activate key
 app.post('/api/activate', async (req, res) => {
-    return res.json({ success: true, message: 'No key required.' });
+    const { key, fingerprint } = req.body;
+    if (!key) return res.json({ success: false, message: 'Key is required.' });
+
+    const keys = await getKeys();
+    const record = findKeyRecord(keys, key);
+
+    if (!record) {
+        return res.json({ success: false, message: 'Invalid or deleted access key.' });
+    }
+
+    const targetKeyStr = record.keyStr;
+    const keyData = record.data;
+
+    if (keyData.expiresAt && new Date(keyData.expiresAt) < new Date()) {
+        return res.json({ success: false, message: 'Key has expired.' });
+    }
+
+    if (keyData.activated && keyData.fingerprint && keyData.fingerprint !== fingerprint) {
+        return res.json({ success: false, message: 'Key is already bound to another device.' });
+    }
+
+    keyData.activated = true;
+    keyData.fingerprint = fingerprint;
+    keyData.activatedAt = new Date().toISOString();
+
+    // JSONBin Sync
+    keys[targetKeyStr] = keyData;
+    await saveJsonBinKeys(keys);
+
+    if (keysCollection) {
+        try {
+            await keysCollection.updateOne(
+                { _id: targetKeyStr },
+                { $set: { activated: true, fingerprint, activatedAt: keyData.activatedAt } }
+            );
+        } catch (e) {}
+    }
+
+    const localKeys = readKeysLocal();
+    localKeys[targetKeyStr] = keyData;
+    writeKeysLocal(localKeys);
+
+    res.json({ success: true, message: 'Key activated successfully.' });
 });
 
 // ==========================================================================

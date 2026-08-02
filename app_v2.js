@@ -25,6 +25,124 @@ document.addEventListener('DOMContentLoaded', () => {
     // Preorder counter
     const preorderCountEl = document.getElementById('preorder-count');
 
+    // ==========================================================================
+    // KEY ACTIVATION SYSTEM
+    // ==========================================================================
+    const keyModalOverlay = document.getElementById('key-modal-overlay');
+    const keyInput = document.getElementById('key-input');
+    const btnActivateKey = document.getElementById('btn-activate-key');
+    const keyErrorMsg = document.getElementById('key-error-msg');
+
+    let isKeyActivated = false;
+
+    function getDeviceFingerprint() {
+        return btoa(navigator.userAgent + screen.width + 'x' + screen.height).slice(0, 32);
+    }
+    const fingerprint = getDeviceFingerprint();
+
+    function hideKeyModal() {
+        if (keyModalOverlay) {
+            keyModalOverlay.classList.remove('active');
+            keyModalOverlay.style.display = 'none';
+            keyModalOverlay.style.pointerEvents = 'none';
+        }
+    }
+
+    function showKeyModal() {
+        if (keyModalOverlay) {
+            keyModalOverlay.classList.add('active');
+            keyModalOverlay.style.display = 'flex';
+            keyModalOverlay.style.pointerEvents = 'auto';
+        }
+    }
+
+    if (keyModalOverlay) {
+        showKeyModal();
+
+        const storedKey = localStorage.getItem('gta6_activated_key');
+        if (storedKey) {
+            fetch('/api/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ key: storedKey, fingerprint })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.valid) {
+                    isKeyActivated = true;
+                    hideKeyModal();
+                } else {
+                    localStorage.removeItem('gta6_activated_key');
+                    isKeyActivated = false;
+                    showKeyModal();
+                    if (keyErrorMsg) {
+                        keyErrorMsg.textContent = data.message || 'Your key has expired or been revoked.';
+                        keyErrorMsg.style.display = 'block';
+                    }
+                }
+            })
+            .catch(() => {
+                isKeyActivated = true;
+                hideKeyModal();
+            });
+        }
+
+        if (btnActivateKey) {
+            btnActivateKey.addEventListener('click', () => {
+                const rawKey = keyInput ? keyInput.value.trim().toUpperCase().replace(/\s+/g, '') : '';
+                if (!rawKey) {
+                    if (keyErrorMsg) {
+                        keyErrorMsg.textContent = 'Please enter an access key.';
+                        keyErrorMsg.style.display = 'block';
+                    }
+                    return;
+                }
+
+                btnActivateKey.disabled = true;
+                btnActivateKey.textContent = 'Verifying key...';
+                if (keyErrorMsg) keyErrorMsg.style.display = 'none';
+
+                fetch('/api/activate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ key: rawKey, fingerprint })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    btnActivateKey.disabled = false;
+                    btnActivateKey.textContent = 'Activate Access';
+
+                    if (data.success) {
+                        localStorage.setItem('gta6_activated_key', rawKey);
+                        isKeyActivated = true;
+                        hideKeyModal();
+                    } else {
+                        if (keyErrorMsg) {
+                            keyErrorMsg.textContent = data.message || 'Invalid or expired access key.';
+                            keyErrorMsg.style.display = 'block';
+                        }
+                    }
+                })
+                .catch(() => {
+                    btnActivateKey.disabled = false;
+                    btnActivateKey.textContent = 'Activate Access';
+                    if (keyErrorMsg) {
+                        keyErrorMsg.textContent = 'Connection error. Please try again.';
+                        keyErrorMsg.style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        if (keyInput) {
+            keyInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && btnActivateKey) {
+                    btnActivateKey.click();
+                }
+            });
+        }
+    }
+
 
     const modalContainer = document.getElementById('modal-container');
     const modalCard = document.getElementById('modal-card');
