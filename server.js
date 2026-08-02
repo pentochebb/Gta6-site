@@ -168,69 +168,14 @@ function findKeyRecord(keysObj, rawKey) {
     return null;
 }
 
-// API: Verify key
+// API: Verify key (Key requirement disabled)
 app.post('/api/verify', async (req, res) => {
-    const { key, fingerprint } = req.body;
-    if (!key) return res.json({ valid: false, message: 'Key is required.' });
-
-    const keys = await getKeys();
-    const record = findKeyRecord(keys, key);
-
-    if (!record) {
-        return res.json({ valid: false, message: 'Invalid access key.' });
-    }
-
-    const keyData = record.data;
-    if (keyData.expiresAt && new Date(keyData.expiresAt) < new Date()) {
-        return res.json({ valid: false, message: 'Key has expired.' });
-    }
-
-    if (keyData.activated && keyData.fingerprint && keyData.fingerprint !== fingerprint) {
-        return res.json({ valid: false, message: 'Key is already bound to another device.' });
-    }
-
-    return res.json({ valid: true, activated: keyData.activated });
+    return res.json({ valid: true, activated: true, message: 'No key required.' });
 });
 
-// API: Activate key
+// API: Activate key (Key requirement disabled)
 app.post('/api/activate', async (req, res) => {
-    const { key, fingerprint } = req.body;
-    if (!key) return res.json({ success: false, message: 'Key is required.' });
-
-    const keys = await getKeys();
-    const record = findKeyRecord(keys, key);
-
-    if (!record) {
-        return res.json({ success: false, message: 'Invalid access key.' });
-    }
-
-    const targetKeyStr = record.keyStr;
-    const keyData = record.data;
-
-    if (keyData.activated && keyData.fingerprint && keyData.fingerprint !== fingerprint) {
-        return res.json({ success: false, message: 'Key is already bound to another device.' });
-    }
-
-    keyData.activated = true;
-    keyData.fingerprint = fingerprint;
-    keyData.activatedAt = new Date().toISOString();
-
-    if (keysCollection) {
-        try {
-            await keysCollection.updateOne(
-                { _id: targetKeyStr },
-                { $set: { activated: true, fingerprint, activatedAt: keyData.activatedAt } }
-            );
-        } catch (e) {
-            console.error('MongoDB update error:', e);
-        }
-    } else {
-        const localKeys = readKeysLocal();
-        localKeys[targetKeyStr] = keyData;
-        writeKeysLocal(localKeys);
-    }
-
-    res.json({ success: true, message: 'Key activated successfully.' });
+    return res.json({ success: true, message: 'No key required.' });
 });
 
 // ==========================================================================

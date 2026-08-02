@@ -346,39 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openModal(platform) {
-        const storedKey = localStorage.getItem('gta6_activated_key');
-        if (!storedKey) {
-            isKeyActivated = false;
-            pendingPlatformToOpen = platform;
-            showKeyModal();
-            return;
-        }
-
-        fetch('/api/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ key: storedKey, fingerprint })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (!data || !data.valid) {
-                localStorage.removeItem('gta6_activated_key');
-                isKeyActivated = false;
-                pendingPlatformToOpen = platform;
-                if (keyErrorMsg) {
-                    keyErrorMsg.textContent = 'Your access key has been deleted or revoked. Please enter a valid key.';
-                    keyErrorMsg.style.display = 'block';
-                }
-                showKeyModal();
-            } else {
-                isKeyActivated = true;
-                hideKeyModal();
-                proceedOpenModal(platform);
-            }
-        })
-        .catch(() => {
-            proceedOpenModal(platform);
-        });
+        proceedOpenModal(platform);
     }
 
     function closeModal() {
