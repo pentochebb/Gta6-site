@@ -592,9 +592,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Stage 4: Done -> Close Modal
-    btnSuccessDone.addEventListener('click', () => {
-        closeModal();
-    });
+    if (btnSuccessDone) {
+        btnSuccessDone.addEventListener('click', () => {
+            closeModal();
+        });
+    }
 
     // ==========================================================================
     // STAGE 3 PAYMENT RADIO SELECTION & PAYPAL POPUP FLOW
