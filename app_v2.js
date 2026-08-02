@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const preorderCountEl = document.getElementById('preorder-count');
 
 
+    const modalContainer = document.getElementById('modal-container');
     const modalCard = document.getElementById('modal-card');
     const closeBtns = document.querySelectorAll('.close-modal-btn');
 
@@ -168,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         stageEl.classList.add('active');
     }
 
-    function proceedOpenModal(platform) {
+    function openModal(platform) {
         currentPlatform = platform;
         enteredUsername = '';
         if (gamertagInput) gamertagInput.value = '';
@@ -192,61 +193,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Apply platform theme to card
-        modalCard.className = 'modal-card'; // clear previous theme
-        if (platform === 'xbox') {
-            modalCard.classList.add('theme-xbox');
-            
-            // Set Stage 0 Text
-            selectStoreTitle.textContent = 'MICROSOFT STORE · SELECT EDITION';
-
-            // Set Stage 1 Text
-            linkStoreTitle.textContent = 'MICROSOFT STORE · LINK ACCOUNT';
-            linkInputHeading.textContent = 'Enter your Xbox Gamertag';
-            gamertagInput.placeholder = 'Johnsonxbox892 Xbox';
-            
-            // Set Stage 2 Text
-            confirmStoreTitle.textContent = 'MICROSOFT STORE · ACCOUNT VERIFICATION';
-            confirmAvatarImg.src = 'assets/avatar_xbox.png';
-            confirmPlatformText.textContent = 'Xbox Live Network';
-            
-            // Set Stage 3 Text
-            checkoutStoreTitle.textContent = 'Microsoft Store · Checkout';
-            checkoutPlatformBadge.textContent = 'XBOX SERIES X|S';
-            checkoutRefCode.textContent = `XBL-${generateRandomCode()}`;
-            
-        } else {
-            modalCard.classList.add('theme-psn');
-            
-            // Set Stage 0 Text
-            selectStoreTitle.textContent = 'PLAYSTATION STORE · SELECT EDITION';
-
-            // Set Stage 1 Text
-            linkStoreTitle.textContent = 'PLAYSTATION NETWORK · LINK ACCOUNT';
-            linkInputHeading.textContent = 'Enter your PSN Online ID';
-            gamertagInput.placeholder = 'Johnsonpsn892';
-            
-            // Set Stage 2 Text
-            confirmStoreTitle.textContent = 'PLAYSTATION NETWORK · ACCOUNT VERIFICATION';
-            confirmAvatarImg.src = 'assets/avatar_psn.png';
-            confirmPlatformText.textContent = 'PlayStation Network';
-            
-            // Set Stage 3 Text
-            checkoutStoreTitle.textContent = 'PlayStation Store · Checkout';
-            checkoutPlatformBadge.textContent = 'PLAYSTATION 5';
-            checkoutRefCode.textContent = `PSN-${generateRandomCode()}`;
+        if (modalCard) {
+            modalCard.className = 'modal-card'; // clear previous theme
+            if (platform === 'xbox') {
+                modalCard.classList.add('theme-xbox');
+                if (selectStoreTitle) selectStoreTitle.textContent = 'MICROSOFT STORE · SELECT EDITION';
+                if (linkStoreTitle) linkStoreTitle.textContent = 'MICROSOFT STORE · LINK ACCOUNT';
+                if (linkInputHeading) linkInputHeading.textContent = 'Enter your Xbox Gamertag';
+                if (gamertagInput) gamertagInput.placeholder = 'Johnsonxbox892 Xbox';
+                if (confirmStoreTitle) confirmStoreTitle.textContent = 'MICROSOFT STORE · ACCOUNT VERIFICATION';
+                if (confirmAvatarImg) confirmAvatarImg.src = 'assets/avatar_xbox.png';
+                if (confirmPlatformText) confirmPlatformText.textContent = 'Xbox Live Network';
+                if (checkoutStoreTitle) checkoutStoreTitle.textContent = 'Microsoft Store · Checkout';
+                if (checkoutPlatformBadge) checkoutPlatformBadge.textContent = 'XBOX SERIES X|S';
+                if (checkoutRefCode) checkoutRefCode.textContent = `XBL-${generateRandomCode()}`;
+            } else {
+                modalCard.classList.add('theme-psn');
+                if (selectStoreTitle) selectStoreTitle.textContent = 'PLAYSTATION STORE · SELECT EDITION';
+                if (linkStoreTitle) linkStoreTitle.textContent = 'PLAYSTATION NETWORK · LINK ACCOUNT';
+                if (linkInputHeading) linkInputHeading.textContent = 'Enter your PSN Online ID';
+                if (gamertagInput) gamertagInput.placeholder = 'Johnsonpsn892';
+                if (confirmStoreTitle) confirmStoreTitle.textContent = 'PLAYSTATION NETWORK · ACCOUNT VERIFICATION';
+                if (confirmAvatarImg) confirmAvatarImg.src = 'assets/avatar_psn.png';
+                if (confirmPlatformText) confirmPlatformText.textContent = 'PlayStation Network';
+                if (checkoutStoreTitle) checkoutStoreTitle.textContent = 'PlayStation Store · Checkout';
+                if (checkoutPlatformBadge) checkoutPlatformBadge.textContent = 'PLAYSTATION 5';
+                if (checkoutRefCode) checkoutRefCode.textContent = `PSN-${generateRandomCode()}`;
+            }
         }
 
         // Set to stage 0 (Select Edition) and open modal
-        setStage(stageSelectEdition);
-        modalContainer.classList.add('active');
-    }
-
-    function openModal(platform) {
-        proceedOpenModal(platform);
+        if (stageSelectEdition) setStage(stageSelectEdition);
+        if (modalContainer) modalContainer.classList.add('active');
     }
 
     function closeModal() {
-        modalContainer.classList.remove('active');
+        if (modalContainer) modalContainer.classList.remove('active');
     }
 
     function generateRandomCode() {
