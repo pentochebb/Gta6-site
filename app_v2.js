@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (btnActivateKey) {
             btnActivateKey.addEventListener('click', () => {
-                const rawKey = keyInput.value.trim().toUpperCase();
+                const rawKey = keyInput.value.trim().toUpperCase().replace(/\s+/g, '');
                 if (!rawKey) {
                     keyErrorMsg.textContent = 'Please enter an access key.';
                     keyErrorMsg.style.display = 'block';
