@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTA VI - License Key Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0b0e;
+            --card-bg: #14141a;
+            --accent-pink: #ff007f;
+            --accent-orange: #ffaa00;
+            --text-color: #ffffff;
+            --text-muted: #8e8e9f;
+            --border-color: #24242e;
+            --success-color: #00e676;
+            --danger-color: #ff1744;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .control-panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .btn-generate {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-orange) 100%);
+            border: none;
+            color: #000;
+            padding: 16px 36px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.4);
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 127, 0.6);
+        }
+
+        .btn-generate:active {
+            transform: translateY(1px);
+        }
+
+        .key-display {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .key-text {
+            font-family: monospace;
+            font-size: 1.4rem;
+            color: var(--accent-orange);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .btn-copy {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .keys-table-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow-x: auto;
+        }
+
+        h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        td {
+            font-size: 0.95rem;
+        }
+
+        .td-key {
+            font-family: monospace;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-unused {
+            background: rgba(0, 230, 118, 0.15);
+            color: var(--success-color);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+        }
+
+        .status-activated {
+            background: rgba(255, 23, 68, 0.15);
+            color: var(--danger-color);
+            border: 1px solid rgba(255, 23, 68, 0.3);
+        }
+
+        .td-fingerprint {
+            color: var(--text-muted);
+            max-width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.85rem;
+        }
+
+        .btn-table-copy {
+            background: transparent;
+            color: var(--accent-pink);
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .btn-table-copy:hover {
+            color: var(--accent-orange);
+        }
+
+        .generate-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .input-user {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-size: 1rem;
+            width: 280px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-user:focus {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
+        }
+
+        .btn-table-delete {
+            background: transparent;
+            color: var(--danger-color);
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: underline;
+            margin-left: 12px;
+        }
+
+        .btn-table-delete:hover {
+            color: #ff5252;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GTA VI Access Panel</h1>
+            <p class="subtitle">Generate and manage activation keys for local playtesting</p>
+        </header>
+
+        <section class="control-panel">
+            <div class="generate-controls">
+                <input type="text" id="user-input" class="input-user" placeholder="User / Note (Optionnel)">
+                <select id="duration-select" class="input-user" style="width:180px; cursor:pointer;">
+                    <option value="0">&#x221E; Permanent</option>
+                    <option value="1">1 jour</option>
+                    <option value="3">3 jours</option>
+                    <option value="7">7 jours</option>
+                    <option value="30">30 jours</option>
+                    <option value="365">1 an</option>
+                </select>
+                <button class="btn-generate" id="btn-generate">Generate License Key</button>
+            </div>
+            <div class="key-display" id="key-display">
+                <span class="key-text" id="key-text">GTA6-XXXX-XXXX-XXXX-XXXX</span>
+                <button class="btn-copy" id="btn-copy">Copy Key</button>
+            </div>
+        </section>
+
+        <section class="keys-table-container">
+            <h2>Active Keys Database</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Access Key</th>
+                        <th>User / Note</th>
+                        <th>Status</th>
+                        <th>Expiration</th>
+                        <th>Device Fingerprint</th>
+                        <th>Activated At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="keys-tbody">
+                    <!-- Dynamic keys list -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        const btnGenerate = document.getElementById('btn-generate');
+        const keyDisplay = document.getElementById('key-display');
+        const keyText = document.getElementById('key-text');
+        const btnCopy = document.getElementById('btn-copy');
+        const keysTbody = document.getElementById('keys-tbody');
+
+        // Fetch keys and render table
+        async function loadKeys() {
+            try {
+                const res = await fetch('/api/keys');
+                const keys = await res.json();
+                
+                keysTbody.innerHTML = '';
+                
+                const entries = Object.entries(keys);
+                if (entries.length === 0) {
+                    keysTbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">No keys generated yet.</td></tr>`;
+                    return;
+                }
+
+                const now = new Date();
+
+                // Render latest keys first
+                entries.reverse().forEach(([key, data]) => {
+                    const row = document.createElement('tr');
+                    
+                    // Check expiry
+                    let expiryText = '∞ Permanent';
+                    let expiryStyle = 'color: var(--text-muted);';
+                    let isExpired = false;
+                    if (data.expiresAt) {
+                        const expDate = new Date(data.expiresAt);
+                        isExpired = expDate < now;
+                        expiryText = expDate.toLocaleDateString('fr-FR', { year: 'numeric', month: 'short', day: 'numeric' });
+                        expiryStyle = isExpired
+                            ? 'color: #ff4444; font-weight: 700;'
+                            : 'color: #44ff88; font-weight: 600;';
+                        if (isExpired) expiryText = '⛔ ' + expiryText;
+                    }
+
+                    // Status
+                    let statusClass = data.activated ? 'status-activated' : 'status-unused';
+                    let statusText = data.activated ? 'Activated' : 'Unused';
+                    if (isExpired) { statusClass = 'status-unused'; statusText = 'Expired'; }
+
+                    const fingerprint = data.fingerprint ? data.fingerprint : '—';
+                    const activatedAt = data.activatedAt ? new Date(data.activatedAt).toLocaleString() : '—';
+                    const user = data.user ? data.user : '—';
+
+                    if (isExpired) row.style.opacity = '0.6';
+
+                    row.innerHTML = `
+                        <td class="td-key">${key}</td>
+                        <td style="color: var(--accent-orange); font-weight: 500;">${user}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td style="${expiryStyle}">${expiryText}</td>
+                        <td class="td-fingerprint" title="${fingerprint}">${fingerprint}</td>
+                        <td>${activatedAt}</td>
+                        <td>
+                            <button class="btn-table-copy" onclick="copyToClipboard('${key}')">Copy</button>
+                            <button class="btn-table-delete" onclick="deleteKey('${key}')">Delete</button>
+                        </td>
+                    `;
+                    keysTbody.appendChild(row);
+                });
+            } catch (e) {
+                console.error("Failed to load keys: ", e);
+            }
+        }
+
+        // Generate click
+        btnGenerate.addEventListener('click', async () => {
+            const userInput = document.getElementById('user-input');
+            const durationSelect = document.getElementById('duration-select');
+            const userVal = userInput.value.trim();
+            const durationDays = parseInt(durationSelect.value);
+            try {
+                const res = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user: userVal, durationDays })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    keyText.innerText = data.key;
+                    keyDisplay.style.display = 'flex';
+                    userInput.value = ''; // clear input
+                    durationSelect.value = '0'; // reset to Permanent
+                    loadKeys();
+                }
+            } catch (e) {
+                alert('Server error generating key.');
+            }
+        });
+
+        // Delete key
+        async function deleteKey(key) {
+            if (confirm(`Supprimer la clé ${key} ?`)) {
+                try {
+                    const res = await fetch(`/api/keys/${key}`, { method: 'DELETE' });
+                    const data = await res.json();
+                    if (data.success) {
+                        loadKeys();
+                    } else {
+                        alert(data.message || 'Failed to delete key.');
+                    }
+                } catch (e) {
+                    alert('Error deleting key.');
+                }
+            }
+        }
+
+        // Copy click
+        btnCopy.addEventListener('click', () => {
+            copyToClipboard(keyText.innerText);
+            btnCopy.innerText = 'Copied!';
+            setTimeout(() => { btnCopy.innerText = 'Copy Key'; }, 2000);
+        });
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+        }
+
+        // Initial Load
+        loadKeys();
+    </script>
+</body>
+</html>
+

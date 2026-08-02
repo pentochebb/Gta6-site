@@ -1,0 +1,16 @@
+{
+  "name": "gta6-preorder-site-backend",
+  "version": "1.0.0",
+  "description": "GTA 6 Pre-order site with secure local license key protection",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2",
+    "mongodb": "^7.4.0"
+  }
+}

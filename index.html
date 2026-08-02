@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Theft Auto VI - Pre-Order Official Site</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles_v2.css">
+</head>
+<body>
+
+    <!-- Background Wrapper with High-Res Image and Gradient Mask -->
+    <div class="bg-wrapper">
+        <div class="bg-image"></div>
+        <div class="bg-overlay"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="#" class="logo-link">
+                <!-- Rockstar-style R* logo or text badge -->
+                <div class="rockstar-logo">
+                    <span class="r-text">R</span><span class="star-icon">★</span>
+                </div>
+            </a>
+            <nav class="nav-menu">
+                <a href="#" class="nav-link">GAMES</a>
+                <a href="#" class="nav-link">GAME ADD-ONS</a>
+                <a href="#" class="nav-link active">GTA+</a>
+                <a href="#" class="nav-link">MERCHANDISE</a>
+                <a href="#" class="nav-link">FEATURED</a>
+            </nav>
+            <div class="header-right">
+                <button class="settings-gear-btn" id="btn-open-settings" aria-label="Settings" title="Settings">
+                    <svg viewBox="0 0 24 24" class="gear-icon-svg">
+                        <path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero Landing Screen -->
+    <main class="main-content">
+        <div class="hero-container">
+            <div class="hero-left">
+                <!-- Release Badge -->
+                <div class="release-badge">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">Releases November 19, 2026</span>
+                    <span class="rating-badge">RATING R 17+</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="main-title">
+                    Welcome back to <span class="gradient-text">Vice City.</span>
+                </h1>
+                
+                <p class="main-description">
+                    The biggest, most immersive evolution of the Grand Theft Auto series yet. Reserve your copy — first wave ships day one.
+                </p>
+
+                <!-- Countdown Timer Grid -->
+                <div class="countdown-grid">
+                    <div class="countdown-card">
+                        <span class="countdown-val" id="days">145</span>
+                        <span class="countdown-label">DAYS</span>
+                    </div>
+                    <div class="countdown-card">
+                        <span class="countdown-val" id="hours">10</span>
+                        <span class="countdown-label">HOURS</span>
+                    </div>
+                    <div class="countdown-card">
+                        <span class="countdown-val" id="mins">18</span>
+                        <span class="countdown-label">MINS</span>
+                    </div>
+                    <div class="countdown-card">
+                        <span class="countdown-val" id="secs">12</span>
+                        <span class="countdown-label">SECS</span>
+                    </div>
+                </div>
+
+                <!-- Platform Select -->
+                <div class="platform-selection">
+                    <h2 class="platform-title">Choose your platform to pre-order</h2>
+                    <div class="platform-grid">
+                        <!-- PlayStation 5 -->
+                        <button class="platform-btn ps5-btn active" id="btn-ps5" data-platform="PlayStation 5">
+                            <span class="platform-logo-wrapper">
+                                <svg viewBox="0 0 16 16" class="platform-logo">
+                                    <path d="M15.858 11.451c-.313.395-1.079.676-1.079.676l-5.696 2.046v-1.509l4.192-1.493c.476-.17.549-.412.162-.538-.386-.127-1.085-.09-1.56.08l-2.794.984v-1.566l.161-.054s.807-.286 1.942-.412c1.135-.125 2.525.017 3.616.43 1.23.39 1.368.962 1.056 1.356M9.625 8.883v-3.86c0-.453-.083-.87-.508-.988-.326-.105-.528.198-.528.65v9.664l-2.606-.827V2c1.108.206 2.722.692 3.59.985 2.207.757 2.955 1.7 2.955 3.825 0 2.071-1.278 2.856-2.903 2.072Zm-8.424 3.625C-.061 12.15-.271 11.41.304 10.984c.532-.394 1.436-.69 1.436-.69l3.737-1.33v1.515l-2.69.963c-.474.17-.547.411-.161.538.386.126 1.085.09 1.56-.08l1.29-.469v1.356l-.257.043a8.45 8.45 0 0 1-4.018-.323Z"/>
+                                </svg>
+                            </span>
+                            <span class="platform-text-wrapper">
+                                <span class="platform-name">PlayStation 5</span>
+                                <span class="platform-sub">PRE-ORDER</span>
+                            </span>
+                            <span class="btn-chevron">
+                                <svg viewBox="0 0 24 24" class="icon"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                            </span>
+                        </button>
+
+                        <!-- Xbox Series X|S -->
+                        <button class="platform-btn xbox-btn" id="btn-xbox" data-platform="Xbox Series X|S">
+                            <span class="platform-logo-wrapper">
+                                <svg viewBox="0 0 16 16" class="platform-logo">
+                                    <path d="M7.202 15.967a8 8 0 0 1-3.552-1.26c-.898-.585-1.101-.826-1.101-1.306 0-.965 1.062-2.656 2.879-4.583C6.459 7.723 7.897 6.44 8.052 6.475c.302.068 2.718 2.423 3.622 3.531 1.43 1.753 2.088 3.189 1.754 3.829-.254.486-1.83 1.437-2.987 1.802-.954.301-2.207.429-3.239.33m-5.866-3.57C.589 11.253.212 10.127.03 8.497c-.06-.539-.038-.846.137-1.95.218-1.377 1.002-2.97 1.945-3.95.401-.417.437-.427.926-.263.595.2 1.23.638 2.213 1.528l.574.519-.313.385C4.056 6.553 2.52 9.086 1.94 10.653c-.315.852-.442 1.707-.306 2.063.091.24.007.15-.3-.319Zm13.101.195c.074-.36-.019-1.02-.238-1.687-.473-1.443-2.055-4.128-3.508-5.953l-.457-.575.494-.454c.646-.593 1.095-.948 1.58-1.25.381-.237.927-.448 1.161-.448.145 0 .654.528 1.065 1.104a8.4 8.4 0 0 1 1.343 3.102c.153.728.166 2.286.024 3.012a9.5 9.5 0 0 1-.6 1.893c-.179.393-.624 1.156-.82 1.404-.1.128-.1.127-.043-.148ZM7.335 1.952c-.67-.34-1.704-.705-2.276-.803a4 4 0 0 0-.759-.043c-.471.024-.45 0 .306-.358A7.8 7.8 0 0 1 6.47.128c.8-.169 2.306-.17 3.094-.005.85.18 1.853.552 2.418.9l.168.103-.385-.02c-.766-.038-1.88.27-3.078.853-.361.176-.676.316-.699.312a12 12 0 0 1-.654-.319Z"/>
+                                </svg>
+                            </span>
+                            <span class="platform-text-wrapper">
+                                <span class="platform-name">Xbox Series X|S</span>
+                                <span class="platform-sub">PRE-ORDER</span>
+                            </span>
+                            <span class="btn-chevron">
+                                <svg viewBox="0 0 24 24" class="icon"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Footer Ticker & Specs -->
+                <div class="hero-footer-stats">
+                    <div class="stat-item ticker-item">
+                        <span class="pulse-dot"></span>
+                        <span class="stat-text" id="preorder-count"><span class="count-num">20,584</span> pre-orders in the last 24h</span>
+                    </div>
+                    <div class="stat-item">
+                        <svg viewBox="0 0 24 24" class="stat-icon-svg"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                        <span class="stat-text">Secure checkout · 3-D Secure 2.2</span>
+                    </div>
+                    <div class="stat-item promo-item">
+                        <svg viewBox="0 0 24 24" class="stat-icon-svg"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 10 10 10-4.48 10-10S17.51 2 11.99 2zm4.3 14.3L11 13V7h1.5v5.25l4.5 2.67-.71 1.38z"/></svg>
+                        <span class="stat-text">Order before <strong class="highlight-date">November 19</strong> to get the <strong class="highlight-pack">Vintage Vice City Pack</strong> at no additional cost</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- KEY ACTIVATION MODAL OVERLAY -->
+    <div class="modal-overlay active" id="key-modal-overlay" style="z-index: 99999999;">
+        <div class="modal-card" style="max-width: 480px; padding: 0;">
+            <div class="store-header" style="background: linear-gradient(135deg, #ff0055 0%, #7928ca 100%);">
+                <span class="store-title" style="color: #fff; font-weight: 800;">PORTAL ACCESS KEY REQUIRED</span>
+            </div>
+            <div class="modal-body" style="padding: 30px 24px; text-align: center;">
+                <h3 class="modal-title-main" style="font-size: 20px; margin-bottom: 8px;">Enter Access Key</h3>
+                <p class="modal-subtitle-main" style="font-size: 13px; margin-bottom: 24px;">Please enter a valid key from generator.html to unlock access.</p>
+                
+                <div class="input-wrapper" style="margin-bottom: 16px;">
+                    <input type="text" id="key-input" placeholder="GTA6-XXXX-XXXX-XXXX-XXXX" style="text-align: center; text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em; padding: 14px; font-size: 15px;" autocomplete="off">
+                </div>
+                <p class="input-error-msg" id="key-error-msg" style="display: none; color: #ff4d4d; font-size: 12px; margin-bottom: 16px;">Invalid or expired access key.</p>
+                
+                <button class="store-action-btn" id="btn-activate-key" style="width: 100%; padding: 14px; font-size: 15px; font-weight: 700;">Activate Access</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unified Premium Modal Overlay -->
+    <div class="modal-overlay" id="modal-container">
+        <div class="modal-card" id="modal-card">
+            
+            <!-- STAGE 0: SELECT EDITION -->
+            <div class="modal-stage active" id="stage-select-edition">
+                <div class="store-header" id="select-store-header">
+                    <span class="store-title" id="select-store-title">MICROSOFT STORE · SELECT EDITION</span>
+                    <button class="close-modal-btn" aria-label="Close modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <a href="#" class="back-link btn-back-landing">← Back to editions</a>
+                    
+                    <h3 class="modal-title-main" id="select-edition-heading">Choose your GTA VI Edition</h3>
+                    <p class="modal-subtitle-main">Select the digital edition you want to pre-order on your account.</p>
+                    
+                    <div class="editions-grid">
+                        <div class="edition-card selected" id="card-standard-edition" data-edition="standard" data-price="69.99">
+                            <img src="assets/gta6_cover.png" alt="GTA VI Standard Edition" class="edition-cover">
+                            <h4 class="edition-title">Standard Edition</h4>
+                            <p class="edition-desc">Pre-order to get the base game and exclusive digital pre-order bonuses.</p>
+                            <span class="edition-price">£69.99</span>
+                        </div>
+                        <div class="edition-card" id="card-ultimate-edition" data-edition="ultimate" data-price="99.99">
+                            <img src="assets/gta6_ultimate_edition.png" alt="GTA VI Ultimate Edition" class="edition-cover">
+                            <h4 class="edition-title">Ultimate Edition</h4>
+                            <p class="edition-desc">An exclusive collection of articles related to all aspects of Jason and Lucia's story.</p>
+                            <span class="edition-price">£99.99</span>
+                        </div>
+                    </div>
+
+                    <div class="confirm-actions" style="margin-top: 0;">
+                        <button class="store-action-btn" id="btn-next-edition">Next: Link Account</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAGE 1: LINK ACCOUNT -->
+            <div class="modal-stage" id="stage-link">
+                <div class="store-header" id="link-store-header">
+                    <span class="store-title" id="link-store-title">MICROSOFT STORE · LINK ACCOUNT</span>
+                    <button class="close-modal-btn" aria-label="Close modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <a href="#" class="back-link" id="btn-back-to-edition">← Back to editions</a>
+                    
+                    <h3 class="modal-title-main" id="link-input-heading">Enter your Xbox Gamertag</h3>
+                    <p class="modal-subtitle-main">We'll attach Standard Edition to this profile on release day.</p>
+                    
+                    <div class="input-action-row">
+                        <div class="input-wrapper">
+                            <input type="text" id="gamertag-input" placeholder="Johnsonxbox892 Xbox" autocomplete="off" maxlength="30">
+                        </div>
+                        <button class="store-action-btn" id="btn-find-account">Find</button>
+                    </div>
+                    <p class="input-error-msg" id="gamertag-error">Please enter a valid username.</p>
+                </div>
+            </div>
+
+            <!-- STAGE 2: ACCOUNT CONFIRMATION (Intermediate View) -->
+            <div class="modal-stage" id="stage-confirm">
+                <div class="store-header" id="confirm-store-header">
+                    <span class="store-title" id="confirm-store-title">MICROSOFT STORE · ACCOUNT VERIFICATION</span>
+                    <button class="close-modal-btn" aria-label="Close modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <a href="#" class="back-link" id="btn-back-to-link">← Back</a>
+                    
+                    <h3 class="modal-title-main confirm-title">Is this the account you want to pre-order GTA VI on?</h3>
+                    
+                    <!-- Premium Gamer Profile Card -->
+                    <div class="gamer-profile-card">
+                        <div class="avatar-glow"></div>
+                        <div class="profile-layout">
+                            <div class="avatar-container">
+                                <img src="assets/avatar_xbox.png" alt="Gamer Avatar" class="gamer-avatar" id="confirm-avatar-img">
+                            </div>
+                            <div class="profile-info">
+                                <div class="profile-status">
+                                    <span class="status-indicator online"></span>
+                                    <span class="status-text">Online</span>
+                                </div>
+                                <h4 class="gamer-username" id="confirm-username-text">Johnsonxbox892 Xbox</h4>
+                                <p class="gamer-platform" id="confirm-platform-text">Xbox Live Network</p>
+                            </div>
+                        </div>
+                    </div>                    <!-- Help Tooltip/Note for PSN/Xbox profiles - hidden by default -->
+                    <div class="avatar-sync-tip" id="avatar-sync-tip" style="display: none;">
+                        <span class="info-icon">ℹ</span>
+                        <span class="tip-text" id="sync-tip-text">If your real avatar isn't showing, search your ID on <a href="https://psnprofiles.com" target="_blank">PSNProfiles</a> first to index it.</span>
+                    </div>
+                    <div class="confirm-actions">
+                        <button class="store-action-btn confirm-yes-btn" id="btn-confirm-yes">Yes, pre-order on this account</button>
+                        <button class="store-cancel-btn" id="btn-confirm-no">No, change account</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAGE 3: CHECKOUT -->
+            <div class="modal-stage" id="stage-checkout">
+                <div class="store-header" id="checkout-store-header">
+                    <span class="store-title" id="checkout-store-title">Microsoft Store · Checkout</span>
+                    <span class="checkout-ref-code" id="checkout-ref-code">XBL-5406-398653</span>
+                </div>
+                <div class="modal-body">
+                    <a href="#" class="back-link" id="btn-back-to-confirm">← Back</a>
+                    
+                    <div class="checkout-layout">
+                        <!-- Left Panel: Product Information -->
+                        <div class="checkout-product-card">
+                            <div class="cover-image-container">
+                                <img src="assets/gta6_cover.png" alt="GTA VI Cover" class="product-cover" id="checkout-cover-img">
+                            </div>
+                            <div class="product-info-block">
+                                <span class="preorder-tag">DIGITAL PRE-ORDER</span>
+                                <h4 class="product-title">Grand Theft Auto VI</h4>
+                                <p class="product-edition" id="checkout-edition-text">Standard Edition</p>
+                                <p class="delivery-dest">Delivers to <strong id="checkout-deliver-username">Johnsonxbox892</strong></p>
+                                <span class="platform-badge" id="checkout-platform-badge">XBOX SERIES X|S</span>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Image 2 Style Payment Options -->
+                        <div class="checkout-pricing-panel">
+                            <div class="payment-methods-header">
+                                <span class="pm-header-label">PAYMENT METHODS</span>
+                                <span class="pm-header-price" id="checkout-top-price">£69.99</span>
+                            </div>
+                            <h3 class="choose-payment-title">Choose payment</h3>
+
+                            <!-- Payment Radio Options (Image 2 Model) -->
+                            <div class="payment-options-list">
+                                <!-- Option 1: PayPal -->
+                                <div class="payment-radio-card active" id="option-card-paypal" data-method="paypal">
+                                    <div class="radio-indicator">
+                                        <div class="radio-dot"></div>
+                                    </div>
+                                    <div class="option-icon-box paypal-icon-box">
+                                        <img src="assets/paypal_logo.png" alt="PayPal" class="paypal-official-img-box">
+                                    </div>
+                                    <div class="option-text-info">
+                                        <div class="option-title-text">Pay with PayPal</div>
+                                        <div class="option-sub-text">PayPal balance or saved PayPal cards</div>
+                                    </div>
+                                    <div class="option-right-logo">
+                                        <span class="paypal-brand-inline">PayPal</span>
+                                    </div>
+                                </div>
+
+                                <!-- Option 2: VISA / Card -->
+                                <div class="payment-radio-card" id="option-card-visa" data-method="visa">
+                                    <div class="radio-indicator">
+                                        <div class="radio-dot"></div>
+                                    </div>
+                                    <div class="option-icon-box visa-icon-box">
+                                        <span class="visa-badge-text">VISA</span>
+                                    </div>
+                                    <div class="option-text-info">
+                                        <div class="option-title-text">Card through PayPal</div>
+                                        <div class="option-sub-text">Available inside the PayPal window</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Summary Box -->
+                            <div class="summary-box">
+                                <div class="summary-row">
+                                    <span>Subtotal</span>
+                                    <span id="summary-subtotal-val">£69.99</span>
+                                </div>
+                                <div class="summary-row text-muted">
+                                    <span>Taxes and fees</span>
+                                    <span>Calculated at store</span>
+                                </div>
+                                <div class="summary-row total-row">
+                                    <span>Total</span>
+                                    <span class="total-green-val" id="summary-total-val">£69.99</span>
+                                </div>
+                            </div>
+
+                            <!-- Yellow Action Button (Image 2 Model) -->
+                            <button class="paypal-yellow-btn" id="btn-trigger-paypal">
+                                <span>Pay with</span> <strong class="paypal-btn-brand">PayPal</strong>
+                            </button>
+
+                            <p class="paypal-caption-text">Select PayPal to open the payment window and confirm this GTA VI digital order.</p>
+
+                            <!-- Back Pill Button -->
+                            <button class="paypal-back-pill" id="btn-paypal-back-pill">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAGE 4: PRE-ORDER CONFIRMED (Success) -->
+            <div class="modal-stage" id="stage-success">
+                <div class="modal-body success-body">
+                    <!-- Animated Checkmark -->
+                    <div class="checkmark-circle">
+                        <div class="checkmark-stem"></div>
+                        <div class="checkmark-kick"></div>
+                    </div>
+                    
+                    <h3 class="success-title">Pre-order confirmed</h3>
+                    <p class="success-desc"><span id="success-edition-text">Standard Edition</span> is reserved for <strong id="success-username">Johnsonxbox892</strong> on <strong id="success-platform">Xbox Series X|S</strong>. You'll be able to pre-load before launch.</p>
+                    
+                    <!-- Receipt Table -->
+                    <div class="receipt-card">
+                        <div class="receipt-row">
+                            <span class="receipt-label">Order</span>
+                            <span class="receipt-value" id="receipt-order-id">816-1802-412781</span>
+                        </div>
+                        <div class="receipt-row">
+                            <span class="receipt-label">Receipt</span>
+                            <span class="receipt-value" id="receipt-email">thomas.dupont35@gmail.com</span>
+                        </div>
+                        <div class="receipt-row total-row">
+                            <span class="receipt-label">Total charged</span>
+                            <span class="receipt-value" id="receipt-total-value">£69.99</span>
+                        </div>
+                    </div>
+
+                    <button class="store-action-btn success-done-btn" id="btn-success-done">Done</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- REALISTIC PAYPAL POPUP WINDOW OVERLAY (Images 3, 4, 5 Model) -->
+    <div class="paypal-popup-overlay" id="paypal-popup-screen">
+        <div class="paypal-window">
+            
+            <!-- Window Title Bar -->
+            <div class="paypal-titlebar">
+                <div class="titlebar-left">
+                    <img src="assets/paypal_logo.png" alt="PayPal" class="paypal-titlebar-icon">
+                    <span class="titlebar-title" id="paypal-window-title">Log in to your PayPal account</span>
+                </div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-minimize" tabindex="-1">_</button>
+                    <button class="win-btn win-maximize" tabindex="-1">□</button>
+                    <button class="win-btn win-close" id="btn-close-paypal-popup" aria-label="Close">×</button>
+                </div>
+            </div>
+
+            <!-- Address Bar -->
+            <div class="paypal-addressbar">
+                <div class="address-box">
+                    <span class="lock-icon">🔒</span>
+                    <span class="address-url" id="paypal-address-url">https://www.paypal.com/checkoutnow?token=EC-MTC6V1QF</span>
+                </div>
+            </div>
+
+            <!-- Window Content Container -->
+            <div class="paypal-window-body" id="paypal-window-body">
+                
+                <!-- STEP 1: LOADING / RECOGNITION VIEW (Images 4 & 5) -->
+                <div class="paypal-view active" id="paypal-view-loading">
+                    <div class="paypal-loader-content">
+                        <div class="paypal-spinner-ring"></div>
+                        <h3 class="pp-load-heading" id="pp-load-heading">Loading your PayPal account</h3>
+                        <p class="pp-load-subheading" id="pp-load-subheading">Checking remembered wallet session...</p>
+                    </div>
+                </div>
+
+                <!-- STEP 2: COMPLETE PURCHASE CHECKOUT VIEW (Image 3) -->
+                <div class="paypal-view" id="paypal-view-checkout">
+                    <!-- Top Navigation Bar -->
+                    <div class="pp-checkout-topbar">
+                        <div class="pp-user-avatar" id="pp-user-initials">PO</div>
+                        <div class="pp-logo-center">
+                            <img src="assets/paypal_logo.png" alt="PayPal" class="paypal-topbar-img">
+                            <span class="pp-logo-blue">PayPal</span>
+                        </div>
+                        <div class="pp-top-price">
+                            <span id="pp-top-price-val">£69.99</span>
+                            <span class="down-arrow">▼</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Body Content -->
+                    <div class="pp-checkout-content">
+                        <div class="pp-heading-row">
+                            <h2>Pay with</h2>
+                            <img src="assets/paypal_logo.png" alt="PayPal" class="paypal-heading-img">
+                            <span class="pp-header-logo">PayPal</span>
+                        </div>
+                        <p class="pp-sub-heading">Select a payment method</p>
+
+                        <!-- Selected Balance Box -->
+                        <div class="pp-method-card">
+                            <div class="pp-radio-ring active">
+                                <div class="pp-radio-inner"></div>
+                            </div>
+                            <div class="pp-method-icon">
+                                <img src="assets/paypal_logo.png" alt="PayPal" class="paypal-card-method-img">
+                            </div>
+                            <div class="pp-method-info">
+                                <div class="pp-method-name">PayPal Balance</div>
+                                <div class="pp-method-sub">Selected PayPal payment method</div>
+                                <span class="pp-preferred-badge">Preferred</span>
+                                
+                                <p class="pp-conversion-note">
+                                    PayPal's conversion rate is locked for this GTA VI order while you complete checkout.
+                                </p>
+                                <a href="#" class="pp-link-blue" onclick="return false;">Why 72 hours? ▼</a>
+                                <p class="pp-backup-note">
+                                    If this payment method doesn't work, PayPal may use your saved Mastercard ending in 4279.
+                                </p>
+                            </div>
+                            <div class="pp-method-amount" id="pp-balance-amount">
+                                £69.99
+                            </div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <button class="pp-complete-purchase-btn" id="btn-complete-paypal-purchase">
+                            Complete Purchase
+                        </button>
+
+                        <p class="pp-bottom-disclaimer">
+                            If money is added to your PayPal balance before this transaction completes, the additional balance may be used to complete your payment.
+                        </p>
+
+                        <a href="#" class="pp-cancel-link" id="btn-cancel-paypal-popup">Cancel and return to merchant</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS MODAL OVERLAY (Image 2 Model) -->
+    <div class="settings-modal-overlay" id="settings-modal-overlay">
+        <div class="settings-modal-card">
+            <div class="settings-modal-header">
+                <h2 class="settings-title">Settings</h2>
+                <button class="settings-close-btn" id="btn-close-settings" aria-label="Close">×</button>
+            </div>
+            
+            <div class="settings-modal-body">
+                <!-- Currency Section -->
+                <div class="settings-section">
+                    <label class="settings-label">Currency</label>
+                    <div class="currency-grid">
+                        <div class="currency-card" data-currency="NZD" data-symbol="$" data-standard="139.99" data-ultimate="189.99">
+                            <div class="curr-code-block">
+                                <span class="curr-code">NZD</span>
+                                <span class="curr-name">New Zealand dollar</span>
+                            </div>
+                            <div class="curr-radio">
+                                <div class="curr-radio-inner"></div>
+                            </div>
+                        </div>
+
+                        <div class="currency-card" data-currency="USD" data-symbol="$" data-standard="69.99" data-ultimate="99.99">
+                            <div class="curr-code-block">
+                                <span class="curr-code">USD</span>
+                                <span class="curr-name">US dollar</span>
+                            </div>
+                            <div class="curr-radio">
+                                <div class="curr-radio-inner"></div>
+                            </div>
+                        </div>
+
+                        <div class="currency-card" data-currency="AUD" data-symbol="$" data-standard="119.99" data-ultimate="159.99">
+                            <div class="curr-code-block">
+                                <span class="curr-code">AUD</span>
+                                <span class="curr-name">Australian dollar</span>
+                            </div>
+                            <div class="curr-radio">
+                                <div class="curr-radio-inner"></div>
+                            </div>
+                        </div>
+
+                        <div class="currency-card active" data-currency="GBP" data-symbol="£" data-standard="69.99" data-ultimate="99.99">
+                            <div class="curr-code-block">
+                                <span class="curr-code">GBP</span>
+                                <span class="curr-name">British pound</span>
+                            </div>
+                            <div class="curr-radio">
+                                <div class="curr-radio-inner"></div>
+                            </div>
+                        </div>
+
+                        <div class="currency-card" data-currency="EUR" data-symbol="€" data-standard="69.99" data-ultimate="99.99">
+                            <div class="curr-code-block">
+                                <span class="curr-code">EUR</span>
+                                <span class="curr-name">Euro</span>
+                            </div>
+                            <div class="curr-radio">
+                                <div class="curr-radio-inner"></div>
+                            </div>
+                        </div>
+
+                        <div class="currency-card" data-currency="CAD" data-symbol="$" data-standard="89.99" data-ultimate="129.99">
+                            <div class="curr-code-block">
+                                <span class="curr-code">CAD</span>
+                                <span class="curr-name">Canadian dollar</span>
+                            </div>
+                            <div class="curr-radio">
+                                <div class="curr-radio-inner"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PayPal Welcome Name Section -->
+                <div class="settings-section">
+                    <label class="settings-label uppercase-label">PAYPAL WELCOME NAME</label>
+                    <input type="text" class="settings-input" id="settings-paypal-name-input" placeholder="e.g. Mark" value="Mark">
+                    <p class="settings-subtext">This name is shown in the PayPal remembered-device loading screen.</p>
+                    <p class="settings-subtext mt-1">Changing currency updates the edition cards, checkout total, PayPal amount, and receipt instantly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: fixed; bottom: 10px; right: 10px; font-size: 10px; color: rgba(255,255,255,0.2); pointer-events: none; z-index: 1000;">v1.0.2 - Custom Currency & PayPal Name</div>
+
+    <!-- Scripts -->
+    <script src="app_v2.js"></script>
+</body>
+</html>
