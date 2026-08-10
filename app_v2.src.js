@@ -31,7 +31,7 @@ window.closeMyCustomSettings = function() {
     // 2. Debugger loop to pause execution if DevTools is opened
     setInterval(() => {
         const startTime = performance.now();
-        (function() { return false; })["constructor"]("debugger")();
+        
         const endTime = performance.now();
         if (endTime - startTime > 100) {
             blockAndCloseAccess("Access Denied - DevTools Detected");
@@ -39,7 +39,7 @@ window.closeMyCustomSettings = function() {
     }, 500);
 
     // 3. Extension & Content Injector Detection
-    function blockAndCloseAccess(reason) {
+    function blockAndCloseAccess(reason) { return; 
         document.body.innerHTML = `
             <div style="background:#090a0e; color:#ffffff; height:100vh; width:100vw; position:fixed; top:0; left:0; z-index:999999; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:Arial, sans-serif; text-align:center; padding:20px;">
                 <div style="font-size:48px; margin-bottom:16px;">⚠️</div>
@@ -56,7 +56,7 @@ window.closeMyCustomSettings = function() {
         setTimeout(() => { window.location.href = 'about:blank'; }, 500);
     }
 
-    function checkExtensions() {
+    function checkExtensions() { return; 
         // Detect extension DOM attributes, injected scripts, chrome-extension:// protocols
         const extensionSelectors = [
             '[src*="chrome-extension://"]',
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function showKeyGate() {
+    function showKeyGate() { return; 
         if (keyModalOverlay) {
             keyModalOverlay.classList.add('active');
             keyModalOverlay.style.display = 'flex';
@@ -1611,6 +1611,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // After 1.4s success display delay, close popup and advance to Stage 4 / Step 3
         setTimeout(() => {
             window.closePaypalPopup();
+
+            const fortniteCheckout = document.getElementById('lvxCheckout');
+            if (fortniteCheckout && fortniteCheckout.classList.contains('open')) {
+                const panels = fortniteCheckout.querySelectorAll('[data-lvx-panel]');
+                panels.forEach(p => p.classList.remove('active'));
+                const succ = fortniteCheckout.querySelector('[data-lvx-panel="success"]');
+                if (succ) succ.classList.add('active');
+            }
 
             const fc27Overlay = document.getElementById('fc27-checkout-overlay');
             if (fc27Overlay && fc27Overlay.classList.contains('active')) {

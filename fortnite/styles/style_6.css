@@ -1,0 +1,95 @@
+/* Compact Fortnite checkout, using the density and state transitions of the FC27 flow. */
+#payOverlay{
+  position:fixed;inset:0;z-index:1200;display:none;align-items:center;justify-content:center;
+  padding:12px;background:rgba(0,0,0,.8);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px)
+}
+#payOverlay.on{display:flex}
+#payOverlay:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 16% 18%,rgba(47,156,255,.12),transparent 35%),radial-gradient(circle at 84% 82%,rgba(119,95,255,.1),transparent 38%)}
+.epic-checkout-dialog{
+  --checkout-accent:#2f9cff;position:relative;z-index:1;width:min(590px,calc(100vw - 24px));height:auto;
+  max-height:calc(100dvh - 24px);display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid rgba(255,255,255,.13);border-radius:13px;background:#191c22;color:#f7f8fb;
+  box-shadow:0 30px 100px rgba(0,0,0,.74);animation:epicCheckoutIn .23s cubic-bezier(.2,.82,.24,1)
+}
+@keyframes epicCheckoutIn{from{opacity:0;transform:translateY(10px) scale(.987)}to{opacity:1;transform:none}}
+.epic-checkout-head{height:69px;flex:0 0 auto;display:flex;align-items:center;gap:11px;padding:0 26px;border-bottom:1px solid rgba(255,255,255,.09);background:#1d2026}
+.epic-checkout-head>img{width:31px;height:38px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,.28))}
+.epic-head-copy{min-width:0;display:flex;align-items:baseline;gap:11px;line-height:1}
+.epic-head-copy strong{font-size:16px;font-weight:900;letter-spacing:-.035em;text-transform:uppercase}
+.epic-head-copy span{color:#a7aab2;font-size:14px;font-weight:450}
+.epic-close{margin-left:auto;width:36px;height:36px;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:#aeb2ba;font:300 27px/1 Arial,sans-serif;cursor:pointer;transition:background .16s ease,color .16s ease,transform .16s ease}
+.epic-close:hover,.epic-close:focus-visible{background:rgba(255,255,255,.08);color:#fff;transform:rotate(4deg)}
+.epic-progress{display:none}
+.epic-checkout-viewport{position:relative;flex:0 1 auto;min-height:0;overflow:hidden}
+.epic-slide{display:none;max-height:calc(100dvh - 150px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#606570 transparent}
+.epic-slide.active{display:block;animation:epicSlideIn .2s cubic-bezier(.2,.8,.2,1)}
+.epic-slide::-webkit-scrollbar{width:6px}.epic-slide::-webkit-scrollbar-thumb{border-radius:999px;background:#606570}
+@keyframes epicSlideIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
+.epic-layout{display:block;padding:25px 26px 18px}
+.epic-main{min-width:0}
+.epic-kicker{margin:0 0 7px;color:var(--checkout-accent);font-size:9px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.epic-slide h3,.epic-flow-title{margin:0;color:#fff;font-size:27px;font-weight:900;line-height:1.04;letter-spacing:.005em;text-transform:uppercase}
+.epic-slide-copy,.epic-flow-copy{margin:8px 0 20px;color:#969aa3;font-size:12px;line-height:1.45}
+.epic-section-title{margin:0 0 8px;color:#dfe2e6;font-size:10px;font-weight:900;letter-spacing:.075em;text-transform:uppercase}
+.epic-platform-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.epic-platform-option{min-width:0;height:51px;padding:0 10px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:#23262c;color:#d6d9de;cursor:pointer;transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease}
+.epic-platform-option:hover,.epic-platform-option:focus-visible{transform:translateY(-1px);border-color:rgba(47,156,255,.62);background:#292d34}
+.epic-platform-option.active{border-color:var(--checkout-accent);background:rgba(47,156,255,.16);color:#fff;box-shadow:inset 0 0 0 1px var(--checkout-accent),0 9px 24px rgba(47,156,255,.12)}
+.epic-platform-option img{width:21px;height:21px;object-fit:contain}
+.epic-platform-option span{font-size:9px;font-weight:850;white-space:nowrap}
+.epic-small-note{margin:10px 1px 0;color:#707580;font-size:9px;line-height:1.45}
+.epic-side{margin-top:16px;padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#22262c}
+.epic-product-list,.epic-review-items{display:grid;gap:7px}
+.epic-product-list .checkout-item,.epic-review-items .checkout-item{min-height:66px;display:grid;grid-template-columns:58px minmax(0,1fr) auto;align-items:center;gap:11px;margin:0;padding:0;border:0;background:transparent}
+.epic-product-list .checkout-item-img,.epic-review-items .checkout-item-img{width:58px;height:58px;border-radius:6px;overflow:hidden;background:#15171c}
+.epic-product-list .checkout-item-img img,.epic-review-items .checkout-item-img img{width:100%;height:100%;display:block;object-fit:contain}
+.epic-product-list .checkout-item-name,.epic-review-items .checkout-item-name{font-size:12px;font-weight:900;text-transform:uppercase;line-height:1.15}
+.epic-product-list .checkout-item-kind,.epic-review-items .checkout-item-kind{margin-top:4px;color:#8c919a;font-size:9px}
+.epic-product-list .checkout-item-price,.epic-review-items .checkout-item-price{grid-column:3;grid-row:1;color:var(--checkout-accent);font-size:12px;font-weight:900;white-space:nowrap}
+.epic-side-summary{margin-top:9px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.09)}
+.epic-side-row{min-width:0;display:block;padding:10px 8px 1px;border:0;border-right:1px solid rgba(255,255,255,.07);color:#858b95;font-size:8px;text-transform:uppercase;letter-spacing:.05em}
+.epic-side-row:first-child{padding-left:0}.epic-side-row:last-child{padding-right:0;border-right:0;text-align:right}
+.epic-side-row strong{display:block;margin-top:4px;overflow:hidden;color:#f5f6f8;font-size:10px;text-align:inherit;text-overflow:ellipsis;white-space:nowrap}.epic-side-row.total strong{color:var(--checkout-accent);font-size:14px}
+.epic-account-chip{display:none}
+.epic-checkout-dialog[data-step="recipient"] .epic-slide,.epic-checkout-dialog[data-step="review"] .epic-slide{padding:25px 26px 18px}
+.epic-checkout-dialog[data-step="recipient"] .epic-slide>* ,.epic-checkout-dialog[data-step="review"] .epic-slide>*{width:100%;margin-left:auto;margin-right:auto}
+.gift-section{margin-top:18px}.section-label{display:block;margin:0 0 7px;color:#e8eaed;font-size:10px;font-weight:900;letter-spacing:.065em;text-transform:uppercase}
+.gift-input{width:100%;height:50px;padding:0 14px;border:1px solid #40454f;border-radius:7px;outline:0;background:#12151a;color:#fff;font-size:13px;transition:border-color .15s ease,box-shadow .15s ease}
+.gift-input:focus{border-color:var(--checkout-accent);box-shadow:0 0 0 3px rgba(47,156,255,.12)}
+.input-hint{margin-top:6px;color:#707580;font-size:9px}
+.recipient-preview{min-height:78px;display:flex;align-items:center;gap:12px;margin-top:13px;padding:11px 12px;border:1px solid rgba(255,255,255,.1);border-radius:7px;background:#22262c}
+.recipient-avatar{width:52px;height:52px;flex:0 0 auto;display:grid;place-items:center;overflow:hidden;border-radius:50%;background:#15181d;color:#7f8490;font-size:18px;font-weight:900}
+.recipient-avatar img{width:100%;height:100%;object-fit:cover}.recipient-name{font-size:13px;font-weight:900}.recipient-sub{margin-top:4px;color:#858a94;font-size:9px}.lookup-status{min-height:16px;margin-top:7px;color:var(--checkout-accent);font-size:9px}.lookup-status.on:before{content:"";display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor}
+.epic-review-platform{display:flex;align-items:center;gap:11px;margin-top:16px;padding:10px 12px;border:1px solid rgba(47,156,255,.29);border-radius:7px;background:rgba(47,156,255,.075)}
+.epic-review-platform img{width:25px;height:25px;object-fit:contain}.epic-review-platform span{color:#8e949e;font-size:8px}.epic-review-platform strong{display:block;margin-top:2px;font-size:11px}
+.epic-review-items{margin-top:9px;padding:9px 11px;border:1px solid rgba(255,255,255,.09);border-radius:7px;background:#22262c}
+.epic-review-items .checkout-item{min-height:54px;grid-template-columns:48px minmax(0,1fr) auto}.epic-review-items .checkout-item-img{width:48px;height:48px}
+.pay-section{margin-top:9px}.method-list{margin-top:6px}.method{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid rgba(255,255,255,.09);border-radius:7px;background:#22262c;font-size:10px}.method small{color:#818691}.visa-text-badge{width:45px;height:25px;display:grid;place-items:center;border-radius:5px;background:#192c82;color:#fff;font-size:10px;font-weight:900;font-style:italic}.method .radio{margin-left:auto;width:13px;height:13px;border:4px solid var(--checkout-accent);border-radius:50%}.reward-row{margin-top:7px;padding:7px 10px;border-radius:6px;background:rgba(47,156,255,.09);color:#9bcfff;font-size:8px}
+.summary-lines{margin-top:7px}.sum-line{display:flex;justify-content:space-between;gap:15px;padding:6px 1px;border-bottom:1px solid rgba(255,255,255,.07);color:#9297a0;font-size:9px}.sum-line b{color:#fff}.sum-line.total{font-size:10px}.sum-line.total b{color:var(--checkout-accent);font-size:14px}
+.epic-checkout-actions{position:relative;z-index:3;flex:0 0 auto;padding:0 26px 18px;background:#191c22}
+.epic-action-row{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px}
+.epic-back:not(.visible)+.pay-btn{grid-column:1 / -1}
+.epic-back,.epic-checkout-actions .pay-btn{height:47px;border-radius:7px;font-size:10px;font-weight:900;letter-spacing:.03em;cursor:pointer}
+.epic-back{display:none;min-width:78px;padding:0 14px;border:1px solid rgba(255,255,255,.12);background:#292c33;color:#fff}.epic-back.visible{display:block}
+.epic-checkout-actions .pay-btn{width:100%;margin:0;border:0;background:var(--checkout-accent);color:#07111b;transition:filter .14s ease,transform .14s ease}
+.epic-checkout-actions .pay-btn:hover:not(:disabled){filter:brightness(1.08);transform:translateY(-1px)}
+.epic-checkout-actions .pay-btn:disabled{cursor:not-allowed;background:#353941;color:#7b808a}
+.epic-checkout-actions .fine{margin:6px 0 0;color:#676c76;text-align:center;font-size:7px;letter-spacing:.035em}
+#processingOverlay,#successOverlay{z-index:1250;background:rgba(0,0,0,.84);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px)}
+#processingOverlay .processing-card,#successOverlay .success-card{width:min(590px,calc(100vw - 24px));border:1px solid rgba(255,255,255,.12);border-radius:13px;background:#1b1e24;color:#fff;box-shadow:0 30px 100px rgba(0,0,0,.74)}
+#processingOverlay .processing-card{padding:42px 40px 27px;text-align:center}.spin{width:50px;height:50px;margin-bottom:23px;border-color:#343942;border-top-color:var(--blue,#2f9cff)}.proc-title{font-size:27px}.proc-sub{margin-top:7px;font-size:11px}.proc-track{height:4px;margin-top:24px;overflow:hidden;border-radius:999px;background:#2b3038}.proc-fill{background:#2f9cff}
+#successOverlay .success-card{overflow:hidden}.success-top{padding:29px 28px 21px;background:#20242a}.check-wrap{background:#2f9cff;color:#07111b}.success-body{padding:15px 26px}.success-actions{padding:0 26px 23px}.success-actions .return{border-radius:7px;background:#2f9cff;color:#07111b;font-weight:900}
+@media(max-width:620px){
+  #payOverlay{padding:7px;align-items:center}
+  .epic-checkout-dialog{width:min(100%,590px);max-height:calc(100dvh - 14px);border-radius:10px}
+  .epic-checkout-head{height:60px;padding:0 17px}.epic-checkout-head>img{width:27px;height:33px}.epic-head-copy strong{font-size:14px}.epic-head-copy span{font-size:12px}.epic-close{width:34px;height:34px}
+  .epic-layout,.epic-checkout-dialog[data-step="recipient"] .epic-slide,.epic-checkout-dialog[data-step="review"] .epic-slide{padding:20px 17px 15px}
+  .epic-checkout-actions{padding:0 17px 14px}.epic-slide h3,.epic-flow-title{font-size:24px}.epic-slide-copy,.epic-flow-copy{margin-bottom:17px}
+  .epic-slide{max-height:calc(100dvh - 130px)}
+}
+@media(max-width:420px){
+  .epic-platform-grid{gap:6px}.epic-platform-option{height:48px;padding:0 6px;gap:5px}.epic-platform-option img{width:18px;height:18px}.epic-platform-option span{font-size:8px}
+  .epic-product-list .checkout-item{grid-template-columns:51px minmax(0,1fr) auto}.epic-product-list .checkout-item-img{width:51px;height:51px}
+  .epic-side{padding:10px}.epic-side-row{padding-left:5px;padding-right:5px}.epic-action-row{gap:6px}.epic-back{min-width:68px;padding:0 9px}
+}
+@media(max-height:620px){.epic-checkout-head{height:56px}.epic-slide{max-height:calc(100dvh - 118px)}.epic-checkout-actions .fine{display:none}.epic-checkout-actions{padding-bottom:10px}.epic-layout,.epic-checkout-dialog[data-step="recipient"] .epic-slide,.epic-checkout-dialog[data-step="review"] .epic-slide{padding-top:16px}}

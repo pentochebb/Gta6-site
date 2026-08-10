@@ -1,0 +1,23 @@
+/* Essential loading animation performance for every visual. */
+.spinner,.spin,.api-spinner,.button-spinner,.search-button-spinner,.processing-ring,.big-spinner,
+.lookup-spinner,.recipient-avatar.loading-dot::before,.loader-ring,.loading-spinner,
+.loader-line span{
+  contain:layout paint;
+  backface-visibility:hidden;
+  transform:translateZ(0);
+  will-change:transform;
+}
+.proc-fill,.processing-bar span,.fc-processing-track span,.payment-progress-bar span,.progress-line span,.loadline::after{
+  backface-visibility:hidden;
+  transform:translateZ(0);
+  will-change:width,transform;
+}
+
+@media (update:slow){
+  .spinner,.spin,.api-spinner,.button-spinner,.search-button-spinner,.processing-ring,.big-spinner,
+  .lookup-spinner,.recipient-avatar.loading-dot::before,.loader-ring,.loading-spinner,
+  .loader-line span{
+    will-change:auto!important;
+  }
+  .proc-fill,.processing-bar span,.fc-processing-track span,.payment-progress-bar span,.progress-line span,.loadline::after{will-change:auto!important}
+}

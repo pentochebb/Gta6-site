@@ -5728,3 +5728,18 @@ a {
     transform: translateY(-2px) !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
 }
+
+/* Fortnite Visual Card Styling */
+.fortnite-bg {
+    background: radial-gradient(circle at center, #27b8ee 0%, #101014 80%);
+}
+
+.fortnite-preview {
+    object-fit: cover;
+    filter: brightness(0.9) contrast(1.1);
+}
+
+.fortnite-visual-card:hover {
+    border-color: #27b8ee !important;
+    box-shadow: 0 10px 30px rgba(39, 184, 238, 0.35) !important;
+}

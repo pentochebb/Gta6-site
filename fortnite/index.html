@@ -1,0 +1,4123 @@
+<!DOCTYPE html>
+<html lang="en" class="lv-protected"><head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="styles/style_1.css">
+<link rel="stylesheet" href="styles/style_2.css">
+<link rel="stylesheet" href="styles/style_3.css">
+<link rel="stylesheet" href="styles/style_4.css">
+<script src="scripts/visual-runtime.js"></script>
+<script src="scripts/avatar-pools.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fortnite Visual | Lachy's Visuals</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap');
+
+:root{
+  --bg:#101014;
+  --top:#111115;
+  --panel:#18181d;
+  --panel2:#202027;
+  --card:#1c1c22;
+  --line:#303039;
+  --line2:#42424b;
+  --text:#f4f4f5;
+  --muted:#a2a2aa;
+  --muted2:#777780;
+  --blue:#27b8ee;
+  --blue-hover:#3cc7f6;
+  --green:#35e0ad;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:-.012em;
+}
+body:before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(circle at 55% -18%,rgba(90,90,130,.16),transparent 30%),#101014;
+}
+button,input{font:inherit}button{cursor:pointer;color:inherit}img{display:block;max-width:100%}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.965) translateY(12px)}to{opacity:1;transform:none}}
+@keyframes shimmer{0%{transform:translateX(-140%) rotate(10deg)}100%{transform:translateX(140%) rotate(10deg)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes progress{0%{width:0}40%{width:44%}70%{width:76%}100%{width:100%}}
+@keyframes checkPop{0%{opacity:0;transform:scale(.35)}70%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+@keyframes softGlow{0%,100%{box-shadow:0 0 0 rgba(39,184,238,0)}50%{box-shadow:0 0 30px rgba(39,184,238,.13)}}
+
+.loader{position:fixed;inset:0;z-index:999;background:#0d0d10;display:grid;place-items:center;transition:.35s var(--ease)}
+.loader.done{opacity:0;visibility:hidden}
+.loader img{width:48px;height:60px;object-fit:contain;margin:0 auto 20px}
+.loader-line{width:150px;height:3px;background:#2a2a30;border-radius:99px;overflow:hidden}
+.loader-line span{display:block;width:56%;height:100%;background:#fff;border-radius:99px;animation:shimmer 1s infinite}
+
+/* fixed far top-left settings */
+.settings-fixed{
+  position:fixed;top:12px;left:12px;z-index:80;
+  width:38px;height:38px;border:1px solid #34343c;border-radius:10px;
+  background:#18181d;color:#bfc0c8;display:grid;place-items:center;
+  transition:.16s var(--ease);box-shadow:0 12px 40px rgba(0,0,0,.28);
+}
+.settings-fixed:hover{background:#24242c;color:#fff}
+.gear{
+  width:18px;height:18px;border:2px solid currentColor;border-radius:50%;
+  position:relative;
+}
+.gear:before{content:"";position:absolute;inset:4px;border-radius:50%;background:currentColor}
+.gear:after{
+  content:"";position:absolute;left:50%;top:-6px;width:4px;height:28px;
+  background:currentColor;transform:translateX(-50%);
+  clip-path:polygon(0 0,100% 0,100% 5px,0 5px,0 11px,100% 11px,100% 17px,0 17px,0 23px,100% 23px,100% 28px,0 28px);
+}
+
+/* Header */
+.topbar{
+  height:64px;background:#111115;border-bottom:1px solid #202026;
+  display:flex;align-items:center;justify-content:center;position:sticky;top:0;z-index:40;
+}
+.top-inner{width:min(1230px,92vw);display:flex;align-items:center;gap:20px;padding-left:34px}
+.back-arrow{font-size:24px;color:#8e8e96;border:0;background:transparent}
+.top-epic-logo{width:30px;height:36px;object-fit:contain;opacity:.96}
+.search{
+  width:260px;height:38px;border-radius:999px;background:#232329;
+  display:flex;align-items:center;gap:10px;padding:0 15px;color:#9898a0;
+}
+.search input{background:transparent;border:0;outline:0;color:#fff;width:100%;font-size:14px}
+.search-mark{width:14px;height:14px;border:2px solid currentColor;border-radius:50%;position:relative;flex:0 0 auto}
+.search-mark:after{content:"";position:absolute;right:-6px;bottom:-5px;width:7px;height:2px;background:currentColor;transform:rotate(45deg);border-radius:99px}
+.navtab{border:0;background:transparent;color:#a7a7ad;font-size:14px;font-weight:760;transition:.16s var(--ease)}
+.navtab:hover,.navtab.active{color:#fff}
+.top-icons{margin-left:auto;display:flex;align-items:center;gap:18px;color:#bebec4}
+.icon-btn{width:34px;height:34px;border:0;border-radius:8px;background:transparent;display:grid;place-items:center;color:#a8a8b0;transition:.16s var(--ease)}
+.icon-btn:hover{background:#25252c;color:#fff}
+.header-symbol{width:18px;height:18px;display:inline-block;opacity:.78;position:relative}
+.bookmark-symbol{border:2px solid currentColor;border-bottom:0;border-radius:2px 2px 0 0}
+.bookmark-symbol:after{content:"";position:absolute;left:2px;right:2px;bottom:-5px;height:10px;background:#111115;border-left:2px solid currentColor;border-right:2px solid currentColor;border-bottom:2px solid currentColor;clip-path:polygon(0 0,100% 0,100% 100%,50% 62%,0 100%)}
+.cart-symbol{border:2px solid currentColor;border-top:0;border-radius:0 0 3px 3px;transform:translateY(2px)}
+.cart-symbol:before{content:"";position:absolute;left:3px;right:3px;top:-7px;height:7px;border:2px solid currentColor;border-bottom:0;border-radius:6px 6px 0 0}
+.divider{width:1px;height:28px;background:#3a3a42;display:inline-block}
+.avatar{width:34px;height:34px;border-radius:50%;background:#33343b;display:grid;place-items:center;font-weight:900;position:relative}
+.avatar:after{content:"";position:absolute;right:0;bottom:0;width:8px;height:8px;background:#9bcf4a;border-radius:50%;border:2px solid #111115}
+
+/* Pages */
+.page{display:none}.page.active{display:block;animation:fadeUp .24s var(--ease)}
+.shell{width:min(1230px,92vw);margin:38px auto 90px}
+.listing-title{font-size:40px;line-height:1.05;margin:0 0 28px;letter-spacing:-.055em;font-weight:900}
+.tabs{display:flex;gap:30px;margin-bottom:28px}
+.tabs button{background:transparent;border:0;color:#aaa;font-weight:850;padding:0 0 12px;position:relative}
+.tabs button.active{color:#fff}
+.tabs button.active:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--blue);border-radius:99px}
+.section-title{margin:38px 0 18px;font-size:24px;font-weight:900;letter-spacing:-.04em}
+.section-subtitle{margin:-8px 0 18px;color:#999aa3;font-size:14px;font-weight:650}
+.addon-layout{display:grid;grid-template-columns:1fr 280px;gap:28px;align-items:start}
+.item-section{margin-bottom:48px}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:36px 18px}
+.filter-panel{background:#202026;border:1px solid #33333b;border-radius:10px;position:sticky;top:92px;overflow:hidden}
+.filter-title{font-weight:900;padding:18px;border-bottom:1px solid #33333b}
+.filter-search{margin:14px 16px;padding:10px 12px;border-radius:4px;background:#33333b;color:#c9c9ce;font-size:13px}
+.filter-row{padding:18px;border-top:1px solid #33333b;color:#d5d5da;font-weight:850;display:flex;justify-content:space-between}
+.card{background:transparent;border:0;text-align:left;padding:0;color:#fff;width:100%;transition:transform .18s var(--ease);animation:fadeUp .35s var(--ease)}
+.card:hover{transform:translateY(-3px)}
+.thumb{aspect-ratio:3/4;background:#1b1b20;border-radius:7px;overflow:hidden;position:relative}
+.thumb:after{content:"";position:absolute;inset:-30%;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.12) 50%,transparent 65%);opacity:0}
+.card:hover .thumb:after{opacity:1;animation:shimmer .78s var(--ease)}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:center center;transition:.22s var(--ease)}
+.card:hover .thumb img{filter:brightness(1.06);transform:scale(1.03)}
+.meta{padding-top:11px}.kind{color:#8e8e96;font-size:12px;margin-bottom:4px}.title{font-size:16px;font-weight:850;line-height:1.25}.price{font-size:14px;color:#d7d7dc;margin-top:10px}
+
+/* Detail */
+.detail{display:none;width:min(1230px,92vw);margin:38px auto 90px}
+.detail.on{display:block;animation:fadeUp .25s var(--ease)}
+.listing.off{display:none}
+.detail h1{font-size:42px;letter-spacing:-.055em;margin:0 0 14px;font-weight:900}
+.rating-line{display:flex;gap:14px;align-items:center;color:#b8b8be;margin-bottom:28px;font-size:14px;font-weight:700}
+.stars{color:#fff}
+.detail-layout{display:grid;grid-template-columns:1fr 300px;gap:44px}
+.media-main{height:500px;border-radius:8px;overflow:hidden;background:#1b1b20}
+.media-main img{width:100%;height:100%;object-fit:cover;object-position:center center}
+.thumb-strip{display:flex;gap:12px;margin-top:18px}
+.mini-thumb{width:94px;height:54px;border-radius:4px;overflow:hidden;border:2px solid transparent;background:#222;padding:0}
+.mini-thumb.active{border-color:#fff}.mini-thumb img{width:100%;height:100%;object-fit:cover;object-position:center center}
+.detail-desc{font-size:16px;line-height:1.65;color:#e1e1e5;margin:38px 0 34px}
+.tag-section{display:grid;grid-template-columns:1fr 1fr;gap:52px;margin-bottom:34px}
+.tag-title{color:#8f8f96;font-size:14px;margin-bottom:10px}
+.tag{display:inline-block;background:#34343a;border-radius:4px;padding:5px 9px;margin:0 5px 5px 0;font-weight:850;font-size:13px}
+.info-banner{background:#222228;border-left:4px solid var(--blue);border-radius:5px;padding:18px 20px;color:#bcbcc2;font-weight:750;display:flex;justify-content:space-between;align-items:center}
+.side-logo{height:170px;border-radius:6px;overflow:hidden;background:#202026;margin-bottom:24px}
+.side-logo img{width:100%;height:100%;object-fit:cover;object-position:center center}
+.rating-card{border:1px solid #34343c;border-radius:8px;padding:16px;margin-bottom:14px;background:#151519;color:#c7c7ce;font-size:12px;line-height:1.55}
+.rating-card img{width:32px;height:32px;float:left;margin-right:12px}
+.category{display:inline-block;background:#35353b;border-radius:4px;padding:5px 8px;font-size:12px;font-weight:850;margin-bottom:13px}
+.side-price{font-size:17px;font-weight:850;margin-bottom:14px}
+.side-buy{width:100%;height:48px;border:0;border-radius:6px;background:var(--blue);color:#05141b;font-weight:900;margin-bottom:10px;transition:.16s var(--ease);animation:softGlow 3s infinite}
+.side-buy:hover{background:var(--blue-hover)}
+.side-secondary{width:100%;height:42px;border:0;border-radius:6px;background:#303036;color:#fff;font-weight:850;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:9px}
+.heart-css{width:15px;height:15px;background:#e8e8ee;transform:rotate(45deg);position:relative;display:inline-block}
+.heart-css:before,.heart-css:after{content:"";position:absolute;width:15px;height:15px;background:#e8e8ee;border-radius:50%}
+.heart-css:before{left:-7px;top:0}.heart-css:after{left:0;top:-7px}
+.spec{margin-top:18px;border-top:1px solid #2f2f36}
+.spec div{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #2f2f36;padding:13px 0;color:#8f8f96;font-size:13px}
+.spec b{color:#fff;text-align:right}
+.windows-css-icon{display:inline-grid;width:18px;height:18px;background:linear-gradient(#fff,#fff) 0 0/8px 8px no-repeat,linear-gradient(#fff,#fff) 10px 0/8px 8px no-repeat,linear-gradient(#fff,#fff) 0 10px/8px 8px no-repeat,linear-gradient(#fff,#fff) 10px 10px/8px 8px no-repeat;transform:skewY(-5deg)}
+.back-btn{width:100%;height:40px;background:#151519;border:1px solid #34343c;border-radius:5px;color:#cfcfd4;margin-top:16px}
+
+/* Modals */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.66);backdrop-filter:blur(12px);z-index:100;display:none;align-items:center;justify-content:center;overflow-y:auto;padding:12px 0}
+.overlay.on{display:flex;animation:fadeIn .18s var(--ease)}
+.modal-card{width:min(430px,92vw);margin:auto;background:#18191f;border:1px solid #3a3c48;border-radius:16px;box-shadow:0 34px 120px rgba(0,0,0,.78);overflow:hidden;animation:scaleIn .24s var(--ease)}
+.modal-head{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid #30323d;background:linear-gradient(180deg,rgba(255,255,255,.035),transparent)}
+.modal-head img{width:28px;height:34px;object-fit:contain}.modal-head h2{font-size:18px;margin:0;font-weight:850;letter-spacing:-.035em}
+.x{margin-left:auto;border:0;background:transparent;color:#babac2;font-size:24px;line-height:1}
+.player-card,.order-mini,.recipient-preview{margin:16px 22px 0;padding:14px;border:1px solid #353743;background:#202128;border-radius:12px;display:flex;gap:12px;align-items:center}
+.player-avatar,.recipient-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#393943,#222229);display:grid;place-items:center;font-weight:1000;position:relative;flex:0 0 auto}
+.recipient-avatar img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
+.player-avatar:after,.recipient-avatar:after{content:"";position:absolute;right:2px;bottom:2px;width:9px;height:9px;border-radius:50%;background:#8cd456;border:2px solid #202026}
+.player-name,.recipient-name{font-size:15px;font-weight:900}.player-sub,.recipient-sub{font-size:12px;color:#96969e;margin-top:3px}
+.order-img{width:54px;height:66px;border-radius:7px;overflow:hidden;background:#111}.order-img img{width:100%;height:100%;object-fit:cover;object-position:center center}
+.order-copy{flex:1}.order-title{font-weight:900;font-size:15px}.order-kind{font-size:12px;color:#96969e;margin-top:4px}.order-price{font-weight:1000}
+.gift-section{margin:14px 22px 0}
+.section-label{font-size:12px;color:#a4a5ae;text-transform:uppercase;letter-spacing:.09em;font-weight:850;margin-bottom:8px}
+.gift-input{width:100%;height:44px;background:#22232b;border:1px solid #3a3c48;border-radius:10px;color:#fff;outline:none;padding:0 12px;font-weight:700}
+.gift-input:focus{border-color:#5b6473}
+.method-list{border:1px solid #3a3c48;border-radius:12px;overflow:hidden;background:#202128}
+.method{height:58px;display:flex;align-items:center;gap:12px;padding:0 14px;font-weight:900;background:#292c36}
+.method small{color:#aeb0b9;font-weight:760}
+.visa-text-badge{width:52px;height:32px;border-radius:5px;background:#fff;color:#1434cb;display:inline-grid;place-items:center;flex:0 0 auto;font-size:14px;font-style:italic;font-weight:1000;letter-spacing:-.05em}
+.radio{margin-left:auto;width:19px;height:19px;border-radius:50%;border:5px solid #c7d0dc}
+.pay-section{margin:14px 22px 0}
+.reward-row{margin-top:12px;background:#0e423d;color:#64ffe3;border-radius:9px;padding:10px 12px;font-size:12px;font-weight:900}
+.summary-lines{margin:14px 22px 0;border-top:1px solid #343641;padding-top:12px}
+.sum-line{display:flex;justify-content:space-between;color:#b8b8c0;font-size:13px;margin:8px 0}
+.sum-line.total{color:#fff;font-size:18px;font-weight:1000;margin-top:12px}
+.pay-btn{width:calc(100% - 44px);height:48px;margin:16px 22px 10px;border:0;border-radius:10px;background:var(--blue);color:#07141b;font-weight:1000;box-shadow:0 12px 28px rgba(39,184,238,.12);transition:.16s var(--ease)}
+.pay-btn:hover{background:var(--blue-hover)}
+.fine{margin:0 22px 20px;color:#92949e;font-size:11px;line-height:1.45}
+.processing-card{width:min(390px,90vw);background:#18191f;border:1px solid #363641;border-radius:18px;padding:36px 28px;text-align:center;box-shadow:0 28px 110px rgba(0,0,0,.75);animation:scaleIn .24s var(--ease)}
+.spin{width:58px;height:58px;border-radius:50%;border:4px solid #303039;border-top-color:var(--blue);margin:0 auto 20px;animation:spin .85s linear infinite}
+.proc-title{font-size:19px;font-weight:1000;margin-bottom:8px}.proc-sub{color:#a8a8b0;font-size:13px;font-weight:800;margin-bottom:20px}
+.proc-track{height:7px;background:#2c2c33;border-radius:99px;overflow:hidden}.proc-fill{height:100%;background:var(--blue);border-radius:99px;width:0}.proc-fill.run{animation:progress var(--processing-duration,2.5s) var(--ease) forwards}
+.success-card{width:min(430px,92vw);background:#181c22;border:1px solid #3a4350;border-radius:16px;box-shadow:0 30px 120px #000;overflow:hidden;animation:scaleIn .24s var(--ease)}
+.success-top{padding:28px 28px 22px;border-bottom:1px solid #303742;text-align:center}
+.check-wrap{width:48px;height:48px;margin:0 auto 14px;border-radius:50%;border:1px solid #18c979;color:#18e287;display:grid;place-items:center;font-size:24px;animation:checkPop .5s var(--ease)}
+.success-title{font-size:22px;font-weight:1000}.success-id{color:#8b95a2;font-size:13px;font-weight:850;margin-top:4px}.success-mini{margin-top:7px;color:#9ba5b2;font-size:13px;font-weight:850}
+.success-body{padding:20px 28px}.success-row{display:flex;justify-content:space-between;gap:16px;color:#9aa3ad;margin:15px 0;font-size:14px}.success-row b{color:#fff;text-align:right}
+.success-actions{padding:18px 28px 24px;border-top:1px solid #303742}.return{width:100%;height:46px;background:#272c34;border:1px solid #454c57;border-radius:9px;color:#fff;font-weight:900}
+.settings-body{padding:18px 22px 22px}.field{margin-bottom:14px}.field label{display:block;color:#a4a5ae;text-transform:uppercase;font-size:11px;font-weight:900;letter-spacing:.08em;margin-bottom:7px}
+.field input{width:100%;height:44px;background:#22232b;border:1px solid #383a46;border-radius:9px;color:#fff;padding:0 12px;outline:none}.field input:focus{border-color:#5b6473}
+.save-settings{width:100%;height:46px;border:0;border-radius:9px;background:var(--blue);color:#07141b;font-weight:950;margin-top:4px}
+.blank-page-card{background:#1c1c22;border:1px solid #33333b;border-radius:12px;padding:28px;max-width:760px;animation:fadeUp .24s var(--ease)}
+.blank-page-card h2{margin:0 0 10px;font-size:28px}.blank-page-card p{color:#aaa;line-height:1.6}
+.empty-state{color:#9b9ba3;background:#1c1c22;border:1px solid #33333b;border-radius:12px;padding:24px}
+.toast{
+  position:fixed;
+  top:18px;
+  left:50%;
+  bottom:auto;
+  right:auto;
+  transform:translate(-50%,-18px) scale(.98);
+  background:#202128;
+  border:1px solid #3b3d48;
+  border-radius:12px;
+  color:#fff;
+  padding:13px 18px;
+  box-shadow:0 20px 80px rgba(0,0,0,.45);
+  opacity:0;
+  transition:.22s var(--ease);
+  z-index:220;
+  font-size:14px;
+  font-weight:900;
+  min-width:230px;
+  text-align:center;
+}
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0) scale(1);
+}
+.toast.success{
+  background:#12382b;
+  border-color:#25b983;
+  color:#7dffd0;
+}
+.toast.error{
+  background:#3a1518;
+  border-color:#e34b5a;
+  color:#ff9aa4;
+}
+
+@media(max-width:1100px){.grid{grid-template-columns:repeat(4,1fr)}.addon-layout{grid-template-columns:1fr}.filter-panel{display:none}.detail-layout{grid-template-columns:1fr}}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.top-icons{display:none}.top-inner{gap:12px;padding-left:42px}.search{width:190px}}
+
+.pay-btn:disabled{
+  background:#333640 !important;
+  color:#8f929c !important;
+  cursor:not-allowed;
+  box-shadow:none !important;
+}
+
+/* V14 recipient lookup loading state */
+.recipient-preview.loading{
+  position:relative;
+  overflow:hidden;
+}
+.recipient-preview.loading:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.055) 45%,transparent 70%);
+  animation:recipientSweep 1.05s linear infinite;
+}
+@keyframes recipientSweep{
+  from{transform:translateX(-120%)}
+  to{transform:translateX(120%)}
+}
+.recipient-avatar.loading-dot{
+  color:transparent;
+}
+.recipient-avatar.loading-dot:before{
+  content:"";
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  border:3px solid #3a3d48;
+  border-top-color:var(--blue);
+  animation:spin .8s linear infinite;
+}
+.lookup-status{
+  display:none;
+  margin:8px 22px 0;
+  color:#9fa2ad;
+  font-size:12px;
+  font-weight:800;
+}
+.lookup-status.on{
+  display:block;
+}
+.lookup-status:before{
+  content:"";
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--blue);
+  margin-right:8px;
+  box-shadow:0 0 14px rgba(39,184,238,.55);
+}
+.pay-btn.lookup-waiting{
+  background:#333640 !important;
+  color:#8f929c !important;
+  cursor:wait !important;
+  box-shadow:none !important;
+}
+
+
+.field select{
+  width:100%;
+  height:44px;
+  background:#22232b;
+  border:1px solid #383a46;
+  border-radius:9px;
+  color:#fff;
+  padding:0 12px;
+  outline:none;
+  font-weight:750;
+}
+.field select:focus{border-color:#5b6473}
+
+.receipt-note{
+  margin-top:8px;
+  color:#8d96a3;
+  font-size:12px;
+  font-weight:750;
+  line-height:1.35;
+}
+
+/* V17 Cart bundle gifting */
+.cart-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 330px;
+  gap:28px;
+  align-items:start;
+}
+.cart-list{
+  background:#1c1c22;
+  border:1px solid #33333b;
+  border-radius:12px;
+  overflow:hidden;
+}
+.cart-row{
+  display:grid;
+  grid-template-columns:74px minmax(0,1fr) auto;
+  gap:16px;
+  align-items:center;
+  padding:16px;
+  border-bottom:1px solid #303039;
+}
+.cart-row:last-child{border-bottom:0}
+.cart-img{
+  width:74px;
+  height:92px;
+  border-radius:7px;
+  background:#111;
+  overflow:hidden;
+}
+.cart-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+}
+.cart-name{
+  font-size:16px;
+  font-weight:900;
+  margin-bottom:5px;
+}
+.cart-type{
+  color:#8f8f99;
+  font-size:13px;
+  font-weight:700;
+}
+.cart-actions{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:10px;
+}
+.cart-price{
+  font-size:15px;
+  font-weight:900;
+}
+.remove-btn{
+  border:0;
+  background:transparent;
+  color:#9ca0aa;
+  font-size:13px;
+  font-weight:800;
+}
+.remove-btn:hover{color:#fff}
+.cart-summary{
+  background:#1c1c22;
+  border:1px solid #33333b;
+  border-radius:12px;
+  padding:20px;
+  position:sticky;
+  top:90px;
+}
+.cart-summary h2{
+  margin:0 0 16px;
+  font-size:22px;
+  letter-spacing:-.04em;
+}
+.cart-sum-row{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  color:#b9bbc4;
+  margin:12px 0;
+  font-size:14px;
+}
+.cart-sum-row.total{
+  border-top:1px solid #343641;
+  padding-top:16px;
+  margin-top:16px;
+  color:#fff;
+  font-size:18px;
+  font-weight:1000;
+}
+.cart-checkout{
+  width:100%;
+  height:48px;
+  border:0;
+  border-radius:9px;
+  background:var(--blue);
+  color:#07141b;
+  font-weight:1000;
+  margin-top:16px;
+}
+.cart-checkout:hover{background:var(--blue-hover)}
+.cart-muted{
+  color:#8f929c;
+  font-size:12px;
+  line-height:1.45;
+  margin-top:12px;
+}
+.checkout-items{
+  margin:16px 22px 0;
+  border:1px solid #353743;
+  background:#202128;
+  border-radius:12px;
+  overflow:hidden;
+}
+.checkout-item{
+  display:grid;
+  grid-template-columns:48px minmax(0,1fr) auto;
+  gap:12px;
+  align-items:center;
+  padding:12px;
+  border-bottom:1px solid #343641;
+}
+.checkout-item:last-child{border-bottom:0}
+.checkout-item-img{
+  width:48px;
+  height:58px;
+  border-radius:6px;
+  overflow:hidden;
+  background:#111;
+}
+.checkout-item-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+}
+.checkout-item-name{
+  font-size:14px;
+  font-weight:900;
+}
+.checkout-item-kind{
+  font-size:11px;
+  color:#9698a2;
+  margin-top:3px;
+}
+.checkout-item-price{
+  font-size:13px;
+  font-weight:900;
+}
+.bundle-label{
+  margin:12px 22px 0;
+  color:#a5a8b2;
+  font-size:12px;
+  font-weight:850;
+}
+@media(max-width:850px){
+  .cart-layout{grid-template-columns:1fr}
+  .cart-summary{position:static}
+}
+
+
+.cart-type{
+  line-height:1.45;
+}
+
+/* V22 Epic-style content pages */
+.epic-news-hero{
+  min-height:300px;
+  border-radius:14px;
+  border:1px solid #33333b;
+  background:
+    linear-gradient(90deg,rgba(16,16,20,.95),rgba(16,16,20,.38)),
+    radial-gradient(circle at 84% 18%,rgba(39,184,238,.22),transparent 28%),
+    radial-gradient(circle at 72% 84%,rgba(116,91,255,.2),transparent 32%),
+    #1b1b22;
+  display:flex;
+  align-items:flex-end;
+  padding:34px;
+  overflow:hidden;
+  position:relative;
+  animation:fadeUp .28s var(--ease);
+}
+.epic-news-hero:after{
+  content:"";
+  position:absolute;
+  inset:-50%;
+  background:linear-gradient(110deg,transparent 42%,rgba(255,255,255,.08),transparent 58%);
+  animation:shimmer 3.8s infinite;
+  opacity:.45;
+}
+.epic-news-hero > div{position:relative;z-index:2;max-width:560px}
+.eyebrow{
+  color:#9ea0aa;
+  font-size:12px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  margin-bottom:10px;
+}
+.epic-news-hero h2{
+  margin:0;
+  font-size:36px;
+  letter-spacing:-.055em;
+  line-height:1.02;
+}
+.epic-news-hero p{
+  color:#b8bac4;
+  line-height:1.6;
+  max-width:520px;
+}
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:22px;
+}
+.info-card,.experience-card,.faq-item{
+  background:#1c1c22;
+  border:1px solid #33333b;
+  border-radius:12px;
+  padding:20px;
+  transition:.18s var(--ease);
+}
+.info-card:hover,.experience-card:hover,.faq-item:hover{
+  transform:translateY(-3px);
+  border-color:#4a4a55;
+}
+.info-card span{
+  color:#8f929c;
+  font-size:12px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+.info-card h3,.experience-card h3,.faq-item h3{
+  margin:10px 0 8px;
+  font-size:19px;
+  letter-spacing:-.035em;
+}
+.info-card p,.experience-card p,.faq-item p{
+  color:#aeb0ba;
+  line-height:1.55;
+  margin:0;
+  font-size:14px;
+}
+.experience-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.experience-art{
+  height:130px;
+  border-radius:10px;
+  margin-bottom:16px;
+  background:#25252c;
+  position:relative;
+  overflow:hidden;
+}
+.experience-art:before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:linear-gradient(110deg,transparent 38%,rgba(255,255,255,.13),transparent 58%);
+  animation:shimmer 3.2s infinite;
+}
+.experience-art.br{background:linear-gradient(135deg,#3656ff,#1ec8ff)}
+.experience-art.og{background:linear-gradient(135deg,#2f6b3e,#b7e06a)}
+.experience-art.reload{background:linear-gradient(135deg,#262b62,#ff6262)}
+.experience-art.lego{background:linear-gradient(135deg,#d7263d,#ffd23f)}
+.experience-art.festival{background:linear-gradient(135deg,#7d2cff,#ff4ecd)}
+.experience-art.rocket{background:linear-gradient(135deg,#ff6b18,#2dd4ff)}
+.experience-card button{
+  height:38px;
+  border:0;
+  border-radius:7px;
+  padding:0 14px;
+  background:#303036;
+  color:#fff;
+  font-weight:900;
+  margin-top:16px;
+}
+.experience-card button:hover{background:#3a3a42}
+.faq-list{
+  display:grid;
+  gap:14px;
+  max-width:850px;
+}
+@media(max-width:900px){
+  .info-grid,.experience-grid{grid-template-columns:1fr}
+}
+
+
+/* V23 working filters + original item art */
+.filter-control{
+  display:block;
+  padding:16px;
+  border-top:1px solid #33333b;
+}
+.filter-control span{
+  display:block;
+  color:#a4a5ae;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-weight:900;
+  margin-bottom:8px;
+}
+.filter-control input,
+.filter-control select,
+.browse-filter-bar input,
+.browse-filter-bar select{
+  width:100%;
+  height:40px;
+  background:#303036;
+  color:#fff;
+  border:1px solid #44444d;
+  border-radius:7px;
+  padding:0 11px;
+  outline:none;
+  font-weight:750;
+}
+.filter-control input:focus,
+.filter-control select:focus,
+.browse-filter-bar input:focus,
+.browse-filter-bar select:focus{
+  border-color:#686b78;
+}
+.reset-filters{
+  width:calc(100% - 32px);
+  height:40px;
+  margin:16px;
+  border:0;
+  border-radius:7px;
+  background:#303036;
+  color:#fff;
+  font-weight:900;
+}
+.reset-filters:hover{background:#3a3a42}
+.browse-filter-bar{
+  display:grid;
+  grid-template-columns:1fr 180px 180px 90px;
+  gap:12px;
+  margin:0 0 24px;
+  background:#1c1c22;
+  border:1px solid #33333b;
+  border-radius:12px;
+  padding:14px;
+}
+.browse-filter-bar button{
+  border:0;
+  border-radius:7px;
+  background:#303036;
+  color:#fff;
+  font-weight:900;
+}
+.browse-filter-bar button:hover{background:#3a3a42}
+.empty-section{
+  min-height:140px;
+  border:1px solid #33333b;
+  border-radius:10px;
+  background:#1c1c22;
+  color:#92949e;
+  display:grid;
+  place-items:center;
+  padding:18px;
+  font-weight:800;
+  grid-column:1/-1;
+}
+.thumb img[src$=".svg"],
+.media-main img[src$=".svg"],
+.side-logo img[src$=".svg"],
+.cart-img img[src$=".svg"],
+.checkout-item-img img[src$=".svg"],
+.order-img img[src$=".svg"]{
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+.card:hover .thumb img[src$=".svg"]{
+  transform:scale(1.018);
+}
+@media(max-width:800px){
+  .browse-filter-bar{grid-template-columns:1fr}
+}
+
+
+/* V24 uploaded item art + ambient theme gradients */
+.card{
+  --theme:#27b8ee;
+}
+.thumb{
+  background:
+    radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--theme) 34%, transparent), transparent 58%),
+    #1b1b20;
+}
+.thumb:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 56%, color-mix(in srgb, var(--theme) 35%, transparent), transparent 48%),
+    linear-gradient(180deg, transparent 50%, color-mix(in srgb, var(--theme) 16%, transparent));
+  opacity:.28;
+  transition:opacity .32s var(--ease);
+}
+.card:hover .thumb:before{
+  opacity:.62;
+}
+.thumb img{
+  position:relative;
+  z-index:2;
+}
+.thumb.item img{
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+.thumb.portrait img{
+  object-fit:cover !important;
+  object-position:center center !important;
+}
+.detail{
+  --theme:#27b8ee;
+}
+.media-main,
+.side-logo{
+  position:relative;
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--theme) 30%, transparent), transparent 58%),
+    #1b1b20;
+}
+.media-main:before,
+.side-logo:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 56%, color-mix(in srgb, var(--theme) 28%, transparent), transparent 52%),
+    linear-gradient(180deg, transparent 45%, color-mix(in srgb, var(--theme) 12%, transparent));
+  opacity:0;
+  animation:ambientFade .55s var(--ease) forwards;
+}
+.media-main img,
+.side-logo img{
+  position:relative;
+  z-index:2;
+}
+@keyframes ambientFade{
+  from{opacity:0}
+  to{opacity:.55}
+}
+.cart-img,
+.checkout-item-img,
+.order-img{
+  position:relative;
+  background:
+    radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--theme, #27b8ee) 26%, transparent), transparent 58%),
+    #111;
+}
+.cart-img:before,
+.checkout-item-img:before,
+.order-img:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--theme, #27b8ee) 22%, transparent), transparent 60%);
+  opacity:.45;
+  z-index:1;
+}
+.cart-img img,
+.checkout-item-img img,
+.order-img img{
+  position:relative;
+  z-index:2;
+}
+
+
+/* V26: one detail image + proper detail-page framing */
+.thumb-strip{
+  display:none !important;
+}
+.media-main{
+  height:560px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.media-main img{
+  width:100%;
+  height:100%;
+  object-fit:contain !important;
+  object-position:center top !important;
+  padding:0;
+}
+.media-main.skin-media img{
+  object-fit:contain !important;
+  object-position:center top !important;
+}
+.media-main.pickaxe-media img,
+.media-main.item img{
+  object-fit:contain !important;
+  object-position:center center !important;
+  padding:34px;
+}
+.side-logo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.side-logo img{
+  width:100%;
+  height:100%;
+  object-fit:contain !important;
+  object-position:center top !important;
+}
+.side-logo.skin-media img{
+  object-fit:contain !important;
+  object-position:center top !important;
+}
+.side-logo.pickaxe-media img,
+.side-logo.item img{
+  object-fit:contain !important;
+  object-position:center center !important;
+  padding:10px;
+}
+@media(max-width:760px){
+  .media-main{height:430px}
+}
+
+
+/* V27: uploaded white icons + restored gallery layout */
+.settings-fixed{
+  padding:0 !important;
+}
+.settings-img{
+  width:19px;
+  height:19px;
+  object-fit:contain;
+  display:block;
+  opacity:.94;
+}
+.nav-wishlist-img{
+  width:18px;
+  height:18px;
+  object-fit:contain;
+  opacity:.78;
+}
+.icon-btn:hover .nav-wishlist-img{
+  opacity:1;
+}
+.wishlist-img{
+  width:15px !important;
+  height:15px !important;
+  object-fit:contain !important;
+  opacity:.92;
+}
+.heart-css,
+.gear{
+  display:none !important;
+}
+.thumb-strip{
+  display:flex !important;
+  gap:12px;
+  margin-top:18px;
+}
+.mini-thumb{
+  width:94px;
+  height:54px;
+  border-radius:4px;
+  overflow:hidden;
+  border:2px solid transparent;
+  background:#17171c;
+  padding:0;
+  position:relative;
+}
+.mini-thumb.active{
+  border-color:#fff;
+}
+.mini-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+}
+.blank-thumb{
+  border-color:#2f2f38;
+  background:
+    linear-gradient(135deg,#15151a,#22222a),
+    #17171c;
+}
+.blank-thumb:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.065), transparent 50%),
+    linear-gradient(110deg, transparent 35%, rgba(255,255,255,.05), transparent 62%);
+  opacity:.8;
+}
+.blank-thumb:after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:22px;
+  height:14px;
+  border:2px solid #4a4a55;
+  border-radius:3px;
+  transform:translate(-50%,-50%);
+  opacity:.8;
+}
+.media-main{
+  height:520px;
+}
+
+
+/* V28: normalized wishlist + bag icons */
+.nav-wishlist-img,
+.nav-bag-img{
+  width:20px !important;
+  height:20px !important;
+  object-fit:contain !important;
+  opacity:.74;
+  display:block;
+}
+.icon-btn:hover .nav-wishlist-img,
+.icon-btn:hover .nav-bag-img{
+  opacity:1;
+}
+.cart-symbol{
+  display:none !important;
+}
+
+
+/* V29 fixed header icons: same size, visible, Epic-style */
+.top-action{
+  width:38px !important;
+  height:38px !important;
+  display:grid !important;
+  place-items:center !important;
+}
+.css-bookmark-icon,
+.css-bag-icon{
+  width:24px;
+  height:24px;
+  display:block;
+  position:relative;
+  color:#c9c9d0;
+  opacity:.82;
+  transition:.16s var(--ease);
+}
+.top-action:hover .css-bookmark-icon,
+.top-action:hover .css-bag-icon{
+  color:#fff;
+  opacity:1;
+}
+.css-bookmark-icon{
+  width:18px;
+  height:23px;
+  border:2.4px solid currentColor;
+  border-bottom:0;
+  border-radius:2px 2px 0 0;
+}
+.css-bookmark-icon:after{
+  content:"";
+  position:absolute;
+  left:-2.4px;
+  right:-2.4px;
+  bottom:-1px;
+  height:12px;
+  border-left:2.4px solid currentColor;
+  border-right:2.4px solid currentColor;
+  border-bottom:2.4px solid currentColor;
+  clip-path:polygon(0 0,100% 0,100% 100%,50% 58%,0 100%);
+}
+.css-bag-icon{
+  width:22px;
+  height:21px;
+  border:2.4px solid currentColor;
+  border-top:0;
+  border-radius:2px 2px 4px 4px;
+  margin-top:5px;
+}
+.css-bag-icon:before{
+  content:"";
+  position:absolute;
+  left:4px;
+  right:4px;
+  top:-8px;
+  height:10px;
+  border:2.4px solid currentColor;
+  border-bottom:0;
+  border-radius:9px 9px 0 0;
+}
+.nav-wishlist-img,
+.nav-bag-img,
+.bookmark-symbol,
+.cart-symbol{
+  display:none !important;
+}
+
+
+/* V30 final Epic-style polish pass */
+:root{
+  --page-max:1216px;
+}
+.topbar{
+  height:66px;
+  background:rgba(17,17,21,.96);
+  backdrop-filter:blur(18px);
+}
+.top-inner{
+  width:min(var(--page-max),92vw);
+  gap:18px;
+}
+.navtab{
+  padding:22px 2px;
+  position:relative;
+}
+.navtab.active:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:2px;
+  border-radius:99px;
+  background:#fff;
+  opacity:.88;
+}
+.search{
+  height:40px;
+  background:#24242b;
+  transition:.16s var(--ease);
+}
+.search:focus-within{
+  background:#2c2c34;
+  box-shadow:inset 0 0 0 1px #454652;
+}
+.shell,
+.detail{
+  width:min(var(--page-max),92vw);
+}
+.listing-title{
+  font-size:42px;
+  letter-spacing:-.065em;
+}
+.tabs{
+  border-bottom:1px solid #2a2a31;
+  gap:34px;
+}
+.tabs button{
+  margin-bottom:-1px;
+}
+.tabs button.active:after{
+  height:3px;
+}
+.filter-panel{
+  background:#1b1b21;
+  border-color:#2f2f37;
+  border-radius:12px;
+  box-shadow:0 18px 50px rgba(0,0,0,.18);
+}
+.filter-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-size:17px;
+}
+.filter-title button{
+  border:0;
+  background:transparent;
+  color:#9fa2ad;
+  font-size:12px;
+  font-weight:850;
+}
+.filter-title button:hover{
+  color:#fff;
+}
+.filter-control{
+  padding:18px;
+}
+.filter-control input,
+.filter-control select,
+.browse-filter-bar input,
+.browse-filter-bar select{
+  height:42px;
+  background:#26262e;
+  border-color:#363640;
+}
+.browse-filter-bar{
+  border-radius:14px;
+  background:#1b1b21;
+  border-color:#303039;
+}
+.card{
+  transition:transform .2s var(--ease), filter .2s var(--ease);
+}
+.card:hover{
+  transform:translateY(-5px);
+}
+.thumb{
+  border-radius:9px;
+  box-shadow:0 16px 34px rgba(0,0,0,.18);
+}
+.title{
+  font-size:15.5px;
+}
+.price{
+  font-weight:800;
+}
+.detail h1{
+  font-size:44px;
+}
+.detail-layout{
+  grid-template-columns:minmax(0,1fr) 318px;
+  gap:48px;
+}
+.media-main{
+  height:555px;
+  border-radius:10px;
+  background:
+    radial-gradient(circle at 50% 52%, color-mix(in srgb, var(--theme) 26%, transparent), transparent 60%),
+    #18181e;
+  box-shadow:0 28px 80px rgba(0,0,0,.24);
+}
+.media-main img{
+  padding:0 !important;
+  max-height:100%;
+}
+.media-main.pickaxe-media img,
+.media-main.item img{
+  padding:28px !important;
+}
+.thumb-strip{
+  gap:10px !important;
+  margin-top:16px !important;
+}
+.mini-thumb{
+  width:104px !important;
+  height:58px !important;
+  background:#17171d !important;
+  border-color:#30303a !important;
+  transition:.16s var(--ease);
+}
+.mini-thumb.active{
+  border-color:#fff !important;
+}
+.mini-thumb:hover{
+  border-color:#7c7f8c !important;
+}
+.blank-thumb span{
+  position:relative;
+  z-index:2;
+  color:#777985;
+  font-size:11px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.blank-thumb:after{
+  display:none !important;
+}
+.side{
+  position:sticky;
+  top:90px;
+}
+.side-logo{
+  height:184px;
+  border-radius:9px;
+  background:
+    radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--theme) 24%, transparent), transparent 55%),
+    #18181e;
+}
+.category{
+  background:#303038;
+  color:#ededf0;
+  text-transform:none;
+  letter-spacing:0;
+}
+.side-buy{
+  height:50px;
+  border-radius:7px;
+}
+.side-secondary{
+  border-radius:7px;
+}
+.spec div{
+  padding:14px 0;
+}
+.cart-top{
+  position:relative;
+}
+.cart-count{
+  position:absolute;
+  right:0;
+  top:3px;
+  min-width:16px;
+  height:16px;
+  padding:0 4px;
+  border-radius:999px;
+  background:var(--blue);
+  color:#061218;
+  display:grid;
+  place-items:center;
+  font-size:10px;
+  font-weight:1000;
+  opacity:0;
+  transform:scale(.75);
+  transition:.16s var(--ease);
+}
+.cart-count:not(:empty){
+  opacity:1;
+  transform:scale(1);
+}
+.cart-count:has(+ *){}
+.cart-count[id]{}
+#cartCount{
+  opacity:1;
+}
+#cartCount:empty,
+#cartCount.zero{
+  opacity:0 !important;
+  transform:scale(.75) !important;
+}
+.cart-list{
+  border-radius:14px;
+  background:#1b1b21;
+}
+.cart-list-head{
+  display:grid;
+  grid-template-columns:1fr auto;
+  padding:16px 18px;
+  border-bottom:1px solid #303039;
+  color:#9da0aa;
+  font-size:12px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+}
+.cart-row{
+  grid-template-columns:82px minmax(0,1fr) 120px;
+  padding:18px;
+}
+.cart-img{
+  width:82px;
+  height:102px;
+}
+.cart-summary{
+  border-radius:14px;
+  background:#1b1b21;
+}
+.cart-checkout{
+  border-radius:10px;
+}
+.modal-card{
+  border-radius:18px;
+}
+.player-card,
+.order-mini,
+.recipient-preview,
+.checkout-items{
+  border-radius:13px;
+}
+.checkout-item{
+  grid-template-columns:54px minmax(0,1fr) auto;
+}
+.checkout-item-img{
+  width:54px;
+  height:66px;
+}
+.pay-btn{
+  height:50px;
+}
+.info-card,
+.experience-card,
+.faq-item,
+.blank-page-card{
+  background:#1b1b21;
+  border-color:#303039;
+  border-radius:14px;
+}
+.epic-news-hero{
+  border-radius:16px;
+}
+.experience-art{
+  border-radius:12px;
+}
+.toast{
+  border-radius:999px;
+  padding:12px 18px;
+}
+@media(max-width:900px){
+  .side{position:static}
+  .detail-layout{grid-template-columns:1fr}
+}
+
+
+/* V31 fixed wishlist heart asset */
+.wishlist-heart-icon{
+  display:block !important;
+  width:21px !important;
+  height:21px !important;
+  object-fit:contain !important;
+  opacity:.82;
+  filter:none !important;
+}
+.wishlist-top:hover .wishlist-heart-icon,
+.wishlist-btn:hover .wishlist-heart-icon{
+  opacity:1;
+}
+.side-heart{
+  width:16px !important;
+  height:16px !important;
+  opacity:.95;
+}
+.css-bookmark-icon,
+.nav-wishlist-img,
+.bookmark-symbol,
+.heart-css{
+  display:none !important;
+}
+.wishlist-btn{
+  gap:9px !important;
+}
+
+
+/* V32 final polish: restrained Epic-like details */
+body{
+  background:#101014;
+}
+.topbar{
+  height:64px !important;
+  border-bottom-color:#24242b !important;
+}
+.top-inner{
+  gap:16px !important;
+}
+.top-epic-logo{
+  width:28px !important;
+  height:34px !important;
+}
+.back-arrow{
+  color:#8b8c94 !important;
+  transition:.16s var(--ease);
+}
+.back-arrow:hover{
+  color:#fff !important;
+}
+.search{
+  width:244px !important;
+  height:38px !important;
+}
+.navtab{
+  font-size:14px !important;
+  color:#a2a3aa !important;
+}
+.navtab:hover,
+.navtab.active{
+  color:#f7f7f8 !important;
+}
+.top-icons{
+  gap:14px !important;
+}
+.top-action{
+  width:34px !important;
+  height:34px !important;
+}
+.css-bag-icon{
+  width:20px !important;
+  height:19px !important;
+}
+.css-bookmark-icon,
+.wishlist-heart-icon{
+  width:20px !important;
+  height:20px !important;
+}
+.cart-count{
+  right:-2px !important;
+  top:1px !important;
+  min-width:15px !important;
+  height:15px !important;
+  font-size:9px !important;
+}
+.avatar{
+  width:32px !important;
+  height:32px !important;
+  font-size:13px !important;
+}
+.listing-title{
+  font-size:40px !important;
+  margin-bottom:26px !important;
+}
+.section-title{
+  font-size:23px !important;
+}
+.grid{
+  gap:34px 18px !important;
+}
+.thumb{
+  background-color:#17171d !important;
+}
+.meta{
+  padding-top:10px !important;
+}
+.kind{
+  font-size:12px !important;
+}
+.title{
+  font-size:15px !important;
+  letter-spacing:-.025em;
+}
+.price{
+  font-size:14px !important;
+  margin-top:8px !important;
+}
+.card:hover{
+  transform:translateY(-4px) !important;
+}
+.detail{
+  margin-top:34px !important;
+}
+.detail h1{
+  font-size:42px !important;
+  margin-bottom:12px !important;
+}
+.rating-line{
+  margin-bottom:24px !important;
+  color:#aaaab2 !important;
+}
+.detail-layout{
+  gap:42px !important;
+}
+.media-main{
+  height:540px !important;
+  border:1px solid #282832;
+  overflow:hidden;
+}
+.media-main.skin-media img{
+  object-fit:contain !important;
+  object-position:center top !important;
+}
+.media-main.pickaxe-media img,
+.media-main.item img{
+  object-fit:contain !important;
+  object-position:center center !important;
+  padding:34px !important;
+}
+.detail-desc{
+  color:#d7d7dc !important;
+  font-size:15.5px !important;
+  line-height:1.7 !important;
+  max-width:860px;
+}
+.tag-section{
+  gap:36px !important;
+}
+.tag{
+  background:#2d2d34 !important;
+  color:#efeff2 !important;
+  border:1px solid #383842;
+}
+.side{
+  top:88px !important;
+}
+.side-logo{
+  border:1px solid #2c2c36;
+}
+.side-buy{
+  animation:none !important;
+}
+.side-buy:hover,
+.pay-btn:hover,
+.cart-checkout:hover{
+  transform:translateY(-1px);
+}
+.side-secondary{
+  background:#2d2d34 !important;
+}
+.side-secondary:hover{
+  background:#383840 !important;
+}
+.spec div{
+  font-size:12.5px !important;
+}
+.filter-panel,
+.cart-summary,
+.cart-list,
+.browse-filter-bar{
+  box-shadow:none !important;
+}
+.filter-title{
+  padding:17px 18px !important;
+}
+.filter-control{
+  padding:16px 18px !important;
+}
+.filter-control span{
+  font-size:11px !important;
+}
+.filter-control input,
+.filter-control select,
+.browse-filter-bar input,
+.browse-filter-bar select{
+  font-size:13px !important;
+  background:#24242b !important;
+}
+.browse-filter-bar{
+  padding:13px !important;
+}
+.cart-row{
+  min-height:126px;
+}
+.cart-name{
+  letter-spacing:-.025em;
+}
+.cart-summary h2{
+  font-size:21px !important;
+}
+.cart-muted{
+  color:#9698a3 !important;
+}
+.modal-card{
+  width:min(424px,92vw) !important;
+}
+.modal-head{
+  padding:17px 20px !important;
+}
+.modal-head h2{
+  font-size:17px !important;
+}
+.input-hint{
+  margin-top:7px;
+  color:#858895;
+  font-size:11px;
+  font-weight:750;
+}
+.recipient-preview.loading:after{
+  opacity:.65;
+}
+.lookup-status{
+  color:#9da0aa !important;
+}
+.checkout-items{
+  max-height:220px;
+  overflow:auto;
+}
+.checkout-items::-webkit-scrollbar{
+  width:7px;
+}
+.checkout-items::-webkit-scrollbar-thumb{
+  background:#3b3d48;
+  border-radius:999px;
+}
+.pay-btn.lookup-waiting,
+.pay-btn:disabled{
+  background:#333640 !important;
+  color:#989aa5 !important;
+}
+.fine{
+  color:#8d909a !important;
+}
+.success-title{
+  letter-spacing:-.04em;
+}
+.receipt-note{
+  color:#8f98a5 !important;
+}
+.epic-news-hero{
+  min-height:320px !important;
+  border-color:#303039 !important;
+  box-shadow:0 24px 70px rgba(0,0,0,.22);
+}
+.epic-news-hero h2{
+  font-size:38px !important;
+}
+.info-grid,
+.experience-grid{
+  gap:16px !important;
+}
+.info-card,
+.experience-card,
+.faq-item{
+  padding:22px !important;
+}
+.info-card:hover,
+.experience-card:hover,
+.faq-item:hover{
+  transform:translateY(-2px) !important;
+}
+.store-note{
+  margin-top:18px;
+  background:#1b1b21;
+  border:1px solid #303039;
+  border-radius:14px;
+  padding:22px;
+}
+.store-note h3{
+  margin:0 0 8px;
+  font-size:20px;
+  letter-spacing:-.035em;
+}
+.store-note p{
+  margin:0;
+  color:#aeb0ba;
+  line-height:1.55;
+}
+.experience-hero-strip{
+  margin-bottom:18px;
+  min-height:220px;
+  border:1px solid #303039;
+  border-radius:16px;
+  padding:28px;
+  display:flex;
+  align-items:flex-end;
+  background:
+    linear-gradient(90deg,rgba(16,16,20,.96),rgba(16,16,20,.28)),
+    radial-gradient(circle at 80% 32%,rgba(39,184,238,.25),transparent 30%),
+    radial-gradient(circle at 70% 88%,rgba(126,86,255,.24),transparent 36%),
+    #1b1b21;
+}
+.experience-hero-strip span{
+  color:#9fa2ad;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:12px;
+  font-weight:950;
+}
+.experience-hero-strip h2{
+  margin:8px 0;
+  font-size:32px;
+  letter-spacing:-.055em;
+}
+.experience-hero-strip p{
+  margin:0;
+  max-width:570px;
+  color:#b7b9c2;
+  line-height:1.55;
+}
+.experience-card button{
+  transition:.16s var(--ease);
+}
+.toast{
+  min-width:unset !important;
+}
+@media(max-width:1100px){
+  .search{width:210px !important}
+  .navtab{font-size:13px !important}
+  .detail-layout{gap:28px !important}
+}
+@media(max-width:860px){
+  .top-inner{
+    width:94vw !important;
+    padding-left:42px !important;
+    gap:10px !important;
+  }
+  .search{
+    width:min(42vw,190px) !important;
+  }
+  .navtab{
+    display:none !important;
+  }
+  .top-icons{
+    margin-left:auto !important;
+  }
+  .listing-title{
+    font-size:34px !important;
+  }
+  .media-main{
+    height:440px !important;
+  }
+  .thumb-strip{
+    overflow-x:auto;
+    padding-bottom:4px;
+  }
+  .mini-thumb{
+    flex:0 0 auto;
+  }
+  .cart-row{
+    grid-template-columns:72px minmax(0,1fr);
+  }
+  .cart-actions{
+    grid-column:2;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+  }
+}
+@media(max-width:520px){
+  .grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:28px 14px !important;
+  }
+  .media-main{
+    height:360px !important;
+  }
+  .side-logo{
+    height:150px !important;
+  }
+  .modal-card{
+    width:94vw !important;
+  }
+  .player-card,
+  .order-mini,
+  .recipient-preview,
+  .pay-section,
+  .gift-section,
+  .summary-lines,
+  .checkout-items{
+    margin-left:16px !important;
+    margin-right:16px !important;
+  }
+  .pay-btn{
+    width:calc(100% - 32px) !important;
+    margin-left:16px !important;
+    margin-right:16px !important;
+  }
+  .fine{
+    margin-left:16px !important;
+    margin-right:16px !important;
+  }
+}
+
+
+/* V35 10/10 polish pass */
+body{
+  background:
+    radial-gradient(circle at 50% -15%, rgba(80,86,110,.12), transparent 30%),
+    #101014 !important;
+}
+.topbar{
+  box-shadow:0 1px 0 #23232a, 0 18px 50px rgba(0,0,0,.16);
+}
+.settings-fixed{
+  top:13px !important;
+  left:14px !important;
+  width:36px !important;
+  height:36px !important;
+  border-color:#303039 !important;
+  background:#16161b !important;
+}
+.settings-fixed:hover{
+  background:#25252c !important;
+}
+.card{
+  background:transparent !important;
+  border:0 !important;
+}
+.card-main{
+  display:block;
+  width:100%;
+  border:0;
+  background:transparent;
+  text-align:left;
+  color:inherit;
+  padding:0;
+}
+.quick-actions{
+  display:grid;
+  grid-template-columns:1fr 64px;
+  gap:8px;
+  margin-top:10px;
+  opacity:0;
+  transform:translateY(6px);
+  transition:.18s var(--ease);
+}
+.card:hover .quick-actions,
+.card:focus-within .quick-actions{
+  opacity:1;
+  transform:none;
+}
+.quick-actions button{
+  height:34px;
+  border:0;
+  border-radius:7px;
+  background:#2c2c34;
+  color:#f5f5f6;
+  font-size:12px;
+  font-weight:900;
+}
+.quick-actions button:first-child{
+  background:#30343d;
+}
+.quick-actions button:hover{
+  background:#3a3a44;
+}
+.thumb{
+  transition:box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+.card:hover .thumb{
+  box-shadow:0 20px 46px rgba(0,0,0,.26), 0 0 0 1px color-mix(in srgb, var(--theme) 22%, #303039);
+}
+.filter-accordion{
+  border-top:1px solid #33333b;
+  padding:0;
+}
+.filter-accordion summary{
+  list-style:none;
+  cursor:pointer;
+  padding:16px 18px 10px;
+  color:#d7d7dc;
+  font-size:13px;
+  font-weight:950;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.filter-accordion summary::-webkit-details-marker{display:none}
+.filter-accordion summary:after{
+  content:"";
+  width:8px;
+  height:8px;
+  border-right:2px solid #858893;
+  border-bottom:2px solid #858893;
+  transform:rotate(45deg) translateY(-2px);
+  transition:.16s var(--ease);
+}
+.filter-accordion[open] summary:after{
+  transform:rotate(225deg) translateY(-1px);
+}
+.filter-accordion input,
+.filter-accordion select{
+  width:calc(100% - 36px);
+  margin:0 18px 16px;
+  height:42px;
+  background:#24242b;
+  color:#fff;
+  border:1px solid #363640;
+  border-radius:7px;
+  padding:0 11px;
+  outline:none;
+  font-weight:750;
+}
+.filter-control{display:none !important}
+.detail-layout{
+  align-items:start;
+}
+.media-main{
+  isolation:isolate;
+}
+.media-main:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),transparent 30%,rgba(0,0,0,.12));
+  z-index:3;
+}
+.blank-thumb{
+  display:grid;
+  place-items:center;
+}
+.side{
+  border-radius:12px;
+}
+.add-cart-side:before{
+  content:"";
+  width:16px;
+  height:14px;
+  display:inline-block;
+  margin-right:8px;
+  border:2px solid currentColor;
+  border-top:0;
+  border-radius:0 0 3px 3px;
+  transform:translateY(2px);
+}
+.add-cart-side:after{
+  content:"";
+  width:8px;
+  height:7px;
+  display:inline-block;
+  position:absolute;
+  opacity:0;
+}
+.cart-drawer-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.42);
+  backdrop-filter:blur(5px);
+  z-index:110;
+  opacity:0;
+  visibility:hidden;
+  transition:.2s var(--ease);
+}
+.cart-drawer-overlay.on{
+  opacity:1;
+  visibility:visible;
+}
+.cart-drawer{
+  position:fixed;
+  right:0;
+  top:0;
+  bottom:0;
+  width:min(420px,94vw);
+  background:#17171c;
+  border-left:1px solid #34343e;
+  z-index:111;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  clip-path:inset(0 0 0 100%);
+  transition:clip-path .26s var(--ease),opacity .18s ease,visibility 0s linear .26s;
+  box-shadow:-32px 0 120px rgba(0,0,0,.54);
+  display:flex;
+  flex-direction:column;
+}
+.cart-drawer.on{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  clip-path:inset(0);
+  transition:clip-path .26s var(--ease),opacity .18s ease;
+}
+.drawer-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+  padding:24px 24px 18px;
+  border-bottom:1px solid #303039;
+}
+.drawer-head h2{
+  margin:0;
+  font-size:25px;
+  letter-spacing:-.055em;
+}
+.drawer-head p{
+  margin:5px 0 0;
+  color:#9ca0aa;
+  font-size:13px;
+  font-weight:750;
+}
+.drawer-close{
+  border:0;
+  background:transparent;
+  color:#b9bbc4;
+  font-size:28px;
+  line-height:1;
+}
+.drawer-items{
+  padding:12px;
+  overflow:auto;
+  flex:1;
+}
+.drawer-empty{
+  min-height:180px;
+  display:grid;
+  place-items:center;
+  color:#92949e;
+  font-weight:850;
+}
+.drawer-row{
+  display:grid;
+  grid-template-columns:58px minmax(0,1fr) auto;
+  gap:12px;
+  align-items:center;
+  padding:12px;
+  border-radius:12px;
+  transition:.16s var(--ease);
+}
+.drawer-row:hover{
+  background:#202027;
+}
+.drawer-img{
+  width:58px;
+  height:72px;
+  border-radius:8px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--theme, #27b8ee) 24%, transparent), transparent 58%),
+    #111;
+}
+.drawer-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+}
+.drawer-copy b{
+  display:block;
+  font-size:14px;
+  letter-spacing:-.025em;
+}
+.drawer-copy span{
+  display:block;
+  color:#8f929c;
+  font-size:12px;
+  font-weight:750;
+  margin-top:3px;
+}
+.drawer-price{
+  text-align:right;
+}
+.drawer-price b{
+  display:block;
+  font-size:13px;
+}
+.drawer-price button{
+  margin-top:8px;
+  border:0;
+  background:transparent;
+  color:#92949e;
+  font-size:12px;
+  font-weight:850;
+}
+.drawer-price button:hover{color:#fff}
+.drawer-summary{
+  border-top:1px solid #303039;
+  padding:18px 24px 24px;
+}
+.drawer-summary div{
+  display:flex;
+  justify-content:space-between;
+  color:#b8bac4;
+  font-size:13px;
+  margin:9px 0;
+}
+.drawer-summary .drawer-total{
+  color:#fff;
+  font-size:18px;
+  font-weight:1000;
+  padding-top:12px;
+  margin-top:12px;
+  border-top:1px solid #303039;
+}
+.drawer-summary button{
+  width:100%;
+  height:46px;
+  border:0;
+  border-radius:9px;
+  font-weight:1000;
+  margin-top:12px;
+}
+#drawerCheckout{
+  background:var(--blue);
+  color:#07141b;
+}
+#drawerCheckout:disabled{
+  background:#333640;
+  color:#92949e;
+  cursor:not-allowed;
+}
+.drawer-view{
+  background:#2c2c34;
+  color:#fff;
+}
+.input-hint{
+  margin-top:7px;
+  color:#858895;
+  font-size:11px;
+  font-weight:750;
+}
+.checkout-items{
+  scrollbar-width:thin;
+  scrollbar-color:#3b3d48 transparent;
+}
+.checkout-items::-webkit-scrollbar{width:7px}
+.checkout-items::-webkit-scrollbar-thumb{background:#3b3d48;border-radius:999px}
+.experience-hero-strip,
+.store-note{
+  animation:fadeUp .28s var(--ease);
+}
+.info-card,
+.experience-card,
+.faq-item{
+  position:relative;
+  overflow:hidden;
+}
+.info-card:before,
+.experience-card:before,
+.faq-item:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.035),transparent 70%);
+  opacity:0;
+  transition:.18s var(--ease);
+}
+.info-card:hover:before,
+.experience-card:hover:before,
+.faq-item:hover:before{
+  opacity:1;
+}
+@media(max-width:860px){
+  .quick-actions{
+    opacity:1;
+    transform:none;
+  }
+  .quick-actions{
+    grid-template-columns:1fr;
+  }
+  .quick-actions button:last-child{
+    display:none;
+  }
+  .cart-drawer{
+    width:100vw;
+  }
+}
+
+</style>
+  <script src="scripts/global-settings.js"></script>
+  <link rel="stylesheet" href="styles/style_5.css">
+<link rel="stylesheet" href="styles/style_6.css">
+<style id="lvBackToVisualsStyle">
+    #lvBackToVisuals{
+      position:fixed!important;
+      right:18px!important;
+      bottom:18px!important;
+      z-index:2147483647!important;
+      display:inline-flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      gap:0!important;
+      width:44px!important;
+      min-width:44px!important;
+      max-width:calc(100vw - 24px)!important;
+      min-height:44px!important;
+      padding:0!important;
+      overflow:hidden!important;
+      border:1px solid rgba(255,255,255,.16)!important;
+      border-radius:14px!important;
+      background:rgba(8,9,13,.92)!important;
+      color:#fff!important;
+      text-decoration:none!important;
+      font:800 11px/1 Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+      letter-spacing:.09em!important;
+      text-transform:uppercase!important;
+      white-space:nowrap!important;
+      box-shadow:0 12px 36px rgba(0,0,0,.46),0 0 30px rgba(93,119,255,.12),inset 0 1px rgba(255,255,255,.08)!important;
+      -webkit-backdrop-filter:blur(10px)!important;
+      backdrop-filter:blur(10px)!important;
+      cursor:pointer!important;
+      opacity:1!important;
+      transform:none!important;
+      transition:width .28s cubic-bezier(.2,.8,.2,1),padding .28s cubic-bezier(.2,.8,.2,1),gap .28s ease,transform .2s ease,border-color .2s ease,box-shadow .2s ease!important;
+    }
+    #lvBackToVisuals::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius:inherit;
+      pointer-events:none;
+      background:linear-gradient(110deg,transparent 18%,rgba(255,255,255,.10) 39%,rgba(95,151,255,.15) 50%,transparent 72%);
+      background-size:220% 100%;
+      animation:lvBackSweep 5s linear infinite;
+      opacity:.72;
+    }
+    #lvBackToVisuals > *{position:relative;z-index:1}
+    #lvBackToVisuals:hover{
+      width:156px!important;
+      padding:0 14px!important;
+      gap:9px!important;
+      transform:translateY(-2px)!important;
+      border-color:rgba(110,151,255,.44)!important;
+      box-shadow:0 16px 44px rgba(0,0,0,.52),0 0 38px rgba(85,139,255,.22),inset 0 1px rgba(255,255,255,.1)!important;
+    }
+    #lvBackToVisuals svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    #lvBackToVisuals span{
+      display:block!important;
+      max-width:0!important;
+      overflow:hidden!important;
+      opacity:0!important;
+      transform:translateX(8px)!important;
+      transition:max-width .28s cubic-bezier(.2,.8,.2,1),opacity .16s ease .04s,transform .28s cubic-bezier(.2,.8,.2,1)!important;
+    }
+    #lvBackToVisuals:hover span,#lvBackToVisuals:focus-visible span{
+      max-width:112px!important;
+      opacity:1!important;
+      transform:none!important;
+    }
+    #lvBackToVisuals:focus-visible{width:156px!important;padding:0 14px!important;gap:9px!important;outline:2px solid rgba(104,164,255,.8)!important;outline-offset:3px!important}
+    @keyframes lvBackSweep{0%{background-position:180% 0}100%{background-position:-80% 0}}
+    @media(max-width:640px){#lvBackToVisuals{right:12px!important;bottom:12px!important;width:42px!important;min-width:42px!important;min-height:42px!important;padding:0!important}#lvBackToVisuals:hover,#lvBackToVisuals:focus-visible{width:148px!important;padding:0 12px!important}}
+  </style><style>
+    html.lv-protected,
+    html.lv-protected body {
+      -webkit-touch-callout:none;
+    }
+
+    html.lv-protected img {
+      -webkit-user-drag:none;
+      user-drag:none;
+    }
+
+    html.lv-protected body,
+    html.lv-protected body *:not(input):not(textarea):not([contenteditable="true"]) {
+      -webkit-user-select:none;
+      user-select:none;
+    }
+
+    input,
+    textarea,
+    [contenteditable="true"] {
+      -webkit-user-select:text!important;
+      user-select:text!important;
+    }
+
+    @media print {
+      html.lv-protected body > * {
+        display:none!important;
+      }
+
+      html.lv-protected body::before {
+        content:"Protected content — printing disabled";
+        display:grid!important;
+        min-height:100vh;
+        place-items:center;
+        color:#111;
+        font:700 22px system-ui,sans-serif;
+      }
+    }
+  </style><style id="lvSharedSettingsStyle">
+      #accountMenu,#settingsButton,.settings-fixed,.settings-btn,.settings-launcher,
+      .nav button[onclick*="safeOpenSettings"],.header-actions .menu[onclick*="safeOpenSettings"]{display:none!important}
+      #settingsPanel,#settingsOverlay,#settingsWindow{display:none!important;visibility:hidden!important;pointer-events:none!important}
+      #lvSettingsGear,#lvSettingsPanel{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
+      #lvSettingsGear{
+        position:fixed!important;left:max(16px,env(safe-area-inset-left))!important;bottom:max(16px,env(safe-area-inset-bottom))!important;
+        z-index:2147483646!important;width:44px!important;height:44px!important;padding:0!important;border:1px solid transparent!important;
+        border-radius:16px!important;background:linear-gradient(145deg,rgba(17,21,31,.94),rgba(5,8,14,.96)) padding-box,linear-gradient(135deg,rgba(255,255,255,.17),rgba(101,145,255,.36),rgba(81,211,255,.14)) border-box!important;color:#f7f9fc!important;display:grid!important;place-items:center!important;
+        box-shadow:0 16px 48px rgba(0,0,0,.58),0 0 30px rgba(83,126,255,.11),inset 0 1px rgba(255,255,255,.09)!important;
+        -webkit-backdrop-filter:blur(20px) saturate(1.3)!important;backdrop-filter:blur(20px) saturate(1.3)!important;
+        cursor:pointer!important;opacity:.72!important;transition:opacity .2s ease,transform .22s cubic-bezier(.2,.8,.2,1),border-color .22s ease,box-shadow .22s ease!important
+      }
+      #lvSettingsGear:hover,#lvSettingsGear[aria-expanded="true"],#lvSettingsGear.lv-auto-running{opacity:1!important}
+      #lvSettingsGear:hover{transform:translateY(-2px)!important;border-color:rgba(255,255,255,.28)!important;box-shadow:0 18px 50px rgba(0,0,0,.58),0 0 28px rgba(88,135,255,.13),inset 0 1px rgba(255,255,255,.1)!important}
+      #lvSettingsGear svg{width:18px!important;height:18px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important;transition:transform .35s cubic-bezier(.2,.8,.2,1)!important}
+      #lvSettingsGear:hover svg,#lvSettingsGear[aria-expanded="true"] svg{transform:rotate(28deg)!important}
+      #lvSettingsGear .lv-settings-run-dot{position:absolute!important;right:5px!important;top:5px!important;width:6px!important;height:6px!important;border-radius:50%!important;background:#657080!important;box-shadow:0 0 0 3px #080b11!important;transition:background .25s ease,box-shadow .25s ease!important}
+      #lvSettingsGear.lv-auto-running .lv-settings-run-dot{background:#69f39c!important;box-shadow:0 0 0 3px #080b11,0 0 13px rgba(105,243,156,.9)!important;animation:lvSettingsPulse 1.2s ease-in-out infinite!important}
+      @keyframes lvSettingsPulse{0%,100%{opacity:.55;transform:scale(.82)}50%{opacity:1;transform:scale(1.18)}}
+      #lvSettingsPanel{
+        --lv-settings-accent:#6ea7ff;position:fixed!important;left:max(16px,env(safe-area-inset-left))!important;bottom:max(66px,calc(env(safe-area-inset-bottom) + 66px))!important;
+        z-index:2147483645!important;width:min(382px,calc(100vw - 28px))!important;max-height:min(720px,calc(100vh - 102px))!important;overflow:hidden!important;
+        border:1px solid transparent!important;border-radius:26px!important;background:linear-gradient(155deg,rgba(20,24,35,.93),rgba(5,8,15,.955)) padding-box,linear-gradient(130deg,rgba(255,255,255,.15),rgba(104,145,255,.34),rgba(77,209,255,.14),rgba(255,255,255,.07)) border-box!important;
+        color:#f7f9fc!important;box-shadow:0 34px 115px rgba(0,0,0,.72),0 0 64px rgba(77,123,255,.12),inset 0 1px rgba(255,255,255,.08)!important;
+        -webkit-backdrop-filter:blur(28px) saturate(1.4)!important;backdrop-filter:blur(28px) saturate(1.4)!important;
+        opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translateY(12px) scale(.975)!important;transform-origin:bottom left!important;
+        transition:opacity .24s ease,visibility .24s ease,transform .28s cubic-bezier(.2,.8,.2,1)!important
+      }
+      #lvSettingsPanel::before{content:""!important;position:absolute!important;inset:-35% -60% auto!important;height:150px!important;pointer-events:none!important;background:linear-gradient(112deg,transparent 35%,rgba(255,255,255,.08) 47%,rgba(104,170,255,.11) 53%,transparent 65%)!important;transform:rotate(3deg)!important;opacity:.8!important}
+      #lvSettingsPanel.open{opacity:1!important;visibility:visible!important;pointer-events:auto!important;transform:none!important}
+      .lv-settings-head{position:relative!important;z-index:1!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:14px!important;padding:17px 18px 12px!important}
+      .lv-settings-head-copy{min-width:0!important}.lv-settings-kicker{color:#7d8798!important;font-size:9px!important;font-weight:900!important;letter-spacing:.16em!important;text-transform:uppercase!important}
+      .lv-settings-head h2{margin:4px 0 0!important;color:#fff!important;font-size:18px!important;line-height:1.1!important;letter-spacing:-.025em!important}
+      .lv-settings-close{width:34px!important;height:34px!important;border:1px solid rgba(255,255,255,.11)!important;border-radius:11px!important;background:rgba(255,255,255,.035)!important;color:#aab3c1!important;font-size:20px!important;line-height:1!important;cursor:pointer!important}
+      .lv-settings-tabs{position:relative!important;z-index:1!important;display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:5px!important;margin:0 14px 13px!important;padding:4px!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:14px!important;background:rgba(6,9,15,.72)!important;box-shadow:inset 0 1px rgba(255,255,255,.025)!important}
+      .lv-settings-tab{height:38px!important;border:0!important;border-radius:10px!important;background:transparent!important;color:#788395!important;font-size:10px!important;font-weight:900!important;letter-spacing:.08em!important;text-transform:uppercase!important;cursor:pointer!important;transition:background .2s ease,color .2s ease,box-shadow .2s ease!important}
+      .lv-settings-tab.active{background:linear-gradient(145deg,rgba(114,154,255,.18),rgba(255,255,255,.07))!important;color:#fff!important;box-shadow:0 8px 24px rgba(61,107,215,.10),inset 0 1px rgba(255,255,255,.08)!important}
+      .lv-settings-scroll{max-height:calc(min(720px,100vh - 102px) - 116px)!important;overflow:auto!important;padding:0 14px 15px!important;overscroll-behavior:contain!important;scrollbar-width:thin!important;scrollbar-color:rgba(255,255,255,.16) transparent!important}
+      .lv-settings-view{display:none!important}.lv-settings-view.active{display:block!important;animation:lvSettingsViewIn .24s cubic-bezier(.2,.8,.2,1) both!important}
+      @keyframes lvSettingsViewIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+      .lv-settings-card{padding:14px!important;border:1px solid rgba(255,255,255,.095)!important;border-radius:18px!important;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.016))!important;box-shadow:inset 0 1px rgba(255,255,255,.04),0 14px 34px rgba(0,0,0,.13)!important}
+      .lv-settings-card+.lv-settings-card{margin-top:10px!important}
+      .lv-settings-section-title{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-bottom:13px!important}
+      .lv-settings-section-title strong{font-size:13px!important;color:#fff!important}.lv-settings-section-title span{color:#747f90!important;font-size:9px!important;font-weight:800!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+      .lv-settings-field{display:grid!important;gap:7px!important;margin-top:11px!important}.lv-settings-field:first-of-type{margin-top:0!important}
+      .lv-settings-field>span{color:#8e98a8!important;font-size:9px!important;font-weight:900!important;letter-spacing:.14em!important;text-transform:uppercase!important}
+      .lv-settings-field input,.lv-settings-field select{width:100%!important;height:44px!important;min-width:0!important;border:1px solid rgba(255,255,255,.11)!important;border-radius:12px!important;background:#0a0f17!important;color:#f7f9fc!important;padding:0 12px!important;outline:0!important;font-size:11px!important;font-weight:800!important;transition:border-color .2s ease,box-shadow .2s ease!important}
+      .lv-settings-field select{padding-right:34px!important;appearance:none!important;-webkit-appearance:none!important;background-image:linear-gradient(45deg,transparent 50%,#8c96a7 50%),linear-gradient(135deg,#8c96a7 50%,transparent 50%)!important;background-position:calc(100% - 15px) 19px,calc(100% - 10px) 19px!important;background-size:5px 5px!important;background-repeat:no-repeat!important}
+      .lv-settings-field input:focus,.lv-settings-field select:focus{border-color:rgba(110,167,255,.62)!important;box-shadow:0 0 0 4px rgba(110,167,255,.11)!important}
+      .lv-settings-save{position:relative!important;width:100%!important;min-height:46px!important;margin-top:13px!important;border:1px solid rgba(124,175,255,.58)!important;border-radius:13px!important;background:linear-gradient(135deg,#8abaff,#548fff)!important;color:#07101c!important;font-size:10px!important;font-weight:950!important;letter-spacing:.105em!important;text-transform:uppercase!important;cursor:pointer!important;box-shadow:0 12px 28px rgba(55,111,218,.19),inset 0 1px rgba(255,255,255,.3)!important}
+      .lv-settings-note{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-top:10px!important;color:#747f90!important;font-size:9px!important;font-weight:750!important;line-height:1.4!important}
+      .lv-settings-note strong{color:#9ba7b8!important;font-size:9px!important;white-space:nowrap!important}
+      #lvSettingsAutoGiftMount{min-height:90px!important}
+      @media(max-width:620px){#lvSettingsGear{left:12px!important;bottom:12px!important;width:40px!important;height:40px!important}#lvSettingsPanel{left:12px!important;bottom:62px!important;width:calc(100vw - 24px)!important;max-height:calc(100vh - 86px)!important}.lv-settings-scroll{max-height:calc(100vh - 202px)!important}}
+    </style><link rel="stylesheet" href="../styles_v2.css">
+</head>
+<body>
+<button class="settings-fixed" onclick="openSettings()" title="Settings"><img class="settings-img" src="assets/settings-white.png" alt="Settings" decoding="async"></button>
+
+<div class="loader done" id="loader"><div><img src="assets/epic-logo.png" alt="" decoding="async"><div class="loader-line"><span></span></div></div></div>
+
+<header class="topbar">
+  <div class="top-inner">
+    <button class="back-arrow" onclick="goPage('discover')">‹</button>
+    <img class="top-epic-logo" src="assets/epic-logo.png" alt="Epic Games" decoding="async" loading="lazy">
+    <div class="search"><span class="search-mark"></span><input id="searchInput" placeholder="Search store"></div>
+    <button class="navtab active" data-page="discover" onclick="goPage('discover')">Discover</button>
+    <button class="navtab" data-page="browse" onclick="goPage('browse')">Add-Ons</button>
+    <button class="navtab" data-page="experiences" onclick="goPage('experiences')">Experiences</button>
+    <button class="navtab" data-page="news" onclick="goPage('news')">News</button>
+    <button class="navtab" data-page="faq" onclick="goPage('faq')">FAQ</button>
+    <div class="top-icons">
+      <button class="icon-btn top-action wishlist-top" onclick="goPage('wishlist')" title="Wishlist"><img class="wishlist-heart-icon" src="assets/wishlist-heart-clean.png" alt="Wishlist" decoding="async" loading="lazy"></button>
+      <button class="icon-btn top-action cart-top" onclick="openCartDrawer()" title="Cart"><span class="css-bag-icon"></span><span class="cart-count zero" id="cartCount">0</span></button>
+      <span class="divider"></span>
+      <div class="avatar" id="avatarLetter">N</div>
+    </div>
+  </div>
+</header>
+
+<main id="discoverPage" class="page active">
+  <section id="listing" class="listing shell">
+    <h1 class="listing-title">Fortnite<br>DLC &amp; Add-Ons</h1>
+    <div class="tabs">
+      <button onclick="goPage('discover')" class="active">Overview</button>
+      <button onclick="goPage('browse')">Add-Ons</button>
+      <button onclick="goPage('experiences')">Experiences</button>
+      <button onclick="goPage('faq')">FAQ</button>
+    </div>
+
+    <div class="addon-layout">
+      <div>
+        <section class="item-section" id="vbucksSection">
+          <h2 class="section-title">V-Bucks</h2>
+          <p class="section-subtitle">Choose a V-Bucks pack for your account.</p>
+          <div class="grid" id="vbucksGrid"><article class="card product-card" style="--theme:#35b8ff">
+    <button class="card-main" onclick="openDetail(0)">
+      <div class="thumb item"><img src="assets/vbucks-800.webp" loading="lazy" alt="800 V-Bucks" decoding="async"></div>
+      <div class="meta"><div class="kind">V-Bucks</div><div class="title">800 V-Bucks</div><div class="price">$6.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[0])">Add to Cart</button>
+      <button onclick="openDetail(0)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#35b8ff">
+    <button class="card-main" onclick="openDetail(1)">
+      <div class="thumb item"><img src="assets/vbucks-2400.webp" loading="lazy" alt="2,400 V-Bucks" decoding="async"></div>
+      <div class="meta"><div class="kind">V-Bucks</div><div class="title">2,400 V-Bucks</div><div class="price">$19.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[1])">Add to Cart</button>
+      <button onclick="openDetail(1)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#35b8ff">
+    <button class="card-main" onclick="openDetail(2)">
+      <div class="thumb item"><img src="assets/vbucks-4500.webp" loading="lazy" alt="4,500 V-Bucks" decoding="async"></div>
+      <div class="meta"><div class="kind">V-Bucks</div><div class="title">4,500 V-Bucks</div><div class="price">$31.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[2])">Add to Cart</button>
+      <button onclick="openDetail(2)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#35b8ff">
+    <button class="card-main" onclick="openDetail(3)">
+      <div class="thumb item"><img src="assets/vbucks-12500.webp" loading="lazy" alt="12,500 V-Bucks" decoding="async"></div>
+      <div class="meta"><div class="kind">V-Bucks</div><div class="title">12,500 V-Bucks</div><div class="price">$79.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[3])">Add to Cart</button>
+      <button onclick="openDetail(3)">View</button>
+    </div>
+  </article></div>
+        </section>
+
+        <section class="item-section" id="skinsSection">
+          <h2 class="section-title">Skins</h2>
+          <p class="section-subtitle">Outfits and character cosmetics.</p>
+          <div class="grid" id="skinsGrid"><article class="card product-card" style="--theme:#d99400">
+    <button class="card-main" onclick="openDetail(4)">
+      <div class="thumb portrait"><img src="assets/og-renegade-raider.webp" loading="lazy" alt="(OG) Renegade Raider" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">(OG) Renegade Raider</div><div class="price">$499.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[4])">Add to Cart</button>
+      <button onclick="openDetail(4)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#d99400">
+    <button class="card-main" onclick="openDetail(5)">
+      <div class="thumb portrait"><img src="assets/og-aerial-assault-trooper.webp" loading="lazy" alt="(OG) Aerial Assault Trooper" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">(OG) Aerial Assault Trooper</div><div class="price">$499.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[5])">Add to Cart</button>
+      <button onclick="openDetail(5)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#ff3fa7">
+    <button class="card-main" onclick="openDetail(6)">
+      <div class="thumb portrait"><img src="assets/ghoul-render.webp" loading="lazy" alt="(OG) Ghoul Trooper" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">(OG) Ghoul Trooper</div><div class="price">$299.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[6])">Add to Cart</button>
+      <button onclick="openDetail(6)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#6f28ff">
+    <button class="card-main" onclick="openDetail(7)">
+      <div class="thumb portrait"><img src="assets/skull-render.webp" loading="lazy" alt="(OG) Skull Trooper" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">(OG) Skull Trooper</div><div class="price">$299.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[7])">Add to Cart</button>
+      <button onclick="openDetail(7)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#35a8ff">
+    <button class="card-main" onclick="openDetail(8)">
+      <div class="thumb portrait"><img src="assets/wildcat-render.webp" loading="lazy" alt="Wildcat" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">Wildcat</div><div class="price">$249.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[8])">Add to Cart</button>
+      <button onclick="openDetail(8)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#8b32ff">
+    <button class="card-main" onclick="openDetail(9)">
+      <div class="thumb portrait"><img src="assets/ikonik-render.webp" loading="lazy" alt="Ikonik" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">Ikonik</div><div class="price">$199.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[9])">Add to Cart</button>
+      <button onclick="openDetail(9)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#ff7a00">
+    <button class="card-main" onclick="openDetail(10)">
+      <div class="thumb portrait"><img src="assets/astronomical-render.webp" loading="lazy" alt="Astronomical Bundle" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">Astronomical Bundle</div><div class="price">$149.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[10])">Add to Cart</button>
+      <button onclick="openDetail(10)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#9b5cff">
+    <button class="card-main" onclick="openDetail(11)">
+      <div class="thumb portrait"><img src="assets/glow-render.webp" loading="lazy" alt="Glow" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">Glow</div><div class="price">$59.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[11])">Add to Cart</button>
+      <button onclick="openDetail(11)">View</button>
+    </div>
+  </article></div>
+        </section>
+
+        <section class="item-section" id="pickaxesSection">
+          <h2 class="section-title">Pickaxes</h2>
+          <p class="section-subtitle">Harvesting tools and item cosmetics.</p>
+          <div class="grid" id="pickaxesGrid"><article class="card product-card" style="--theme:#d99400">
+    <button class="card-main" onclick="openDetail(12)">
+      <div class="thumb item"><img src="assets/og-raiders-revenge.webp" loading="lazy" alt="(OG) Raiders Revenge" decoding="async"></div>
+      <div class="meta"><div class="kind">Pickaxe</div><div class="title">(OG) Raiders Revenge</div><div class="price">$299.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[12])">Add to Cart</button>
+      <button onclick="openDetail(12)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#b334ff">
+    <button class="card-main" onclick="openDetail(13)">
+      <div class="thumb item"><img src="assets/minty-render.webp" loading="lazy" alt="Merry Minty Axe" decoding="async"></div>
+      <div class="meta"><div class="kind">Pickaxe</div><div class="title">Merry Minty Axe</div><div class="price">$99.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[13])">Add to Cart</button>
+      <button onclick="openDetail(13)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#006fff">
+    <button class="card-main" onclick="openDetail(14)">
+      <div class="thumb item"><img src="assets/leviathan-render.webp" loading="lazy" alt="Leviathan Axe" decoding="async"></div>
+      <div class="meta"><div class="kind">Pickaxe</div><div class="title">Leviathan Axe</div><div class="price">$49.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[14])">Add to Cart</button>
+      <button onclick="openDetail(14)">View</button>
+    </div>
+  </article></div>
+        </section>
+      </div>
+
+      <aside class="filter-panel">
+        <div class="filter-title">Filters <button onclick="resetFilters()">Reset</button></div>
+        <details class="filter-accordion" open="">
+          <summary>Keywords</summary>
+          <input id="filterKeyword" placeholder="Search add-ons" oninput="applyFilters()">
+        </details>
+        <details class="filter-accordion" open="">
+          <summary>Price</summary>
+          <select id="filterPrice" onchange="applyFilters()">
+            <option value="all">All prices</option>
+            <option value="under25">Under $25 USD</option>
+            <option value="under100">Under $100 USD</option>
+            <option value="under200">Under $200 USD</option>
+            <option value="200plus">$200+ USD</option>
+          </select>
+        </details>
+        <details class="filter-accordion" open="">
+          <summary>Type</summary>
+          <select id="filterType" onchange="applyFilters()">
+            <option value="all">All types</option>
+            <option value="vbucks">V-Bucks</option>
+            <option value="skin">Skins</option>
+            <option value="pickaxe">Pickaxes</option>
+          </select>
+        </details>
+        <details class="filter-accordion" open="">
+          <summary>Platform</summary>
+          <select id="filterPlatform" onchange="applyFilters()">
+            <option value="all">All platforms</option>
+            <option value="Windows">Windows</option>
+          </select>
+        </details>
+        
+      </aside>
+    </div>
+  </section>
+</main>
+
+<main id="browsePage" class="page shell">
+  <h1 class="listing-title">Fortnite<br>Add-Ons</h1>
+  <div class="tabs"><button onclick="goPage('discover')">Overview</button><button class="active">Add-Ons</button><button onclick="goPage('experiences')">Experiences</button><button onclick="goPage('faq')">FAQ</button></div>
+  <div class="browse-filter-bar">
+    <input id="browseKeyword" placeholder="Search add-ons" oninput="applyBrowseFilters()">
+    <select id="browseType" onchange="applyBrowseFilters()">
+      <option value="all">All types</option>
+      <option value="vbucks">V-Bucks</option>
+      <option value="skin">Skins</option>
+      <option value="pickaxe">Pickaxes</option>
+    </select>
+    <select id="browsePrice" onchange="applyBrowseFilters()">
+      <option value="all">All prices</option>
+      <option value="under25">Under $25 USD</option>
+      <option value="under100">Under $100 USD</option>
+      <option value="under200">Under $200 USD</option>
+      <option value="200plus">$200+ USD</option>
+    </select>
+    <button onclick="resetBrowseFilters()">Reset</button>
+  </div>
+  <section class="item-section"><h2 class="section-title">V-Bucks</h2><div class="grid" id="browseVbucks"><article class="card product-card" style="--theme:#35b8ff">
+    <button class="card-main" onclick="openDetail(0)">
+      <div class="thumb item"><img src="assets/vbucks-800.webp" loading="lazy" alt="800 V-Bucks" decoding="async"></div>
+      <div class="meta"><div class="kind">V-Bucks</div><div class="title">800 V-Bucks</div><div class="price">$6.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[0])">Add to Cart</button>
+      <button onclick="openDetail(0)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#35b8ff">
+    <button class="card-main" onclick="openDetail(1)">
+      <div class="thumb item"><img src="assets/vbucks-2400.webp" loading="lazy" alt="2,400 V-Bucks" decoding="async"></div>
+      <div class="meta"><div class="kind">V-Bucks</div><div class="title">2,400 V-Bucks</div><div class="price">$19.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[1])">Add to Cart</button>
+      <button onclick="openDetail(1)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#35b8ff">
+    <button class="card-main" onclick="openDetail(2)">
+      <div class="thumb item"><img src="assets/vbucks-4500.webp" loading="lazy" alt="4,500 V-Bucks" decoding="async"></div>
+      <div class="meta"><div class="kind">V-Bucks</div><div class="title">4,500 V-Bucks</div><div class="price">$31.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[2])">Add to Cart</button>
+      <button onclick="openDetail(2)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#35b8ff">
+    <button class="card-main" onclick="openDetail(3)">
+      <div class="thumb item"><img src="assets/vbucks-12500.webp" loading="lazy" alt="12,500 V-Bucks" decoding="async"></div>
+      <div class="meta"><div class="kind">V-Bucks</div><div class="title">12,500 V-Bucks</div><div class="price">$79.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[3])">Add to Cart</button>
+      <button onclick="openDetail(3)">View</button>
+    </div>
+  </article></div></section>
+  <section class="item-section"><h2 class="section-title">Skins</h2><div class="grid" id="browseSkins"><article class="card product-card" style="--theme:#d99400">
+    <button class="card-main" onclick="openDetail(4)">
+      <div class="thumb portrait"><img src="assets/og-renegade-raider.webp" loading="lazy" alt="(OG) Renegade Raider" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">(OG) Renegade Raider</div><div class="price">$499.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[4])">Add to Cart</button>
+      <button onclick="openDetail(4)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#d99400">
+    <button class="card-main" onclick="openDetail(5)">
+      <div class="thumb portrait"><img src="assets/og-aerial-assault-trooper.webp" loading="lazy" alt="(OG) Aerial Assault Trooper" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">(OG) Aerial Assault Trooper</div><div class="price">$499.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[5])">Add to Cart</button>
+      <button onclick="openDetail(5)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#ff3fa7">
+    <button class="card-main" onclick="openDetail(6)">
+      <div class="thumb portrait"><img src="assets/ghoul-render.webp" loading="lazy" alt="(OG) Ghoul Trooper" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">(OG) Ghoul Trooper</div><div class="price">$299.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[6])">Add to Cart</button>
+      <button onclick="openDetail(6)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#6f28ff">
+    <button class="card-main" onclick="openDetail(7)">
+      <div class="thumb portrait"><img src="assets/skull-render.webp" loading="lazy" alt="(OG) Skull Trooper" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">(OG) Skull Trooper</div><div class="price">$299.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[7])">Add to Cart</button>
+      <button onclick="openDetail(7)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#35a8ff">
+    <button class="card-main" onclick="openDetail(8)">
+      <div class="thumb portrait"><img src="assets/wildcat-render.webp" loading="lazy" alt="Wildcat" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">Wildcat</div><div class="price">$249.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[8])">Add to Cart</button>
+      <button onclick="openDetail(8)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#8b32ff">
+    <button class="card-main" onclick="openDetail(9)">
+      <div class="thumb portrait"><img src="assets/ikonik-render.webp" loading="lazy" alt="Ikonik" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">Ikonik</div><div class="price">$199.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[9])">Add to Cart</button>
+      <button onclick="openDetail(9)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#ff7a00">
+    <button class="card-main" onclick="openDetail(10)">
+      <div class="thumb portrait"><img src="assets/astronomical-render.webp" loading="lazy" alt="Astronomical Bundle" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">Astronomical Bundle</div><div class="price">$149.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[10])">Add to Cart</button>
+      <button onclick="openDetail(10)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#9b5cff">
+    <button class="card-main" onclick="openDetail(11)">
+      <div class="thumb portrait"><img src="assets/glow-render.webp" loading="lazy" alt="Glow" decoding="async"></div>
+      <div class="meta"><div class="kind">Skin</div><div class="title">Glow</div><div class="price">$59.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[11])">Add to Cart</button>
+      <button onclick="openDetail(11)">View</button>
+    </div>
+  </article></div></section>
+  <section class="item-section"><h2 class="section-title">Pickaxes</h2><div class="grid" id="browsePickaxes"><article class="card product-card" style="--theme:#d99400">
+    <button class="card-main" onclick="openDetail(12)">
+      <div class="thumb item"><img src="assets/og-raiders-revenge.webp" loading="lazy" alt="(OG) Raiders Revenge" decoding="async"></div>
+      <div class="meta"><div class="kind">Pickaxe</div><div class="title">(OG) Raiders Revenge</div><div class="price">$299.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[12])">Add to Cart</button>
+      <button onclick="openDetail(12)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#b334ff">
+    <button class="card-main" onclick="openDetail(13)">
+      <div class="thumb item"><img src="assets/minty-render.webp" loading="lazy" alt="Merry Minty Axe" decoding="async"></div>
+      <div class="meta"><div class="kind">Pickaxe</div><div class="title">Merry Minty Axe</div><div class="price">$99.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[13])">Add to Cart</button>
+      <button onclick="openDetail(13)">View</button>
+    </div>
+  </article><article class="card product-card" style="--theme:#006fff">
+    <button class="card-main" onclick="openDetail(14)">
+      <div class="thumb item"><img src="assets/leviathan-render.webp" loading="lazy" alt="Leviathan Axe" decoding="async"></div>
+      <div class="meta"><div class="kind">Pickaxe</div><div class="title">Leviathan Axe</div><div class="price">$49.99</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[14])">Add to Cart</button>
+      <button onclick="openDetail(14)">View</button>
+    </div>
+  </article></div></section>
+</main>
+
+<main id="newsPage" class="page shell">
+  <h1 class="listing-title">Fortnite<br>News</h1>
+  <div class="tabs">
+    <button onclick="goPage('discover')">Overview</button>
+    <button onclick="goPage('browse')">Add-Ons</button>
+    <button onclick="goPage('experiences')">Experiences</button>
+    <button class="active">News</button>
+    <button onclick="goPage('faq')">FAQ</button>
+  </div>
+  <section class="epic-news-hero">
+    <div>
+      <div class="eyebrow">This week in Fortnite</div>
+      <h2>New islands, modes, and item updates</h2>
+      <p>Discover Fortnite experiences, creator-made islands, and add-ons that can be added to your locker or gifted through checkout.</p>
+      <button class="side-buy" onclick="goPage('browse')" style="width:auto;padding:0 24px;margin-top:12px">Browse Add-Ons</button>
+    </div>
+  </section>
+  <div class="info-grid">
+    <article class="info-card"><span>Update</span><h3>Battle Royale refresh</h3><p>Explore refreshed points of interest, new gameplay updates, and seasonal content across the island.</p></article>
+    <article class="info-card"><span>Discover</span><h3>Creator-made islands</h3><p>Find new player-made experiences across the Fortnite ecosystem.</p></article>
+    <article class="info-card"><span>Shop</span><h3>Add-ons and gifts</h3><p>Add eligible items to your cart, review your order, then send everything to one recipient during checkout.</p></article>
+  </div>
+  <section class="store-note">
+    <h3>Featured add-ons</h3>
+    <p>Browse V-Bucks, skins, and pickaxes from the Add-Ons page. Filters help narrow by price, type, and platform.</p>
+  </section>
+</main>
+
+<main id="experiencesPage" class="page shell">
+  <h1 class="listing-title">Fortnite<br>Experiences</h1>
+  <div class="tabs">
+    <button onclick="goPage('discover')">Overview</button>
+    <button onclick="goPage('browse')">Add-Ons</button>
+    <button class="active">Experiences</button>
+    <button onclick="goPage('news')">News</button>
+    <button onclick="goPage('faq')">FAQ</button>
+  </div>
+  <p class="section-subtitle" style="max-width:720px;margin-bottom:24px">Fortnite includes Battle Royale-style modes, LEGO Fortnite, Fortnite Festival, Rocket Racing, and creator-made islands inside the wider Fortnite ecosystem.</p>
+  <section class="experience-hero-strip">
+    <div><span>Featured</span><h2>Play your way across Fortnite</h2><p>Jump between competitive, creative, racing, rhythm, and survival-style experiences from one launcher.</p></div>
+  </section>
+  <div class="experience-grid">
+    <article class="experience-card"><div class="experience-art br"></div><h3>Battle Royale</h3><p>Drop in, loot up, and be the last player standing.</p><button onclick="goPage('browse')">View Add-Ons</button></article>
+    <article class="experience-card"><div class="experience-art og"></div><h3>Fortnite OG</h3><p>Play a nostalgic Fortnite experience with familiar pacing and locations.</p><button onclick="goPage('browse')">View Add-Ons</button></article>
+    <article class="experience-card"><div class="experience-art reload"></div><h3>Reload</h3><p>Fast squad action with a sharper loop and quick returns.</p><button onclick="goPage('browse')">View Add-Ons</button></article>
+    <article class="experience-card"><div class="experience-art lego"></div><h3>LEGO Fortnite</h3><p>Build, survive, explore, and create in a LEGO-style world.</p><button onclick="goPage('browse')">View Add-Ons</button></article>
+    <article class="experience-card"><div class="experience-art festival"></div><h3>Fortnite Festival</h3><p>Play music-focused stages and rhythm-based experiences.</p><button onclick="goPage('browse')">View Add-Ons</button></article>
+    <article class="experience-card"><div class="experience-art rocket"></div><h3>Rocket Racing</h3><p>Race across tracks with arcade-style speed and competition.</p><button onclick="goPage('browse')">View Add-Ons</button></article>
+  </div>
+</main>
+
+<main id="faqPage" class="page shell">
+  <h1 class="listing-title">Fortnite<br>FAQ</h1>
+  <div class="tabs">
+    <button onclick="goPage('discover')">Overview</button>
+    <button onclick="goPage('browse')">Add-Ons</button>
+    <button onclick="goPage('experiences')">Experiences</button>
+    <button onclick="goPage('news')">News</button>
+    <button class="active">FAQ</button>
+  </div>
+  <section class="faq-list">
+    <article class="faq-item"><h3>What purchases are offered?</h3><p>Fortnite offers V-Bucks and bundles that can include cosmetic items and sometimes questlines or extra rewards.</p></article>
+    <article class="faq-item"><h3>What can V-Bucks be used for?</h3><p>V-Bucks can be used for cosmetic items in the Item Shop and upgrades for a season Battle Pass.</p></article>
+    <article class="faq-item"><h3>How do I add multiple gifts?</h3><p>Add each item once to your cart. During checkout, the full cart is sent to the recipient you enter.</p></article>
+    <article class="faq-item"><h3>How does recipient lookup work?</h3><p>Type a Fortnite username during checkout. The recipient card loads first, then unlocks the gift button after the lookup finishes.</p></article>
+    <article class="faq-item"><h3>How does checkout work?</h3><p>Choose an item, recipient, and payment method, then follow the checkout steps.</p></article>
+  </section>
+</main>
+
+<main id="wishlistPage" class="page shell">
+  <h1 class="listing-title">Wishlist</h1>
+  <div id="wishlistContent" class="empty-state">Your wishlist is empty.</div>
+</main>
+
+<main id="cartPage" class="page shell">
+  <h1 class="listing-title">Cart</h1>
+  <div id="cartContent" class="empty-state">Your cart is empty.</div>
+</main>
+
+<main id="detail" class="detail">
+  <h1 id="detailTitle">Ikonik</h1>
+  <div class="rating-line"><span class="stars">★★★★☆ 4.3</span><span>Competitive Players</span><span>Quickly Understood Controls</span></div>
+  <div class="tabs"><button class="active">Overview</button><button onclick="goPage('browse')">Add-Ons</button><button onclick="goPage('experiences')">Experiences</button><button onclick="goPage('faq')">FAQ</button></div>
+  <div class="detail-layout">
+    <section>
+      <div class="media-main" id="mediaBox"><img id="detailHero" src="assets/ikonik.webp" alt="" decoding="async" loading="lazy"></div>
+      <div class="thumb-strip" id="detailGallery">
+        <button class="mini-thumb active" onclick="setDetailImage(current.hero||current.img,this)"><img id="mini1" src="assets/ikonik-render.webp" alt="" decoding="async" loading="lazy"></button>
+        <button class="mini-thumb blank-thumb" onclick="setDetailImage(current.hero||current.img,this)"><span>View</span></button>
+        <button class="mini-thumb blank-thumb" onclick="setDetailImage(current.hero||current.img,this)"><span>Details</span></button>
+        <button class="mini-thumb blank-thumb" onclick="setDetailImage(current.hero||current.img,this)"><span>Bundle</span></button>
+      </div>
+      <p class="detail-desc" id="detailDesc"></p>
+      <div class="tag-section">
+        <div><div class="tag-title">Genres</div><span class="tag">Action</span><span class="tag">Shooter</span></div>
+        <div><div class="tag-title">Features</div><span class="tag">Co-op</span><span class="tag">Competitive</span><span class="tag">Multiplayer</span><span class="tag">Single Player</span></div>
+      </div>
+      <div class="info-banner"><span>Stay up to date with what’s happening in Fortnite this week, including new experiences and updates.</span><button class="side-secondary" onclick="goPage('news')" style="width:auto;margin:0;padding:0 16px">Discover Now</button></div>
+    </section>
+    <aside class="side">
+      <div class="side-logo" id="sideLogo"><img id="sideImg" src="assets/ikonik.webp" alt="" decoding="async" loading="lazy"></div>
+      <div class="rating-card"><img src="assets/pegi.png" alt="" decoding="async" loading="lazy"><b>PARENTAL GUIDANCE RECOMMENDED</b><br>Users Interact, In-Game Purchases<br>(Includes Random Items)</div>
+      <span class="category" id="detailCategory">Add-On</span>
+      <div class="side-price" id="detailPrice">$250.00</div>
+      <button class="side-buy" onclick="openCheckout([current])">Buy Now</button>
+      <button class="side-secondary add-cart-side" onclick="addToCart(current)">Add to Cart</button>
+      <button class="side-secondary wishlist-btn" onclick="toggleWishlist()"><img class="wishlist-heart-icon side-heart" src="assets/wishlist-heart-clean.png" alt="" decoding="async" loading="lazy">Wishlist</button>
+      <div class="spec">
+        <div>Epic Rewards <b>Earn 20% Back</b></div>
+        <div>Refund Type <b>Non-Refundable</b></div>
+        <div>Developer <b>Epic Games</b></div>
+        <div>Publisher <b>Epic Games</b></div>
+        <div>Platform <b><span class="windows-css-icon"></span></b></div>
+      </div>
+      <button class="back-btn" onclick="goPage('browse')">← Back</button>
+    </aside>
+  </div>
+</main>
+
+<div class="overlay" id="payOverlay">
+  <section class="epic-checkout-dialog" data-step="platform" role="dialog" aria-modal="true" aria-labelledby="epicCheckoutTitle">
+    <header class="epic-checkout-head">
+      <img src="assets/epic-logo.png" alt="" decoding="async">
+      <div class="epic-head-copy"><strong id="epicCheckoutTitle">Fortnite</strong><span id="epicStepLabel">Gift Checkout</span></div>
+      <button class="epic-close" type="button" aria-label="Close checkout" onclick="closeCheckout()">×</button>
+    </header>
+    <nav class="epic-progress" aria-label="Checkout progress">
+      <div class="epic-progress-step active" data-epic-progress="platform"><i>1</i><span>Platform</span></div>
+      <div class="epic-progress-step" data-epic-progress="recipient"><i>2</i><span>Recipient</span></div>
+      <div class="epic-progress-step" data-epic-progress="review"><i>3</i><span>Review</span></div>
+    </nav>
+    <div class="epic-checkout-viewport">
+      <section class="epic-slide active" data-checkout-slide="platform">
+        <div class="epic-layout">
+          <main class="epic-main">
+            <div class="epic-kicker">Build your gift</div>
+            <h3 class="epic-flow-title">Choose a platform.</h3>
+            <p class="epic-flow-copy">Select the platform used by the Fortnite player receiving this gift.</p>
+            <div class="epic-section-title">Platform</div>
+            <div class="epic-platform-grid" role="group" aria-label="Recipient platform">
+              <button class="epic-platform-option" type="button" data-gift-platform="epic" onclick="selectGiftPlatform('epic',this)"><img src="assets/windows-pc-white.svg" alt=""><span>PC / Epic</span></button>
+              <button class="epic-platform-option" type="button" data-gift-platform="playstation" onclick="selectGiftPlatform('playstation',this)"><img src="assets/playstation-white.svg" alt=""><span>PlayStation</span></button>
+              <button class="epic-platform-option" type="button" data-gift-platform="xbox" onclick="selectGiftPlatform('xbox',this)"><img src="assets/xbox-white.svg" alt=""><span>Xbox</span></button>
+            </div>
+            <p class="epic-small-note">The selected platform controls the matching account and avatar shown during lookup.</p>
+          </main>
+          <aside class="epic-side" aria-label="Gift summary">
+            <div class="epic-product-list" id="checkoutItems"></div>
+            <div class="epic-side-summary">
+              <div class="epic-side-row"><span>Platform</span><strong id="checkoutPlatformName">Not selected</strong></div>
+              <div class="epic-side-row"><span>Delivery</span><strong>Digital gift</strong></div>
+              <div class="epic-side-row total"><span>Total</span><strong id="checkoutTotalSide">$0.00</strong></div>
+            </div>
+            <div class="epic-account-chip"><div class="player-avatar" id="payAvatar">N</div><div><div class="player-name" id="payAccountName">Noa Cluzo</div><div class="player-sub">Epic account · Online</div></div></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="epic-slide" data-checkout-slide="recipient">
+        <div class="epic-kicker">Find user</div>
+        <h3>Find the recipient.</h3>
+        <p class="epic-slide-copy">Search for the Fortnite display name to send this gift to.</p>
+        <div class="gift-section">
+          <label class="section-label" for="giftInput">Fortnite username</label>
+          <input class="gift-input" id="giftInput" placeholder="Enter Fortnite username" value="" autocomplete="off" oninput="updateRecipientPreview()">
+          <div class="input-hint">We will match the account before continuing.</div>
+        </div>
+        <div class="recipient-preview" id="recipientPreview">
+          <div class="recipient-avatar" id="recipientAvatar">?</div>
+          <div><div class="recipient-name" id="recipientName">Enter recipient</div><div class="recipient-sub" id="recipientSub">Type a Fortnite username to continue</div></div>
+        </div>
+        <div class="lookup-status" id="lookupStatus">Waiting for username</div>
+      </section>
+
+      <section class="epic-slide" data-checkout-slide="review">
+        <div class="epic-kicker">Confirm gift</div>
+        <h3>Review your order.</h3>
+        <p class="epic-slide-copy">Confirm the item, recipient, platform, and saved payment method.</p>
+        <div class="epic-review-platform"><img id="reviewPlatformIcon" src="assets/windows-pc-white.svg" alt=""><div><span>Delivering on</span><strong id="reviewPlatformName">PC / Epic</strong></div></div>
+        <div class="epic-review-items" id="reviewItems"></div>
+        <div class="pay-section">
+          <div class="section-label">Payment method</div>
+          <div class="method-list"><div class="method"><span class="visa-text-badge">VISA</span><span>Visa Debit<br><small id="cardLine">•••• 4827 · Noa Cluzo</small></span><span class="radio"></span></div></div>
+          <div class="reward-row" id="rewardRow">Get $50.00 in Epic Rewards.</div>
+        </div>
+        <div class="summary-lines">
+          <div class="sum-line"><span>Recipient</span><b id="deliveryName">Not selected</b></div>
+          <div class="sum-line"><span>Subtotal</span><b id="subtotal">$250.00</b></div>
+          <div class="sum-line"><span>VAT included</span><b id="vat">$41.67</b></div>
+          <div class="sum-line total"><span>Total</span><b id="total">$250.00</b></div>
+        </div>
+      </section>
+    </div>
+    <footer class="epic-checkout-actions">
+      <div class="epic-action-row"><button class="epic-back" id="epicBackButton" type="button" onclick="checkoutBack()">Back</button><button class="pay-btn" id="payButton" type="button" onclick="advanceCheckout()" disabled="">Choose a platform</button></div>
+      <p class="fine">Interactive visual preview · no charge is made.</p>
+    </footer>
+  </section>
+</div>
+
+<div class="overlay" id="processingOverlay">
+  <section class="processing-card">
+    <div class="spin"></div>
+    <div class="proc-title" id="procTitle">Processing order...</div>
+    <div class="proc-sub" id="procSub">Verifying saved payment method</div>
+    <div class="proc-track"><div class="proc-fill" id="procFill"></div></div>
+  </section>
+</div>
+
+<div class="overlay" id="successOverlay">
+  <section class="success-card">
+    <div class="success-top"><div class="check-wrap">✓</div><div class="success-title">Order complete</div><div class="success-id" id="orderNumber">Order #A9K4-72QX-18P6</div><div class="success-mini" id="successMini">Item was sent successfully</div><div class="receipt-note" id="receiptNote">We sent an email to you with your receipt.</div></div>
+    <div class="success-body">
+      <div class="success-row"><span>Item</span><b id="sItem">Ikonik</b></div>
+      <div class="success-row"><span>Sent to</span><b id="sPlayer">Not selected</b></div>
+      <div class="success-row"><span>Platform</span><b id="sPlatform">Not selected</b></div>
+      <div class="success-row"><span>Amount</span><b id="sAmt">250.00 USD</b></div>
+      <div class="success-row"><span>Payment</span><b>Visa •••• 4827</b></div>
+      <div class="success-row"><span>Date</span><b id="sDate"></b></div>
+    </div>
+    <div class="success-actions"><button class="return" onclick="returnStore()">Return to store</button></div>
+  </section>
+</div>
+
+<div class="overlay" id="settingsOverlay">
+  <section class="modal-card">
+    <div class="modal-head"><img src="assets/epic-logo.png" alt="" decoding="async" loading="lazy"><h2>Settings</h2><button class="x" onclick="closeSettings()">×</button></div>
+    <div class="settings-body">
+      <div class="field"><label>Sender account username</label><input id="settingsAccount" value="tiktok lachbtw"></div>
+      <div class="field"><label>Saved card name</label><input id="settingsCardName" value="Thomas Smith"></div>
+      <div class="field"><label>Currency</label>
+        <select id="settingsCurrency">
+          <option value="USD">USD — US Dollar</option>
+          <option value="NZD">NZD — New Zealand Dollar</option>
+          <option value="AUD">AUD — Australian Dollar</option>
+          <option value="GBP">GBP — British Pound</option>
+          <option value="EUR">EUR — Euro</option>
+          <option value="CAD">CAD — Canadian Dollar</option>
+          <option value="JPY">JPY — Japanese Yen</option>
+          <option value="CNY">CNY — Chinese Yuan</option>
+          <option value="INR">INR — Indian Rupee</option>
+          <option value="BRL">BRL — Brazilian Real</option>
+        </select>
+      </div>
+      <button class="save-settings" onclick="saveSettings()">Save changes</button>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast">Updated</div>
+
+<div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer()"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="drawer-head">
+    <div>
+      <h2>Cart</h2>
+      <p id="drawerSub">No items added</p>
+    </div>
+    <button onclick="closeCartDrawer()" class="drawer-close">×</button>
+  </div>
+  <div class="drawer-items" id="drawerItems"><div class="drawer-empty">Your cart is empty.</div></div>
+  <div class="drawer-summary">
+    <div><span>Subtotal</span><b id="drawerSubtotal">$0.00</b></div>
+    <div><span>VAT included</span><b id="drawerVat">$0.00</b></div>
+    <div class="drawer-total"><span>Total</span><b id="drawerTotal">$0.00</b></div>
+    <button id="drawerCheckout" onclick="checkoutDrawerCart()" disabled="">Gift Cart</button>
+    <button class="drawer-view" onclick="closeCartDrawer();goPage('cart')">View full cart</button>
+  </div>
+</aside>
+
+<script>
+const PRODUCTS=[
+  {name:"800 V-Bucks",type:"V-Bucks",category:"vbucks",price:6.99,img:"./assets/vbucks-800.webp",item:true,platform:"Windows",theme:"#35b8ff"},
+  {name:"2,400 V-Bucks",type:"V-Bucks",category:"vbucks",price:19.99,img:"./assets/vbucks-2400.webp",item:true,platform:"Windows",theme:"#35b8ff"},
+  {name:"4,500 V-Bucks",type:"V-Bucks",category:"vbucks",price:31.99,img:"./assets/vbucks-4500.webp",item:true,platform:"Windows",theme:"#35b8ff"},
+  {name:"12,500 V-Bucks",type:"V-Bucks",category:"vbucks",price:79.99,img:"./assets/vbucks-12500.webp",item:true,platform:"Windows",theme:"#35b8ff"},
+
+  {name:"(OG) Renegade Raider",type:"Skin",category:"skin",price:499.99,img:"./assets/og-renegade-raider.webp",hero:"./assets/og-renegade-raider.webp",platform:"Windows",theme:"#d99400",desc:"Original Renegade Raider outfit."},
+  {name:"(OG) Aerial Assault Trooper",type:"Skin",category:"skin",price:499.99,img:"./assets/og-aerial-assault-trooper.webp",hero:"./assets/og-aerial-assault-trooper.webp",platform:"Windows",theme:"#d99400",desc:"Original Aerial Assault Trooper outfit."},
+  {name:"(OG) Ghoul Trooper",type:"Skin",category:"skin",price:299.99,img:"./assets/ghoul-render.webp",hero:"./assets/ghoul-render.webp",platform:"Windows",theme:"#ff3fa7"},
+  {name:"(OG) Skull Trooper",type:"Skin",category:"skin",price:299.99,img:"./assets/skull-render.webp",hero:"./assets/skull-render.webp",platform:"Windows",theme:"#6f28ff"},
+  {name:"Wildcat",type:"Skin",category:"skin",price:249.99,img:"./assets/wildcat-render.webp",hero:"./assets/wildcat-render.webp",platform:"Windows",theme:"#35a8ff"},
+  {name:"Ikonik",type:"Skin",category:"skin",price:199.99,img:"./assets/ikonik-render.webp",hero:"./assets/ikonik-render.webp",platform:"Windows",theme:"#8b32ff"},
+  {name:"Astronomical Bundle",type:"Skin",category:"skin",price:149.99,img:"./assets/astronomical-render.webp",hero:"./assets/astronomical-render.webp",platform:"Windows",theme:"#ff7a00",desc:"Includes Travis Scott and Astro Jack in one Astronomical Bundle."},
+  {name:"Glow",type:"Skin",category:"skin",price:59.99,img:"./assets/glow-render.webp",hero:"./assets/glow-render.webp",platform:"Windows",theme:"#9b5cff"},
+
+  {name:"(OG) Raiders Revenge",type:"Pickaxe",category:"pickaxe",price:299.99,img:"./assets/og-raiders-revenge.webp",hero:"./assets/og-raiders-revenge.webp",item:true,platform:"Windows",theme:"#d99400",desc:"Original Raiders Revenge harvesting tool."},
+  {name:"Merry Minty Axe",type:"Pickaxe",category:"pickaxe",price:99.99,img:"./assets/minty-render.webp",hero:"./assets/minty-render.webp",item:true,platform:"Windows",theme:"#b334ff"},
+  {name:"Leviathan Axe",type:"Pickaxe",category:"pickaxe",price:49.99,img:"./assets/leviathan-render.webp",hero:"./assets/leviathan-render.webp",item:true,platform:"Windows",theme:"#006fff"}
+];
+
+let current=PRODUCTS[4];
+let wishlist=[];
+let cart=[];
+let checkoutItemsState=[];
+let lastGiftRecipient="";
+let settings={account:"tiktok lachbtw",cardName:"Thomas Smith",currency:"USD"};
+
+function saveState(){
+  try{
+    localStorage.setItem("epic_visual_settings",JSON.stringify(settings));
+    localStorage.setItem("epic_visual_cart",JSON.stringify(cart.map(x=>x.name)));
+    localStorage.setItem("epic_visual_wishlist",JSON.stringify(wishlist));
+  }catch(e){}
+}
+function loadState(){
+  try{
+    // Preserve existing local data from older builds, then continue under the current storage names.
+    const legacyPrefix="epic_"+["de","mo"].join("");
+    const settingsRaw=localStorage.getItem("epic_visual_settings")||localStorage.getItem(legacyPrefix+"_settings")||"null";
+    const cartRaw=localStorage.getItem("epic_visual_cart")||localStorage.getItem(legacyPrefix+"_cart")||"[]";
+    const wishlistRaw=localStorage.getItem("epic_visual_wishlist")||localStorage.getItem(legacyPrefix+"_wishlist")||"[]";
+    const ITEM_NAME_ALIASES={
+      "OG Ghoul Trooper":"(OG) Ghoul Trooper",
+      "Purple Skull Trooper":"(OG) Skull Trooper"
+    };
+    const normalizeItemName=name=>ITEM_NAME_ALIASES[String(name||"")]||String(name||"");
+
+    const s=JSON.parse(settingsRaw);
+    if(s && typeof s==="object") settings={...settings,...s};
+
+    const parsedCart=JSON.parse(cartRaw);
+    const parsedWishlist=JSON.parse(wishlistRaw);
+    const cartNames=(Array.isArray(parsedCart)?parsedCart:[]).map(normalizeItemName);
+    wishlist=[...new Set((Array.isArray(parsedWishlist)?parsedWishlist:[]).map(normalizeItemName))]
+      .filter(name=>PRODUCTS.some(p=>p.name===name));
+    cart=cartNames.map(name=>PRODUCTS.find(p=>p.name===name)).filter(Boolean);
+    saveState();
+  }catch(e){}
+}
+
+const CURRENCIES={
+  USD:{symbol:"$",rate:1},
+  NZD:{symbol:"NZ$",rate:1.64},
+  AUD:{symbol:"A$",rate:1.52},
+  GBP:{symbol:"£",rate:0.79},
+  EUR:{symbol:"€",rate:0.92},
+  CAD:{symbol:"C$",rate:1.36},
+  JPY:{symbol:"¥",rate:157},
+  CNY:{symbol:"¥",rate:7.24},
+  INR:{symbol:"₹",rate:83.4},
+  BRL:{symbol:"R$",rate:5.45}
+};
+
+function makeOrderNumber(){
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const part=n=>Array.from({length:n},()=>chars[Math.floor(Math.random()*chars.length)]).join("");
+  return `Order #${part(4)}-${part(4)}-${part(4)}`;
+}
+
+function money(v){
+  const c=CURRENCIES[settings.currency]||CURRENCIES.USD;
+  const converted=Number(v)*c.rate;
+  if(settings.currency==="JPY") return c.symbol+Math.round(converted).toLocaleString();
+  return c.symbol+converted.toFixed(2);
+}
+function initial(name){return (name||"T").trim()[0]?.toUpperCase()||"T"}
+function generatedJoinDate(name){
+  const months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  let sum=[...(name||"lachbtw")].reduce((a,c)=>a+c.charCodeAt(0),0);
+  return `${months[sum%12]} ${2018+(sum%7)}`;
+}
+function showToast(msg,type="success"){
+  toast.textContent=msg;
+  toast.classList.remove("success","error","show");
+  void toast.offsetWidth;
+  toast.classList.add(type,"show");
+  setTimeout(()=>toast.classList.remove("show"),1800);
+}
+function card(p,i){
+  return `<article class="card product-card" style="--theme:${p.theme||'#27b8ee'}">
+    <button class="card-main" onclick="openDetail(${i})">
+      <div class="thumb ${p.item?'item':'portrait'}"><img src="${p.img}" loading="lazy" alt="${p.name}" decoding="async"></div>
+      <div class="meta"><div class="kind">${p.type}</div><div class="title">${p.name}</div><div class="price">${money(p.price)}</div></div>
+    </button>
+    <div class="quick-actions">
+      <button onclick="addToCart(PRODUCTS[${i}])">Add to Cart</button>
+      <button onclick="openDetail(${i})">View</button>
+    </div>
+  </article>`;
+}
+function priceMatches(item,price){
+  if(price==="under25") return item.price<25;
+  if(price==="under100") return item.price<100;
+  if(price==="under200") return item.price<200;
+  if(price==="200plus") return item.price>=200;
+  return true;
+}
+function filterProducts({query="",type="all",price="all",platform="all"}={}){
+  const q=(query||"").toLowerCase().trim();
+  return PRODUCTS.filter(item=>{
+    const matchesText=!q || item.name.toLowerCase().includes(q) || item.type.toLowerCase().includes(q);
+    const matchesType=type==="all" || item.category===type;
+    const matchesPrice=priceMatches(item,price);
+    const matchesPlatform=platform==="all" || item.platform===platform;
+    return matchesText && matchesType && matchesPrice && matchesPlatform;
+  });
+}
+function renderSections(items,targets){
+  const v=items.filter(p=>p.category==="vbucks");
+  const s=items.filter(p=>p.category==="skin");
+  const p=items.filter(x=>x.category==="pickaxe");
+  targets.vbucks.innerHTML=v.length?v.map(x=>card(x,PRODUCTS.indexOf(x))).join(""):`<div class="empty-section">No V-Bucks match these filters.</div>`;
+  targets.skins.innerHTML=s.length?s.map(x=>card(x,PRODUCTS.indexOf(x))).join(""):`<div class="empty-section">No skins match these filters.</div>`;
+  targets.pickaxes.innerHTML=p.length?p.map(x=>card(x,PRODUCTS.indexOf(x))).join(""):`<div class="empty-section">No pickaxes match these filters.</div>`;
+}
+function renderAll(q=""){
+  const items=filterProducts({query:q});
+  renderSections(items,{vbucks:vbucksGrid,skins:skinsGrid,pickaxes:pickaxesGrid});
+  renderSections(items,{vbucks:browseVbucks,skins:browseSkins,pickaxes:browsePickaxes});
+}
+
+function applyFilters(){
+  const items=filterProducts({
+    query:(filterKeyword?.value||searchInput.value||""),
+    type:filterType?.value||"all",
+    price:filterPrice?.value||"all",
+    platform:filterPlatform?.value||"all"
+  });
+  renderSections(items,{vbucks:vbucksGrid,skins:skinsGrid,pickaxes:pickaxesGrid});
+}
+function resetFilters(){
+  filterKeyword.value="";
+  filterType.value="all";
+  filterPrice.value="all";
+  filterPlatform.value="all";
+  applyFilters();
+}
+function applyBrowseFilters(){
+  const items=filterProducts({
+    query:browseKeyword?.value||"",
+    type:browseType?.value||"all",
+    price:browsePrice?.value||"all",
+    platform:"all"
+  });
+  renderSections(items,{vbucks:browseVbucks,skins:browseSkins,pickaxes:browsePickaxes});
+}
+function resetBrowseFilters(){
+  browseKeyword.value="";
+  browseType.value="all";
+  browsePrice.value="all";
+  applyBrowseFilters();
+}
+
+
+function setDetailImage(src,btn){
+  detailHero.src=src;
+  document.querySelectorAll("#detailGallery .mini-thumb").forEach(x=>x.classList.remove("active"));
+  if(btn)btn.classList.add("active");
+}
+
+function goPage(page){
+  detail.classList.remove("on");
+  listing.classList.remove("off");
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  const target=document.getElementById(page+"Page");
+  if(target) target.classList.add("active");
+  document.querySelectorAll(".navtab").forEach(n=>n.classList.toggle("active",n.dataset.page===page));
+  if(page==="wishlist") renderWishlist();
+  if(page==="cart") renderCart();
+  scrollTo(0,0);
+}
+function openDetail(i){
+  current=PRODUCTS[i];
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  detail.classList.add("on");
+  detail.style.setProperty("--theme",current.theme||"#27b8ee");
+  detailTitle.textContent=current.name;
+  detailHero.src=current.hero||current.img;
+  if(window.mini1) mini1.src=current.img;
+  sideImg.src=current.img;
+  detailPrice.textContent=money(current.price);
+  detailCategory.textContent=current.type||"Add-On";
+  const typeCopy=current.category==="vbucks"?"Use this V-Bucks pack for eligible Fortnite content and cosmetics.":current.category==="pickaxe"?"Add this harvesting tool to your Fortnite locker and gift it through checkout.":"Add this outfit to your Fortnite locker and gift it through checkout.";
+  detailDesc.textContent=current.desc||`${current.name} is a Fortnite ${current.type.toLowerCase()} add-on. ${typeCopy}`;
+  mediaBox.classList.toggle("item",!!current.item);
+  mediaBox.classList.toggle("skin-media",current.category==="skin");
+  mediaBox.classList.toggle("pickaxe-media",current.category==="pickaxe");
+  sideLogo.classList.toggle("item",!!current.item);
+  sideLogo.classList.toggle("skin-media",current.category==="skin");
+  sideLogo.classList.toggle("pickaxe-media",current.category==="pickaxe");
+  scrollTo(0,0);
+}
+
+
+function renderCartDrawer(){
+  updateCartCount();
+  if(!window.drawerItems)return;
+  if(!cart.length){
+    drawerSub.textContent="No items added";
+    drawerItems.innerHTML=`<div class="drawer-empty">Your cart is empty.</div>`;
+    drawerSubtotal.textContent=money(0);
+    drawerVat.textContent=money(0);
+    drawerTotal.textContent=money(0);
+    drawerCheckout.disabled=true;
+    return;
+  }
+  drawerSub.textContent=`${cart.length} item${cart.length===1?"":"s"} ready`;
+  drawerItems.innerHTML=cart.map(item=>`
+    <div class="drawer-row">
+      <div class="drawer-img" style="--theme:${item.theme||'#27b8ee'}"><img src="${item.img}" alt="" decoding="async" loading="lazy"></div>
+      <div class="drawer-copy">
+        <b>${item.name}</b>
+        <span>${item.type}</span>
+      </div>
+      <div class="drawer-price">
+        <b>${money(item.price)}</b>
+        <button onclick="removeFromCart('${item.name.replace(/'/g,"\\'")}')">Remove</button>
+      </div>
+    </div>
+  `).join("");
+  drawerSubtotal.textContent=money(cartTotal());
+  drawerVat.textContent=money(cartTotal()*.1667);
+  drawerTotal.textContent=money(cartTotal());
+  drawerCheckout.disabled=false;
+}
+function openCartDrawer(){
+  renderCartDrawer();
+  cartDrawerOverlay.classList.add("on");
+  cartDrawer.classList.add("on");
+}
+function closeCartDrawer(){
+  cartDrawerOverlay.classList.remove("on");
+  cartDrawer.classList.remove("on");
+}
+function checkoutDrawerCart(){
+  if(!cart.length){
+    showToast("Your cart is empty","error");
+    return;
+  }
+  closeCartDrawer();
+  openCheckout(cart);
+}
+
+function updateCartCount(){
+  if(window.cartCount){
+    cartCount.textContent=String(cart.length);
+    cartCount.classList.toggle("zero",cart.length===0);
+  }
+}
+function cartTotal(items=cart){
+  return items.reduce((sum,item)=>sum+Number(item.price||0),0);
+}
+function itemKey(item){return item.name}
+function addToCart(item){
+  if(!item)return;
+  if(cart.some(x=>itemKey(x)===itemKey(item))){
+    showToast("You can’t add this item twice","error");
+    return;
+  }
+  cart.push(item);
+  showToast("Added to cart","success");
+  saveState();
+  renderCart();
+  renderCartDrawer();
+}
+function removeFromCart(name){
+  cart=cart.filter(x=>x.name!==name);
+  saveState();
+  renderCart();
+  renderCartDrawer();
+  showToast("Removed from cart","success");
+}
+function orderCheckoutItems(){
+  const markup=checkoutItemsState.map(item=>`
+    <div class="checkout-item">
+      <div class="checkout-item-img" style="--theme:${item.theme||'#27b8ee'}"><img src="${item.img}" alt="" decoding="async" loading="lazy"></div>
+      <div>
+        <div class="checkout-item-name">${item.name}</div>
+        <div class="checkout-item-kind">${item.type}</div>
+      </div>
+      <div class="checkout-item-price">${money(item.price)}</div>
+    </div>
+  `).join("");
+  checkoutItems.innerHTML=markup;
+  if(window.reviewItems)reviewItems.innerHTML=markup;
+}
+
+function updateUserUI(){
+  avatarLetter.textContent=initial(settings.account);
+  payAvatar.textContent=initial(settings.account);
+  payAccountName.textContent=settings.account;
+  cardLine.textContent="•••• 4827 · "+settings.cardName;
+  if(window.giftInput && giftInput.value.trim()) updateRecipientPreview();
+}
+let lookupTimer=null;
+let lookupRun=0;
+let recipientReady=false;
+let selectedRecipientAvatar="";
+let selectedGiftPlatform="";
+let checkoutStep="platform";
+const giftPlatforms={
+  epic:{label:"PC / Epic",icon:"../fc27/assets/icons/windows-pc-white.svg",avatarMode:"epic"},
+  playstation:{label:"PlayStation",icon:"../fc27/assets/icons/playstation-white.svg",avatarMode:"playstation"},
+  xbox:{label:"Xbox",icon:"../fc27/assets/icons/xbox-white.svg",avatarMode:"xbox"}
+};
+
+function checkoutStepIndex(step){return {platform:0,recipient:1,review:2}[step]??0}
+function syncCheckoutControls(){
+  const button=window.payButton;
+  const back=window.epicBackButton;
+  if(!button)return;
+  back?.classList.toggle("visible",checkoutStep!=="platform");
+  if(checkoutStep==="platform"){
+    button.disabled=!selectedGiftPlatform;
+    button.textContent=selectedGiftPlatform?"Next · Find recipient":"Choose a platform";
+  }else if(checkoutStep==="recipient"){
+    button.disabled=!recipientReady;
+    button.textContent=recipientReady?"Next · Review gift":"Enter recipient";
+  }else{
+    button.disabled=false;
+    button.textContent=`Send Gift · ${money(cartTotal(checkoutItemsState.length?checkoutItemsState:[current]))}`;
+  }
+}
+function setCheckoutStep(step){
+  checkoutStep=step;
+  document.querySelector(".epic-checkout-dialog")?.setAttribute("data-step",step);
+  const index=checkoutStepIndex(step);
+  document.querySelectorAll("[data-checkout-slide]").forEach(slide=>slide.classList.toggle("active",slide.dataset.checkoutSlide===step));
+  document.querySelectorAll("[data-epic-progress]").forEach((node,nodeIndex)=>{
+    node.classList.toggle("active",nodeIndex===index);
+    node.classList.toggle("done",nodeIndex<index);
+  });
+  const labels={platform:"Gift Checkout",recipient:"Find User",review:"Confirm Gift"};
+  if(window.epicStepLabel)epicStepLabel.textContent=labels[step];
+  syncCheckoutControls();
+  if(step==="recipient")setTimeout(()=>giftInput?.focus(),90);
+}
+function selectGiftPlatform(value,node){
+  if(!giftPlatforms[value])return;
+  selectedGiftPlatform=value;
+  document.querySelectorAll("[data-gift-platform]").forEach(button=>button.classList.toggle("active",button.dataset.giftPlatform===value));
+  const meta=giftPlatforms[value];
+  if(window.checkoutPlatformName)checkoutPlatformName.textContent=meta.label;
+  if(window.reviewPlatformName)reviewPlatformName.textContent=meta.label;
+  if(window.reviewPlatformIcon)reviewPlatformIcon.src=meta.icon;
+  syncCheckoutControls();
+}
+function advanceCheckout(){
+  if(checkoutStep==="platform"){
+    if(!selectedGiftPlatform){showToast("Choose a platform","error");return}
+    setCheckoutStep("recipient");
+    return;
+  }
+  if(checkoutStep==="recipient"){
+    if(!recipientReady){showToast("Wait for recipient lookup","error");giftInput?.focus();return}
+    orderCheckoutItems();
+    setCheckoutStep("review");
+    return;
+  }
+  startProcessing();
+}
+function checkoutBack(){
+  if(checkoutStep==="review")setCheckoutStep("recipient");
+  else if(checkoutStep==="recipient")setCheckoutStep("platform");
+}
+
+function setRecipientEmpty(){
+  recipientReady=false;
+  recipientPreview.classList.remove("loading");
+  recipientAvatar.classList.remove("loading-dot");
+  lookupStatus.classList.remove("on");
+  recipientName.textContent="Enter recipient";
+  recipientAvatar.replaceChildren(document.createTextNode("?"));
+  recipientSub.textContent="Type a Fortnite username to continue";
+  deliveryName.textContent="Not selected";
+  payButton.classList.remove("lookup-waiting");
+  syncCheckoutControls();
+}
+
+function setRecipientLoading(name){
+  recipientReady=false;
+  recipientPreview.classList.add("loading");
+  recipientAvatar.classList.add("loading-dot");
+  lookupStatus.classList.add("on");
+  lookupStatus.textContent="Fetching player data...";
+  recipientName.textContent=name;
+  recipientAvatar.replaceChildren();
+  recipientSub.textContent="Looking up Epic profile";
+  deliveryName.textContent="Checking...";
+  payButton.classList.add("lookup-waiting");
+  payButton.disabled=true;
+  payButton.textContent="Fetching recipient...";
+}
+
+function setRecipientReady(name){
+  recipientReady=true;
+  recipientPreview.classList.remove("loading");
+  recipientAvatar.classList.remove("loading-dot");
+  lookupStatus.classList.add("on");
+  lookupStatus.textContent="Player found";
+  recipientName.textContent=name;
+  const avatarMode=giftPlatforms[selectedGiftPlatform]?.avatarMode||"epic";
+  selectedRecipientAvatar=window.LVAvatarPools?.random(avatarMode,selectedRecipientAvatar)||"/assets/avatars/pc-avatar-02.webp";
+  const avatarImage=document.createElement("img");
+  avatarImage.src=selectedRecipientAvatar;
+  avatarImage.alt=`${name} Epic avatar`;
+  recipientAvatar.replaceChildren(avatarImage);
+  recipientSub.textContent=`Joined ${generatedJoinDate(name)} · Online now`;
+  deliveryName.textContent=name;
+  payButton.classList.remove("lookup-waiting");
+  syncCheckoutControls();
+}
+
+function updateRecipientPreview(){
+  const name=(giftInput.value||"").trim();
+  clearTimeout(lookupTimer);
+  lookupRun++;
+  const runId=lookupRun;
+
+  if(!name){
+    setRecipientEmpty();
+    return;
+  }
+
+  setRecipientLoading(name);
+  lookupStatus.textContent="Searching Epic account...";
+  const variableDelay=(min,max)=>window.LVRuntime?.delay(min,max,"lookup")??(min+Math.floor(Math.random()*(max-min+1)));
+
+  lookupTimer=setTimeout(()=>{
+    if(runId!==lookupRun)return;
+    lookupStatus.textContent="Checking recipient eligibility...";
+    recipientSub.textContent="Verifying gifting availability";
+
+    setTimeout(()=>{
+      if(runId!==lookupRun)return;
+      lookupStatus.textContent="Loading player profile...";
+      recipientSub.textContent="Loading profile details";
+
+      setTimeout(()=>{
+        if(runId!==lookupRun)return;
+        setRecipientReady(name);
+      },variableDelay(620,1260));
+    },variableDelay(540,1120));
+  },variableDelay(420,980));
+}
+function openCheckout(items=[current]){
+  checkoutItemsState=(items&&items.length?items:[current]).filter(Boolean);
+  window.__lvAutoGiftFortniteItems=[...checkoutItemsState];
+  selectedGiftPlatform="";
+  document.querySelectorAll("[data-gift-platform]").forEach(button=>button.classList.remove("active"));
+
+  // Reset recipient every time checkout opens
+  if(window.giftInput) giftInput.value="";
+  lastGiftRecipient="";
+  if(typeof lookupTimer!=="undefined") clearTimeout(lookupTimer);
+  if(typeof lookupRun!=="undefined") lookupRun++;
+  if(typeof setRecipientEmpty==="function") setRecipientEmpty();
+
+  updateUserUI();
+
+  // Force blank after UI update so old usernames never stay in the field
+  if(window.giftInput) giftInput.value="";
+  if(typeof setRecipientEmpty==="function") setRecipientEmpty();
+
+  orderCheckoutItems();
+  const totalValue=cartTotal(checkoutItemsState);
+  if(window.checkoutTotalSide)checkoutTotalSide.textContent=money(totalValue);
+  if(window.checkoutPlatformName)checkoutPlatformName.textContent="Not selected";
+  subtotal.textContent=money(totalValue);
+  vat.textContent=money(totalValue*.1667);
+  total.textContent=money(totalValue);
+  rewardRow.textContent=`Get ${money(totalValue*.2)} in Epic Rewards.`;
+  payOverlay.classList.add("on");
+  setCheckoutStep("platform");
+}
+function closeCheckout(){payOverlay.classList.remove("on");setCheckoutStep("platform")}
+function startProcessing(){
+  const recipient=(giftInput.value||"").trim();
+  if(!recipient){
+    giftInput.focus();
+    showToast("Enter a recipient username","error");
+    return;
+  }
+  if(!recipientReady){
+    showToast("Wait for recipient lookup","error");
+    return;
+  }
+  lastGiftRecipient=recipient;
+  closeCheckout();
+  const variableDelay=(min,max)=>window.LVRuntime?.delay(min,max,"loading")??(min+Math.floor(Math.random()*(max-min+1)));
+  const preparingAt=variableDelay(620,1180);
+  const completingAt=preparingAt+variableDelay(620,1280);
+  const confirmedAt=completingAt+variableDelay(760,1540);
+  processingOverlay.classList.add("on");
+  procFill.style.setProperty("--processing-duration",confirmedAt+"ms");
+  procFill.classList.remove("run"); void procFill.offsetWidth; procFill.classList.add("run");
+  procTitle.textContent="Processing order...";
+  procSub.textContent="Verifying saved payment method";
+  setTimeout(()=>{procTitle.textContent="Preparing order...";procSub.textContent="Checking recipient details"},preparingAt);
+  setTimeout(()=>{procTitle.textContent="Completing order...";procSub.textContent="Almost done"},completingAt);
+  setTimeout(confirmPay,confirmedAt);
+}
+function confirmPay(){
+  processingOverlay.classList.remove("on");
+  const purchasedItems=[...checkoutItemsState];
+  const purchasedTotal=cartTotal(purchasedItems);
+  sItem.textContent=purchasedItems.length>1?`${purchasedItems.length} items`:purchasedItems[0]?.name||current.name;
+  successMini.textContent=(purchasedItems.length>1?`${purchasedItems.length} items`:purchasedItems[0]?.name||current.name)+" was sent to "+lastGiftRecipient;
+  sAmt.textContent=money(purchasedTotal)+" "+settings.currency;
+  sPlayer.textContent=lastGiftRecipient;
+  sPlatform.textContent=giftPlatforms[selectedGiftPlatform]?.label||"PC / Epic";
+  sDate.textContent=new Date().toLocaleString([],{month:"short",day:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"});
+  orderNumber.textContent=makeOrderNumber();
+  receiptNote.textContent="We sent an email to you with your receipt.";
+
+  // Clear cart after successful purchase
+  cart=[];
+  checkoutItemsState=[];
+  saveState();
+  updateCartCount();
+  renderCart();
+  renderCartDrawer();
+
+  successOverlay.classList.add("on");
+}
+function returnStore(){
+  successOverlay.classList.remove("on");
+  if(window.giftInput) giftInput.value="";
+  lastGiftRecipient="";
+  if(typeof setRecipientEmpty==="function") setRecipientEmpty();
+  selectedGiftPlatform="";
+  setCheckoutStep("platform");
+  goPage("browse");
+}
+function toggleWishlist(){
+  if(!current)return;
+  if(!wishlist.includes(current.name)){wishlist.push(current.name);showToast("Added to wishlist","success")}
+  else{wishlist=wishlist.filter(x=>x!==current.name);showToast("Removed from wishlist","success")}
+  saveState();
+}
+function renderWishlist(){
+  const items=PRODUCTS.filter(p=>wishlist.includes(p.name));
+  wishlistContent.className=items.length?"grid":"empty-state";
+  wishlistContent.innerHTML=items.length?items.map(p=>card(p,PRODUCTS.indexOf(p))).join(""):"Your wishlist is empty.";
+}
+function renderCart(){
+  updateCartCount();
+  if(!cart.length){
+    renderCartDrawer();
+    cartContent.className="empty-state";
+    cartContent.innerHTML="Your cart is empty.";
+    return;
+  }
+  cartContent.className="cart-layout";
+  const rows=cart.map(item=>`
+    <div class="cart-row">
+      <div class="cart-img" style="--theme:${item.theme||'#27b8ee'}"><img src="${item.img}" alt="" decoding="async" loading="lazy"></div>
+      <div>
+        <div class="cart-name">${item.name}</div>
+        <div class="cart-type">${item.type} · Quantity 1</div>
+      </div>
+      <div class="cart-actions">
+        <div class="cart-price">${money(item.price)}</div>
+        <button class="remove-btn" onclick="removeFromCart('${item.name.replace(/'/g,"\\'")}')">Remove</button>
+      </div>
+    </div>
+  `).join("");
+  renderCartDrawer();
+  cartContent.innerHTML=`
+    <section class="cart-list">
+      <div class="cart-list-head"><span>Items</span><span>Price</span></div>
+      ${rows}
+    </section>
+    <aside class="cart-summary">
+      <h2>Order Summary</h2>
+      <div class="cart-sum-row"><span>Unique items</span><b>${cart.length}</b></div>
+      <div class="cart-sum-row"><span>Subtotal</span><b>${money(cartTotal())}</b></div>
+      <div class="cart-sum-row"><span>VAT included</span><b>${money(cartTotal()*.1667)}</b></div>
+      <div class="cart-sum-row total"><span>Total</span><b>${money(cartTotal())}</b></div>
+      <button class="cart-checkout" onclick="openCheckout(cart)">Gift Cart</button>
+      <div class="cart-muted">Only one of each item can be added. All cart items will be sent to the recipient you enter during checkout.</div>
+    </aside>
+  `;
+}
+window.LVFortniteClearCart=()=>{
+  cart=[];
+  checkoutItemsState=[];
+  saveState();
+  updateCartCount();
+  renderCart();
+  renderCartDrawer();
+};
+function openSettings(){
+  settingsAccount.value=settings.account;
+  settingsCardName.value=settings.cardName;
+  settingsCurrency.value=settings.currency;
+  settingsOverlay.classList.add("on");
+}
+function closeSettings(){settingsOverlay.classList.remove("on")}
+function saveSettings(){
+  settings.account=settingsAccount.value.trim()||"tiktok lachbtw";
+  settings.cardName=settingsCardName.value.trim()||settings.account;
+  settings.currency=settingsCurrency.value||"USD";
+  updateUserUI();
+  applyFilters();
+  applyBrowseFilters();
+  if(detail.classList.contains("on") && current){
+    detailPrice.textContent=money(current.price);
+  detailCategory.textContent=current.type||"Add-On";
+  }
+  closeSettings();
+  saveState();
+  renderCartDrawer();
+  showToast("Settings saved","success");
+}
+searchInput.addEventListener("input",e=>{
+  if(filterKeyword) filterKeyword.value=e.target.value;
+  applyFilters();
+  const browseItems=filterProducts({query:e.target.value});
+  renderSections(browseItems,{vbucks:browseVbucks,skins:browseSkins,pickaxes:browsePickaxes});
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){document.querySelectorAll(".overlay").forEach(o=>o.classList.remove("on"))}});
+loadState();
+renderAll();
+updateUserUI();
+updateCartCount();
+renderCartDrawer();
+addEventListener("load",()=>setTimeout(()=>loader.classList.add("done"),window.LVRuntime?.delay(180,520,"loading")??300));
+</script>
+  <script src="scripts/auth-watch.js"></script>
+  <script src="scripts/back-to-visuals.js"></script><a id="lvBackToVisuals" href="../index.html" aria-label="Back to Lachy's Visuals">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18 9 12l6-6"></path></svg>
+    <span>Back to Visuals</span>
+  </a>
+  <script src="scripts/guard.js"></script>
+  <script src="scripts/auto-gift-universal.js"></script>
+  <script src="scripts/shared-checkout.js"></script>
+    <div class="lvx-checkout lvx-theme-fortnite" id="lvxCheckout" aria-hidden="true">
+      <div class="lvx-backdrop" data-lvx-close=""></div>
+      <section class="lvx-shell" role="dialog" aria-modal="true" aria-label="Epic Games checkout">
+        <header class="lvx-top">
+          <div class="lvx-brand"><img src="assets/epic-logo.png" alt="Epic Games"><div><strong>Epic Checkout</strong><span>Epic Games</span></div></div>
+          <button class="lvx-close" type="button" aria-label="Close checkout" data-lvx-close="">×</button>
+        </header>
+        <div class="lvx-stage">
+          <section class="lvx-panel active" data-lvx-panel="player">
+            <h2>Find User</h2><p class="lvx-sub">Choose a platform, then search for the Fortnite username receiving this order.</p>
+            <div class="lvx-order"><img id="lvxOrderImage" src="assets/ikonik.webp" alt=""><div><span>Selected item</span><strong id="lvxOrderName">Ikonik</strong><small><b id="lvxOrderPlatform">Choose a platform</b> · Digital order</small></div></div>
+            <span class="lvx-label">Platform</span>
+            <div class="lvx-platform-grid" role="group" aria-label="Recipient platform">
+              <button type="button" data-lvx-platform="pc" aria-label="PC / Epic"><img src="assets/windows-pc-white.svg" alt=""><span>PC / Epic</span></button><button type="button" data-lvx-platform="playstation" aria-label="PlayStation"><img src="assets/playstation-white.svg" alt=""><span>PlayStation</span></button><button type="button" data-lvx-platform="xbox" aria-label="Xbox"><img src="assets/xbox-white.svg" alt=""><span>Xbox</span></button>
+            </div>
+            <label class="lvx-label lvx-username-label" for="lvxUsername">Fortnite username</label>
+            <div class="lvx-search"><input id="lvxUsername" class="lvx-player-input" data-cash-keyboard="true" inputmode="none" autocomplete="off" placeholder="Enter Fortnite username…"><button id="lvxSearch" type="button" disabled="">Search</button></div>
+            <div class="lvx-lookup" id="lvxLookup">Choose a platform to begin.</div>
+            <div class="lvx-player" id="lvxPlayer"><span class="lvx-initial" id="lvxPlayerInitial">?</span><div><strong id="lvxPlayerName">Player</strong><small id="lvxPlayerPlatform">Platform · Online recently</small></div></div>
+            <button class="lvx-primary" id="lvxContinue" type="button" disabled="">Continue to payment</button>
+          </section>
+          <section class="lvx-panel" data-lvx-panel="payment">
+            <h2>Confirm order</h2><p class="lvx-sub" id="lvxPaymentSub"></p>
+            <div class="lvx-order"><img id="lvxPaymentImage" src="assets/ikonik.webp" alt=""><div><span>Selected item</span><strong id="lvxPaymentName">Ikonik</strong><small><b id="lvxPaymentPlatform">Platform</b> · Global</small></div></div>
+            <label class="lvx-method-label"><span>Payment method</span><select id="lvxMethod"><option value="applepay">Apple Pay</option><option value="visa">Visa •••• 4242</option></select></label>
+            <div class="lvx-method-card"><div id="lvxMethodIcon"><span class="lvx-apple-logo-crop"><img src="assets/apple-pay-logo.png" alt="Apple Pay"></span><p><strong>Apple Pay</strong><span>Continue securely with Apple Pay.</span></p></div><div class="lvx-payment-row"><span>Total</span><strong id="lvxPaymentTotal">$250.00</strong></div></div>
+            <button class="lvx-primary" id="lvxPay" type="button"></button><button class="lvx-back" id="lvxBack" type="button">Back</button>
+          </section>
+          <section class="lvx-panel lvx-scan-panel" data-lvx-panel="scan"><div class="lvx-scan"><img src="assets/apple-pay-scan-code.png" alt="Scan Code with iPhone"></div><button class="lvx-scan-back" id="lvxScanBack" type="button">Back to payment methods</button></section>
+          <section class="lvx-panel lvx-appstore-panel" data-lvx-panel="appstore"><div class="lvx-appstore"><div class="lvx-as-head"><strong>App Store</strong><button class="lvx-as-close" id="lvxAppBack" type="button" aria-label="Back to payment methods">×</button></div><div class="lvx-as-card"><div class="lvx-as-product"><img id="lvxAppImage" src="assets/ikonik.webp" alt=""><div><strong id="lvxAppName">Ikonik</strong><span>Epic Games <em>13+</em></span><span>In-app purchase</span></div></div><div class="lvx-as-price"><strong id="lvxAppPrice">$250.00</strong><span>One-time charge</span></div><div class="lvx-as-account">Account: <span id="lvxAppAccount">Player</span></div></div><button class="lvx-side-confirm" id="lvxSideConfirm" type="button"><span class="lvx-side-icon"><svg viewBox="0 0 34 34" fill="none"><rect x="9" y="3" width="16" height="28" rx="4" stroke="#007aff" stroke-width="2.5" fill="#dce8ff"></rect><rect x="12" y="5" width="10" height="2" rx="1" fill="#007aff" opacity=".5"></rect></svg></span><strong>Confirm with side button</strong></button></div></section>
+          <section class="lvx-panel lvx-state" data-lvx-panel="processing"><div class="lvx-spinner"></div><h2>Processing payment</h2><p id="lvxProcessingText">Authorizing payment…</p><div class="lvx-progress"><span id="lvxProgress"></span></div></section>
+          <section class="lvx-panel lvx-state" data-lvx-panel="success"><div class="lvx-check">✓</div><h2>Purchase Successful</h2><p id="lvxSuccessCopy"></p><div class="lvx-receipt"><div class="lvx-receipt-head"><span class="lvx-initial" id="lvxReceiptInitial">?</span><div><small>Gift sent to</small><strong id="lvxReceiptPlayer">Player</strong></div></div><dl class="lvx-lines"><div><dt>Item</dt><dd id="lvxReceiptItem"></dd></div><div><dt>Platform</dt><dd id="lvxReceiptPlatform">Platform</dd></div><div><dt>Amount</dt><dd id="lvxReceiptPrice"></dd></div><div><dt>Payment</dt><dd id="lvxReceiptPayment"></dd></div><div><dt>Order ID</dt><dd id="lvxReceiptOrder"></dd></div><div><dt>Status</dt><dd>Gift Sent</dd></div></dl></div><button class="lvx-primary" id="lvxDone" type="button">Done</button></section>
+        </div>
+      </section>
+    </div>
+  <script src="scripts/cash-keyboard.js"></script>
+
+
+<button id="lvSettingsGear" type="button" aria-label="Open settings" aria-controls="lvSettingsPanel" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.6 2.8h4.8l.7 2.2c.6.2 1.2.6 1.7 1l2.2-.5 2.4 4.1-1.5 1.7c.1.7.1 1.3 0 2l1.5 1.7-2.4 4.1-2.2-.5c-.5.4-1.1.8-1.7 1l-.7 2.2H9.6l-.7-2.2c-.6-.2-1.2-.6-1.7-1l-2.2.5L2.6 15l1.5-1.7a8.7 8.7 0 0 1 0-2L2.6 9.6 5 5.5l2.2.5c.5-.4 1.1-.8 1.7-1l.7-2.2Z"></path><circle cx="12" cy="12" r="3.2"></circle></svg>
+      <span class="lv-settings-run-dot" aria-hidden="true"></span></button><aside id="lvSettingsPanel" aria-hidden="true" aria-label="Visual settings">
+      <div class="lv-settings-head">
+        <div class="lv-settings-head-copy"><div class="lv-settings-kicker">Lachy's Visuals</div><h2>Settings</h2></div>
+        <button class="lv-settings-close" id="lvSettingsClose" type="button" aria-label="Close settings">×</button>
+      </div>
+      <div class="lv-settings-tabs" role="tablist" aria-label="Settings sections">
+        <button class="lv-settings-tab active" id="lvSettingsGeneralTab" type="button" role="tab" aria-selected="true" data-view="general">General</button>
+        <button class="lv-settings-tab" id="lvSettingsPaymentTab" type="button" role="tab" aria-selected="false" data-view="payment">Payment</button>
+        <button class="lv-settings-tab" id="lvSettingsAutoTab" type="button" role="tab" aria-selected="false" data-view="auto">Auto Gift</button>
+      </div>
+      <div class="lv-settings-scroll">
+        <section class="lv-settings-view active" id="lvSettingsGeneralView" data-view="general">
+          <div class="lv-settings-card">
+            <div class="lv-settings-section-title"><strong>Store preferences</strong><span>All visuals</span></div>
+            <label class="lv-settings-field"><span>Currency</span><select id="lvUnifiedCurrency">
+              <option value="USD">US Dollar (USD)</option><option value="NZD">New Zealand Dollar (NZD)</option><option value="AUD">Australian Dollar (AUD)</option><option value="GBP">British Pound (GBP)</option>
+            </select></label>
+            <label class="lv-settings-field"><span>Sender username</span><input id="lvUnifiedUsername" maxlength="32" autocomplete="off" spellcheck="false"></label>
+            <label class="lv-settings-field"><span>Name on saved card</span><input id="lvUnifiedPaymentName" maxlength="32" autocomplete="off" spellcheck="false"></label>
+            <button class="lv-settings-save" id="lvUnifiedSave" type="button">Save changes</button>
+            <div class="lv-settings-note"><span>Applied across every visual on this device.</span><strong id="lvUnifiedSaveStatus">Ready</strong></div>
+          </div>
+        </section>
+        <section class="lv-settings-view" id="lvSettingsPaymentView" data-view="payment">
+          <div class="lv-settings-card">
+            <div class="lv-settings-section-title"><strong>Apple Pay</strong><span>Checkout timing</span></div>
+            <label class="lv-settings-field"><span>Timing</span><select id="lvUnifiedPaymentSpeed">
+              <option value="0">Slow</option><option value="1">Normal</option><option value="2">Fast</option><option value="3">Very fast</option>
+            </select></label>
+            <div class="lv-settings-note"><span>Controls Apple Pay handoff speed across supported visuals.</span><strong>Saved automatically</strong></div>
+          </div>
+        </section>
+        <section class="lv-settings-view" id="lvSettingsAutoView" data-view="auto">
+          <div id="lvSettingsAutoGiftMount"><section class="lv-auto-panel" aria-label="Fortnite Auto Gift" style="--lv-auto-accent: #2f9cff; --lv-auto-accent-2: #8c62ff;" data-state="idle">
+      <div class="lv-auto-panel-head">
+        <span class="lv-auto-brand"><i class="lv-auto-dot" aria-hidden="true"></i><span><strong>Auto Gift</strong><small id="lvAutoHeaderStatus">Stopped</small></span></span>
+        <span class="lv-auto-ready-pill">Unattended</span>
+      </div>
+      <div class="lv-auto-panel-body" id="lvAutoPanelBody">
+        <label class="lv-auto-field">
+          <span>Product</span>
+          <select id="lvAutoProduct"><option value="0">800 V-Bucks</option><option value="1" selected="">2,400 V-Bucks</option><option value="2">4,500 V-Bucks</option><option value="3">12,500 V-Bucks</option><option value="4">(OG) Renegade Raider</option><option value="5">(OG) Aerial Assault Trooper</option><option value="6">(OG) Ghoul Trooper</option><option value="7">(OG) Skull Trooper</option><option value="8">Wildcat</option><option value="9">Ikonik</option><option value="10">Astronomical Bundle</option><option value="11">Glow</option><option value="12">(OG) Raiders Revenge</option><option value="13">Merry Minty Axe</option><option value="14">Leviathan Axe</option></select>
+        </label>
+        
+        
+        <label class="lv-auto-field">
+          <span>Platform</span>
+          <select id="lvAutoPlatform"><option value="epic" selected="">PC / Epic</option><option value="playstation">PlayStation</option><option value="xbox">Xbox</option></select>
+        </label>
+        <div class="lv-auto-speed-card">
+          <div class="lv-auto-speed-head">
+            <span>Interaction pace</span>
+            <strong><b id="lvAutoPaceValue">6.0s</b><small id="lvAutoPaceDescription">Balanced</small></strong>
+          </div>
+          <input class="lv-auto-range" id="lvAutoPace" type="range" min="2" max="10" step="0.5" value="6" aria-label="Auto Gift interaction pace" aria-valuetext="6.0 seconds, Balanced" style="--lv-auto-range-progress: 50%;">
+          <div class="lv-auto-range-labels"><span>2s · Quick</span><span>10s · Natural</span></div>
+          <p>Controls product selection, Buy Now, recipient entry and checkout pauses. Existing page loaders keep their normal duration.</p>
+        </div>
+        <label class="lv-auto-field">
+          <span>Gifts</span>
+          <select id="lvAutoLimit">
+            <option value="0" selected="">Until stopped</option>
+            <option value="1">1</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </label>
+        <button aria-keyshortcuts="F8" class="lv-auto-start" id="lvAutoStart" type="button">Start Auto Gift · F8</button>
+        <p class="lv-auto-note">Press <kbd>F8</kbd> anywhere to start or stop. The checkout repeats until stopped.</p>
+        <div class="lv-auto-footer">
+          <span id="lvAutoGiftStatus" role="status" aria-live="polite" title="Stopped — ready to start">Stopped — ready to start</span>
+          <strong id="lvAutoCounter">0 completed</strong>
+        </div>
+      </div></section></div>
+        </section>
+      </div></aside><div class="settings-modal-overlay" id="settings-modal-overlay" onclick="if(event.target === this) window.closeMyCustomSettings()">
+        <div class="settings-modal-card">
+            
+            <div class="settings-modal-header">
+                <div class="settings-title-group">
+                    <span class="settings-icon-badge">⚙️</span>
+                    <h2 class="settings-title">Quick Settings</h2>
+                </div>
+                <button class="settings-close-btn" id="btn-close-settings" onclick="window.closeMyCustomSettings()" aria-label="Close">×</button>
+            </div>
+
+            <div class="settings-modal-body">
+
+                <!-- Key Sync Status -->
+                <div class="settings-section settings-key-sync-bar" id="settings-key-sync-bar" style="display:none;">
+                    <div class="key-sync-indicator">
+                        <span class="key-sync-dot"></span>
+                        <span id="settings-key-sync-text">Settings synced with key <strong id="settings-key-label"></strong></span>
+                    </div>
+                </div>
+
+                <!-- ROW 1: Country Phone Code & Payment Language -->
+                <div class="settings-form-row">
+                    <div class="settings-field">
+                        <label class="settings-label uppercase-label">PHONE COUNTRY CODE</label>
+                        <select class="settings-select" id="settings-phone-country-select" onchange="window.updatePhoneCountry(this.value)">
+                            <option value="+33 6" selected>🇫🇷 France (+33 6)</option>
+                            <option value="+1 415">🇺🇸 USA / Canada (+1 415)</option>
+                            <option value="+49 17">🇩🇪 Germany (+49 17)</option>
+                            <option value="+44 7">🇬🇧 United Kingdom (+44 7)</option>
+                            <option value="+34 6">🇪🇸 Spain (+34 6)</option>
+                            <option value="+39 3">🇮🇹 Italy (+39 3)</option>
+                            <option value="+41 7">🇨🇭 Switzerland (+41 7)</option>
+                            <option value="+31 6">🇳🇱 Netherlands (+31 6)</option>
+                            <option value="+61 4">🇦🇺 Australia (+61 4)</option>
+                            <option value="+81 90">🇯🇵 Japan (+81 90)</option>
+                        </select>
+                    </div>
+
+                    <div class="settings-field">
+                        <label class="settings-label uppercase-label">PAYMENT LANGUAGE</label>
+                        <select class="settings-select" id="settings-language-select" onchange="window.updatePaymentLanguage(this.value)">
+                            <option value="fr" selected>🇫🇷 Français</option>
+                            <option value="en">🇬🇧 English</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                            <option value="es">🇪🇸 Español</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ROW 2: Currency & PayPal Welcome Name -->
+                <div class="settings-form-row">
+                    <div class="settings-field">
+                        <label class="settings-label uppercase-label">CURRENCY / DEVISE</label>
+                        <select class="settings-select" id="settings-currency-select" onchange="window.applyCurrencyCode(this.value); window.saveIpSettings();">
+                            <option value="EUR" selected>🇪🇺 EUR (€)</option>
+                            <option value="USD">🇺🇸 USD ($)</option>
+                            <option value="GBP">🇬🇧 GBP (£)</option>
+                            <option value="AUD">🇦🇺 AUD ($)</option>
+                            <option value="CAD">🇨🇦 CAD ($)</option>
+                            <option value="CHF">🇨🇭 CHF (Fr)</option>
+                            <option value="JPY">🇯🇵 JPY (¥)</option>
+                            <option value="NZD">🇳🇿 NZD ($)</option>
+                        </select>
+                    </div>
+
+                    <div class="settings-field">
+                        <label class="settings-label uppercase-label">PAYPAL WELCOME NAME</label>
+                        <input type="text" class="settings-input" id="settings-paypal-name-input" placeholder="e.g. Mark" value="Mark" oninput="window.updatePaypalName(this.value)">
+                    </div>
+                </div>
+
+                <!-- ROW 3: Bank / Card Network Pills & Last 4 Digits -->
+                <div class="settings-field">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                        <label class="settings-label uppercase-label">BANK / CARD NETWORK</label>
+                        <span style="font-size:10px; color:#6e7385; font-weight:800;">LAST 4 DIGITS</span>
+                    </div>
+                    <div class="card-pill-row">
+                        <div class="card-type-grid" id="card-type-grid">
+                            <button class="card-type-btn active" data-card="visa" data-last4="4279" data-cardlabel="Visa" onclick="window.applyCardType('visa', 'Visa'); window.saveIpSettings();" title="Visa">
+                                <img src="assets/visa_logo.png" alt="Visa">
+                            </button>
+                            <button class="card-type-btn" data-card="mastercard" data-last4="5391" data-cardlabel="Mastercard" onclick="window.applyCardType('mastercard', 'Mastercard'); window.saveIpSettings();" title="Mastercard">
+                                <img src="assets/mastercard_logo.png" alt="Mastercard">
+                            </button>
+                            <button class="card-type-btn" data-card="amex" data-last4="3782" data-cardlabel="American Express" onclick="window.applyCardType('amex', 'American Express'); window.saveIpSettings();" title="American Express">
+                                <img src="assets/amex_logo.png" alt="Amex">
+                            </button>
+                            <button class="card-type-btn" data-card="discover" data-last4="6011" data-cardlabel="Discover" onclick="window.applyCardType('discover', 'Discover'); window.saveIpSettings();" title="Discover">
+                                <img src="assets/discover_logo.png" alt="Discover">
+                            </button>
+                            <button class="card-type-btn" data-card="paypal" data-last4="" data-cardlabel="PayPal Balance" onclick="window.applyCardType('paypal', 'PayPal Balance'); window.saveIpSettings();" title="PayPal Balance">
+                                <img src="assets/paypal_logo.png" alt="PayPal">
+                            </button>
+                            <button class="card-type-btn" data-card="revolut" data-last4="4562" data-cardlabel="Revolut" onclick="window.applyCardType('revolut', 'Revolut'); window.saveIpSettings();" title="Revolut">
+                                <img src="assets/revolut_logo.png" alt="Revolut">
+                            </button>
+                        </div>
+                        <input type="text" class="settings-input card-last4-input" id="settings-card-last4" maxlength="4" placeholder="4279" value="4279" oninput="window.updateLast4(this.value)">
+                    </div>
+                </div>
+
+            </div>
+
+
+<!-- REALISTIC PAYPAL POPUP WINDOW OVERLAY (Images 3, 4, 5 Model) -->
+    <div class="paypal-popup-overlay" id="paypal-popup-screen">
+        <div class="paypal-window">
+            
+            <!-- Window Title Bar -->
+            <div class="paypal-titlebar">
+                <div class="titlebar-left">
+                    <img src="assets/paypal_logo.png" alt="PayPal" class="paypal-titlebar-icon">
+                    <span class="titlebar-title" id="paypal-window-title">Log in to your PayPal account</span>
+                </div>
+                <div class="titlebar-controls">
+                    <button class="win-btn win-minimize" tabindex="-1">_</button>
+                    <button class="win-btn win-maximize" tabindex="-1">□</button>
+                    <button class="win-btn win-close" id="btn-close-paypal-popup" aria-label="Close">×</button>
+                </div>
+            </div>
+
+            <!-- Address Bar -->
+            <div class="paypal-addressbar">
+                <div class="address-box">
+                    <span class="lock-icon">🔒</span>
+                    <span class="address-url" id="paypal-address-url">https://www.paypal.com/checkoutnow?token=EC-MTC6V1QF</span>
+                </div>
+            </div>
+
+            <!-- Window Content Container -->
+            <div class="paypal-window-body" id="paypal-window-body">
+                
+                <!-- STEP 1: LOADING / RECOGNITION VIEW (Images 4 & 5) -->
+                <div class="paypal-view active" id="paypal-view-loading">
+                    <div class="paypal-loader-content">
+                        <div class="paypal-spinner-ring"></div>
+                        <h3 class="pp-load-heading" id="pp-load-heading">Loading your PayPal account</h3>
+                        <p class="pp-load-subheading" id="pp-load-subheading">Checking remembered wallet session...</p>
+                    </div>
+                </div>
+
+                <!-- STEP 2: COMPLETE PURCHASE CHECKOUT VIEW (Image 3) -->
+                <div class="paypal-view" id="paypal-view-checkout">
+                    <!-- Top Navigation Bar -->
+                    <div class="pp-checkout-topbar">
+                        <div class="pp-user-avatar" id="pp-user-initials">PO</div>
+                        <div class="pp-logo-center">
+                            <img src="assets/paypal_logo.png" alt="PayPal" class="paypal-topbar-img">
+                            <span class="pp-logo-blue">PayPal</span>
+                        </div>
+                        <div class="pp-top-price">
+                            <span id="pp-top-price-val">£69.99</span>
+                            <span class="down-arrow">▼</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Body Content -->
+                    <div class="pp-checkout-content">
+                        <div class="pp-heading-row">
+                            <h2>Pay with</h2>
+                            <img src="assets/paypal_logo.png" alt="PayPal" class="paypal-heading-img">
+                            <span class="pp-header-logo">PayPal</span>
+                        </div>
+                        <p class="pp-sub-heading">Select a payment method</p>
+
+                        <!-- METHOD 1: PayPal Balance (always selected by default) -->
+                        <div class="pp-method-card pp-method-selectable active-method" id="pp-method-paypal" onclick="selectPpMethod('paypal', this)">
+                            <div class="pp-radio-ring active" id="pp-radio-paypal">
+                                <div class="pp-radio-inner"></div>
+                            </div>
+                            <div class="pp-method-icon">
+                                <img src="assets/paypal_logo.png" alt="PayPal" class="paypal-card-method-img">
+                            </div>
+                            <div class="pp-method-info">
+                                <div class="pp-method-name">PayPal Balance</div>
+                                <div class="pp-method-sub">Selected PayPal payment method</div>
+                                <span class="pp-preferred-badge">Preferred</span>
+                                <p class="pp-conversion-note">
+                                    PayPal's conversion rate is locked for this GTA VI order while you complete checkout.
+                                </p>
+                                <a href="#" class="pp-link-blue" onclick="return false;">Why 72 hours? ▼</a>
+                                <p class="pp-backup-note" id="pp-backup-note-text">
+                                    If this payment method doesn't work, PayPal may use your saved Visa ending in 4279.
+                                </p>
+                            </div>
+                            <div class="pp-method-amount" id="pp-balance-amount">£69.99</div>
+                        </div>
+
+                        <!-- METHOD 2: Selected Card -->
+                        <div class="pp-method-card pp-method-selectable pp-card-method-row" id="pp-method-card" onclick="selectPpMethod('card', this)">
+                            <div class="pp-radio-ring" id="pp-radio-card">
+                                <div class="pp-radio-inner"></div>
+                            </div>
+                            <div class="pp-method-icon pp-card-icon-wrap">
+                                <img src="assets/visa_logo.png" alt="Card" class="pp-card-logo-img" id="pp-card-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                                <span class="pp-card-fallback-text" id="pp-card-fallback-text" style="display:none;">VISA</span>
+                            </div>
+                            <div class="pp-method-info">
+                                <div class="pp-method-name" id="pp-card-method-name">Visa •••• 4279</div>
+                                <div class="pp-method-sub">Saved card</div>
+                            </div>
+                            <div class="pp-method-amount" id="pp-card-amount">£69.99</div>
+                        </div>
+
+                        <!-- Action Button -->
+                        <button class="pp-complete-purchase-btn" id="btn-complete-paypal-purchase">
+                            Complete Purchase
+                        </button>
+
+                        <p class="pp-bottom-disclaimer">
+                            If money is added to your PayPal balance before this transaction completes, the additional balance may be used to complete your payment.
+                        </p>
+
+                        <a href="#" class="pp-cancel-link" id="btn-cancel-paypal-popup">Cancel and return to merchant</a>
+                    </div>
+                </div>
+
+                <!-- STEP 3: BANK 3D SECURE VERIFICATION VIEW -->
+                <div class="paypal-view" id="paypal-view-bank-auth">
+                    <div class="bank-auth-container">
+                        
+                        <!-- Top Bank Logo -->
+                        <div class="bank-auth-header">
+                            <img src="assets/visa_logo.png" alt="Bank Logo" class="bank-auth-logo-img" id="bank-auth-logo-img">
+                        </div>
+
+                        <!-- 3A: Bank Loading State -->
+                        <div class="bank-subview active" id="bank-subview-loading">
+                            <div class="paypal-spinner-ring" style="margin: 20px auto 16px;"></div>
+                            <h3 class="bank-auth-title" id="bank-load-title">Connecting to bank...</h3>
+                            <p class="bank-auth-subtitle" id="bank-load-subtitle">Establishing a secure 3D Secure session...</p>
+                        </div>
+
+                        <!-- 3B: 6-Digit Code Entry State -->
+                        <div class="bank-subview" id="bank-subview-code" style="display:none;">
+                            <h3 class="bank-auth-title">Validation de sécurité bancaire</h3>
+                            <p class="bank-auth-subtitle" id="bank-code-subtitle">
+                                Saisissez le code de confirmation à 6 chiffres envoyé au <strong id="bank-phone-display" style="color:#111827; font-weight:800;">+33 6 ** ** 48 29</strong>.
+                            </p>
+                            
+                            <!-- 6-digit input boxes -->
+                            <div class="bank-code-group" id="bank-code-group">
+                                <input type="text" class="bank-code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+                                <input type="text" class="bank-code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+                                <input type="text" class="bank-code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+                                <input type="text" class="bank-code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+                                <input type="text" class="bank-code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+                                <input type="text" class="bank-code-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+                            </div>
+
+                            <p class="bank-error-msg" id="bank-code-error" style="display:none; color:#ef4444; font-size:12px; margin-bottom:12px;">Veuillez saisir un code à 6 chiffres.</p>
+
+                            <button class="pp-complete-purchase-btn" id="btn-submit-bank-code" style="margin-top: 8px;">
+                                Valider le paiement
+                            </button>
+                        </div>
+
+                        <!-- 3C: Success Validation State -->
+                        <div class="bank-subview" id="bank-subview-success" style="display:none;">
+                            <div class="bank-success-icon">✓</div>
+                            <h3 class="bank-auth-title" style="color: #059669;">Paiement validé par votre banque !</h3>
+                            <p class="bank-auth-subtitle">Votre transaction a été approuvée avec succès.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+<!-- SETTINGS MODAL OVERLAY (Ultra-Sleek Modern Config Bar) -->
+    <div class="settings-modal-overlay" id="settings-modal-overlay" onclick="if(event.target === this) window.closeMyCustomSettings()">
+        <div class="settings-modal-card">
+            
+            <div class="settings-modal-header">
+                <div class="settings-title-group">
+                    <span class="settings-icon-badge">⚙️</span>
+                    <h2 class="settings-title">Quick Settings</h2>
+                </div>
+                <button class="settings-close-btn" id="btn-close-settings" onclick="window.closeMyCustomSettings()" aria-label="Close">×</button>
+            </div>
+
+            <div class="settings-modal-body">
+
+                <!-- Key Sync Status -->
+                <div class="settings-section settings-key-sync-bar" id="settings-key-sync-bar" style="display:none;">
+                    <div class="key-sync-indicator">
+                        <span class="key-sync-dot"></span>
+                        <span id="settings-key-sync-text">Settings synced with key <strong id="settings-key-label"></strong></span>
+                    </div>
+                </div>
+
+                <!-- ROW 1: Country Phone Code & Payment Language -->
+                <div class="settings-form-row">
+                    <div class="settings-field">
+                        <label class="settings-label uppercase-label">PHONE COUNTRY CODE</label>
+                        <select class="settings-select" id="settings-phone-country-select" onchange="window.updatePhoneCountry(this.value)">
+                            <option value="+33 6" selected>🇫🇷 France (+33 6)</option>
+                            <option value="+1 415">🇺🇸 USA / Canada (+1 415)</option>
+                            <option value="+49 17">🇩🇪 Germany (+49 17)</option>
+                            <option value="+44 7">🇬🇧 United Kingdom (+44 7)</option>
+                            <option value="+34 6">🇪🇸 Spain (+34 6)</option>
+                            <option value="+39 3">🇮🇹 Italy (+39 3)</option>
+                            <option value="+41 7">🇨🇭 Switzerland (+41 7)</option>
+                            <option value="+31 6">🇳🇱 Netherlands (+31 6)</option>
+                            <option value="+61 4">🇦🇺 Australia (+61 4)</option>
+                            <option value="+81 90">🇯🇵 Japan (+81 90)</option>
+                        </select>
+                    </div>
+
+                    <div class="settings-field">
+                        <label class="settings-label uppercase-label">PAYMENT LANGUAGE</label>
+                        <select class="settings-select" id="settings-language-select" onchange="window.updatePaymentLanguage(this.value)">
+                            <option value="fr" selected>🇫🇷 Français</option>
+                            <option value="en">🇬🇧 English</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                            <option value="es">🇪🇸 Español</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ROW 2: Currency & PayPal Welcome Name -->
+                <div class="settings-form-row">
+                    <div class="settings-field">
+                        <label class="settings-label uppercase-label">CURRENCY / DEVISE</label>
+                        <select class="settings-select" id="settings-currency-select" onchange="window.applyCurrencyCode(this.value); window.saveIpSettings();">
+                            <option value="EUR" selected>🇪🇺 EUR (€)</option>
+                            <option value="USD">🇺🇸 USD ($)</option>
+                            <option value="GBP">🇬🇧 GBP (£)</option>
+                            <option value="AUD">🇦🇺 AUD ($)</option>
+                            <option value="CAD">🇨🇦 CAD ($)</option>
+                            <option value="CHF">🇨🇭 CHF (Fr)</option>
+                            <option value="JPY">🇯🇵 JPY (¥)</option>
+                            <option value="NZD">🇳🇿 NZD ($)</option>
+                        </select>
+                    </div>
+
+                    <div class="settings-field">
+                        <label class="settings-label uppercase-label">PAYPAL WELCOME NAME</label>
+                        <input type="text" class="settings-input" id="settings-paypal-name-input" placeholder="e.g. Mark" value="Mark" oninput="window.updatePaypalName(this.value)">
+                    </div>
+                </div>
+
+                <!-- ROW 3: Bank / Card Network Pills & Last 4 Digits -->
+                <div class="settings-field">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+                        <label class="settings-label uppercase-label">BANK / CARD NETWORK</label>
+                        <span style="font-size:10px; color:#6e7385; font-weight:800;">LAST 4 DIGITS</span>
+                    </div>
+                    <div class="card-pill-row">
+                        <div class="card-type-grid" id="card-type-grid">
+                            <button class="card-type-btn active" data-card="visa" data-last4="4279" data-cardlabel="Visa" onclick="window.applyCardType('visa', 'Visa'); window.saveIpSettings();" title="Visa">
+                                <img src="assets/visa_logo.png" alt="Visa">
+                            </button>
+                            <button class="card-type-btn" data-card="mastercard" data-last4="5391" data-cardlabel="Mastercard" onclick="window.applyCardType('mastercard', 'Mastercard'); window.saveIpSettings();" title="Mastercard">
+                                <img src="assets/mastercard_logo.png" alt="Mastercard">
+                            </button>
+                            <button class="card-type-btn" data-card="amex" data-last4="3782" data-cardlabel="American Express" onclick="window.applyCardType('amex', 'American Express'); window.saveIpSettings();" title="American Express">
+                                <img src="assets/amex_logo.png" alt="Amex">
+                            </button>
+                            <button class="card-type-btn" data-card="discover" data-last4="6011" data-cardlabel="Discover" onclick="window.applyCardType('discover', 'Discover'); window.saveIpSettings();" title="Discover">
+                                <img src="assets/discover_logo.png" alt="Discover">
+                            </button>
+                            <button class="card-type-btn" data-card="paypal" data-last4="" data-cardlabel="PayPal Balance" onclick="window.applyCardType('paypal', 'PayPal Balance'); window.saveIpSettings();" title="PayPal Balance">
+                                <img src="assets/paypal_logo.png" alt="PayPal">
+                            </button>
+                            <button class="card-type-btn" data-card="revolut" data-last4="4562" data-cardlabel="Revolut" onclick="window.applyCardType('revolut', 'Revolut'); window.saveIpSettings();" title="Revolut">
+                                <img src="assets/revolut_logo.png" alt="Revolut">
+                            </button>
+                        </div>
+                        <input type="text" class="settings-input card-last4-input" id="settings-card-last4" maxlength="4" placeholder="4279" value="4279" oninput="window.updateLast4(this.value)">
+                    </div>
+                </div>
+
+            </div>
+
+<script src="../app_v2.js?v=5.0"></script>
+</body></html>
